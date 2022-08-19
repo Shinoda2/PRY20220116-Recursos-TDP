@@ -3,6 +3,8 @@ import 'package:pry20220116/screens/home.dart';
 import 'package:pry20220116/screens/login.dart';
 import 'dart:ui';
 
+import 'package:pry20220116/screens/login_medico.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -81,11 +83,12 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
-      routes: {
+      home: LoginMedico(),
+      //initialRoute: '/home',
+      /*routes: {
         '/': (context) => const Login(),
         '/home': (context) => const Home()
-      },
+      },*/
     );
   }
 }
