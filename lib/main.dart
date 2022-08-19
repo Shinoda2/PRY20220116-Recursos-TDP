@@ -4,6 +4,7 @@ import 'package:pry20220116/screens/login.dart';
 import 'dart:ui';
 
 import 'package:pry20220116/screens/login_medico.dart';
+import 'package:pry20220116/screens/option.dart';
 
 void main() {
   runApp(const MyApp());
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginMedico(),
+      home: Option(),
       //initialRoute: '/home',
       /*routes: {
         '/': (context) => const Login(),
