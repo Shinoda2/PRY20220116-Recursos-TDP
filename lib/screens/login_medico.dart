@@ -72,7 +72,21 @@ class _LoginMedicoState extends State<LoginMedico> {
                     ),
                     SizedBox(height: 60),
                     ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          showDialog(
+                              context: context,
+                              builder: (context)=> AlertDialog(
+                                title: Text('Error'),
+                                content: Text('Usuario o contraseña incorrectos. Inténtelo nuevamente',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                                actions: <Widget>[
+                                  FlatButton(onPressed: () {  },
+                                  child: Text('Ok')),
+                                ],
+                              ),
+                          );
+                        },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.greenAccent),
                           fixedSize: MaterialStateProperty.all<Size>(Size.fromWidth(300)),
