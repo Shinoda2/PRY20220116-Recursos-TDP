@@ -51,6 +51,23 @@ class _Calendar extends State<Calendar>{
           return isSameDay(selectedDay,date);
         },
       ),
+    bottomNavigationBar: BottomNavigationBar(
+    items: const <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+    icon: Icon(Icons.calendar_today_rounded, size: 30,),
+    label: '',
+    ),
+    BottomNavigationBarItem(
+    icon: Icon(Icons.chat, size: 30),
+    label: '',
+    ),
+    BottomNavigationBarItem(
+    icon: Icon(Icons.playlist_add_check_rounded, size: 30),
+    label: '',
+    ),
+    ],
+      selectedItemColor: Colors.blue,
+    )
     );
   }
 }
