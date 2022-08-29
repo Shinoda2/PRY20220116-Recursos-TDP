@@ -27,7 +27,11 @@ class NavBar extends StatelessWidget{
               style: TextStyle(
                   fontWeight: FontWeight.bold
               ),),
-            onTap: ()=>ListPatient(),
+            onTap: (){
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ListPatient()));
+            },
+
           ),
           Divider(),
           ListTile(
@@ -48,7 +52,11 @@ class NavBar extends StatelessWidget{
               color: Colors.red,
               fontWeight: FontWeight.bold
             ),),
-            onTap: ()=>Option(),
+            onTap: (){
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Option()
+              ));
+            },
           ),
         ],
       ),

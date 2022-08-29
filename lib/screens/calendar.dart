@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/profile.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import '../widgets/nav_bar.dart';
 
 class Calendar extends StatefulWidget{
   @override
@@ -15,7 +18,18 @@ class _Calendar extends State<Calendar>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+        drawer: NavBar(),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => Profile()));
+              },
+            ),
+          ],
+        ),
       body: TableCalendar(
         focusedDay: focusedDay,
         firstDay: DateTime(1920),

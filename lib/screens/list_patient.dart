@@ -23,17 +23,17 @@ class _ListPatient extends State<ListPatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
+        drawer: NavBar(),
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Profile()));
-            },
-            padding:EdgeInsets.only(left: 370) ,
-            icon: Icon(Icons.person),
-            iconSize: 30,
-          ),
+           actions: [
+             IconButton(
+               icon: const Icon(Icons.person),
+                 onPressed: () {
+                   Navigator.of(context).push(MaterialPageRoute(
+                       builder: (BuildContext context) => Profile()));
+                 },
+             ),
+           ],
         ),
 
         //backgroundColor: Colors.white70,

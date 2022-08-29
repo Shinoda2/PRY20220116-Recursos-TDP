@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pry20220116/widgets/nav_bar.dart';
 
 class Profile extends StatefulWidget{
   const Profile({Key? key}) : super(key: key);
@@ -11,8 +12,17 @@ class _LoginMedicoState extends State<Profile>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
-
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Profile()));
+            },
+          ),
+        ],
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
