@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/models/patients.dart';
 import 'package:pry20220116/screens/profile.dart';
+import 'package:pry20220116/widgets/nav_bar.dart';
 import 'package:pry20220116/widgets/patient_card.dart';
 
 class ListPatient extends StatefulWidget{
@@ -22,17 +23,19 @@ class _ListPatient extends State<ListPatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => Profile()));
             },
-            padding:EdgeInsets.only(left: 0) ,
+            padding:EdgeInsets.only(left: 370) ,
             icon: Icon(Icons.person),
             iconSize: 30,
           ),
         ),
+
         //backgroundColor: Colors.white70,
         /*floatingActionButton: FloatingActionButton(
           onPressed: (){},
