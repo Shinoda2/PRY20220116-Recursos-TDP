@@ -7,6 +7,7 @@ import 'dart:ui';
 
 import 'package:pry20220116/screens/login_medico.dart';
 import 'package:pry20220116/screens/option.dart';
+import 'package:pry20220116/screens/profile.dart';
 
 void main() {
 
@@ -15,9 +16,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-
-
 
   // This widget is the root of your application.
   @override

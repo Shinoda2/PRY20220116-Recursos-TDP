@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pry20220116/models/message.dart';
 import 'package:pry20220116/models/patients.dart';
 
 class IndividualPatientChat extends StatefulWidget{
-  /*final Patient patient;
-  IndividualPatientChat(Key key,this.patient) : super(key: key);*/
-  //@override
+  const IndividualPatientChat({Key? key}) : super(key: key);
+  @override
   _IndividualPatientChat createState() => _IndividualPatientChat();
 }
 
@@ -47,7 +47,8 @@ class _IndividualPatientChat extends State<IndividualPatientChat>{
           ],
         ),
       ),
-      body: Container(
+      body:
+      Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Stack(
@@ -83,6 +84,12 @@ class _IndividualPatientChat extends State<IndividualPatientChat>{
                           ),
                           contentPadding: EdgeInsets.all(5),
                         ),
+                        onFieldSubmitted: (text){
+                          final message= Message(
+                              text,
+                              '28/08',
+                              true);
+                        },
                       ),
                     ),
                   ),
