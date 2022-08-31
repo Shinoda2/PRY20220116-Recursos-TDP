@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/calendar.dart';
 import 'package:pry20220116/screens/home.dart';
 import 'package:pry20220116/screens/list_patient.dart';
 import 'dart:ui';
@@ -91,7 +92,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      home: ListPatient(),
+      home: Calendar(),
       //initialRoute: '/home',
       /*routes: {
         '/': (context) => const Login(),

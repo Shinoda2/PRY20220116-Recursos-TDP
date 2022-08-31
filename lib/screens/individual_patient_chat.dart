@@ -24,7 +24,7 @@ class _IndividualPatientChat extends State<IndividualPatientChat>{
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.arrow_back,
+              const Icon(Icons.arrow_back,
                 size: 24,),
               CircleAvatar(
                 child:  Image.asset(
@@ -39,7 +39,7 @@ class _IndividualPatientChat extends State<IndividualPatientChat>{
         title: Column(
           children: [
             Text(widget.patient.name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize:19,
                 fontWeight: FontWeight.bold,
               ),

@@ -4,6 +4,8 @@ import 'package:pry20220116/screens/profile.dart';
 import 'package:pry20220116/widgets/nav_bar.dart';
 import 'package:pry20220116/widgets/patient_card.dart';
 
+import '../widgets/navigation_bar.dart';
+
 class ListPatient extends StatefulWidget{
   //ListPatient(Key key): super(key: key);
   @override
@@ -40,6 +42,7 @@ class _ListPatient extends State<ListPatient> {
         itemCount: patients.length,
         itemBuilder: (context,index)=> PatientCard(patients[index]),
       ),
+      bottomNavigationBar: NavigationBarB(),
       );
   }
 }

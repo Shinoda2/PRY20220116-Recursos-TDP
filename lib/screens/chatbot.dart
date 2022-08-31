@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 
+import '../widgets/navigation_bar.dart';
+
 class ChatBot extends StatefulWidget {
   const ChatBot({Key? key}) : super(key: key);
 
@@ -46,16 +48,22 @@ class _ChatBotState extends State<ChatBot> {
 
   @override
   Widget build(BuildContext context) {
-    return Chat(
-      messages: _messages,
-      onPreviewDataFetched: _handlePreviewDataFetched,
-      onSendPressed: _handleSendPressed,
-      showUserAvatars: true,
-      showUserNames: true,
-      user: _user,
-      theme: const DefaultChatTheme(
-        inputBackgroundColor: Colors.grey,
+    return Scaffold(
+      body: Chat(
+        messages: _messages,
+        onPreviewDataFetched: _handlePreviewDataFetched,
+        onSendPressed: _handleSendPressed,
+        showUserAvatars: true,
+        showUserNames: true,
+        user: _user,
+        theme: const DefaultChatTheme(
+          inputBackgroundColor: Colors.grey,
+        ),
+
       ),
+      bottomNavigationBar: NavigationBarB(),
     );
+
+
   }
 }

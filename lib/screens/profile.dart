@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/widgets/nav_bar.dart';
 
+import '../widgets/navigation_bar.dart';
+
 class Profile extends StatefulWidget{
   const Profile({Key? key}) : super(key: key);
 
@@ -70,6 +72,7 @@ class _LoginMedicoState extends State<Profile>{
           ],
         ),
       ),
+      bottomNavigationBar: NavigationBarB(),
     );
   }
 
