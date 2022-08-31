@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/calendar.dart';
 import 'package:pry20220116/screens/home.dart';
 import 'package:pry20220116/screens/list_patient.dart';
-import 'package:pry20220116/screens/login.dart';
 import 'dart:ui';
-
-import 'package:pry20220116/screens/login_medico.dart';
-import 'package:pry20220116/screens/option.dart';
-import 'package:pry20220116/screens/profile.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
+//import 'package:path/path.dart';
+//import 'package:path_provider/path_provider.dart';
 
 void main() {
 
   runApp(const MyApp());
 }
 
+/*Future<void> main() async{
+  final cameras = await availableCameras();
+  final firstCamera= cameras.first;
+  runApp(const MyApp());
+}*/
+
 class MyApp extends StatelessWidget {
+
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.

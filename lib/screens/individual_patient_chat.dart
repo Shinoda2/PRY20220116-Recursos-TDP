@@ -3,13 +3,13 @@ import 'package:pry20220116/models/message.dart';
 import 'package:pry20220116/models/patients.dart';
 
 class IndividualPatientChat extends StatefulWidget{
-  const IndividualPatientChat({Key? key}) : super(key: key);
-  @override
+  const IndividualPatientChat({Key? key , required this.patient}) : super(key: key);
+  final Patient patient;
   _IndividualPatientChat createState() => _IndividualPatientChat();
 }
 
 class _IndividualPatientChat extends State<IndividualPatientChat>{
-  List<Patient> patients = Patient.generatePatient();
+  //List<Patient> patients ;
   @override
   Widget build(BuildContext context) {
     //var patients=patient;
@@ -38,7 +38,7 @@ class _IndividualPatientChat extends State<IndividualPatientChat>{
         ),
         title: Column(
           children: [
-            Text('Name',
+            Text(widget.patient.name,
               style: TextStyle(
                 fontSize:19,
                 fontWeight: FontWeight.bold,

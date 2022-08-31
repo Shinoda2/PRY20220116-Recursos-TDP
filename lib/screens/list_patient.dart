@@ -36,11 +36,6 @@ class _ListPatient extends State<ListPatient> {
            ],
         ),
 
-        //backgroundColor: Colors.white70,
-        /*floatingActionButton: FloatingActionButton(
-          onPressed: (){},
-          child: Icon(Icons.chat),
-        ),*/
       body: ListView.builder(
         itemCount: patients.length,
         itemBuilder: (context,index)=> PatientCard(patients[index]),

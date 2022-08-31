@@ -11,7 +11,7 @@ class PatientCard extends StatelessWidget{
   Widget build(BuildContext context) {
      return InkWell(
        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>IndividualPatientChat()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>IndividualPatientChat(patient: patient)));
        },
        child: Column(
          children: [
