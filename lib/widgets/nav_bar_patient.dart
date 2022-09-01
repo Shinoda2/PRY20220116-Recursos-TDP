@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/list_appointment.dart';
 import 'package:pry20220116/screens/list_medical.dart';
 import 'package:pry20220116/screens/list_medicine.dart';
 import 'package:pry20220116/screens/list_patient.dart';
@@ -15,7 +16,7 @@ class NavBarPatient extends StatelessWidget{
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('José Juarez'),
+            accountName: Text('Sebastian Jara'),
             accountEmail: Text('example@gmail.com'),
             currentAccountPicture: CircleAvatar(
               child: Image.asset('assets/image/icon.png',
@@ -44,7 +45,10 @@ class NavBarPatient extends StatelessWidget{
               style: TextStyle(
                   fontWeight: FontWeight.bold
               ),),
-            onTap: ()=>null,
+            onTap: (){
+            Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => ListAppointment()));
+          },
           ),
           Divider(),
           ListTile(

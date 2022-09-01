@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:pry20220116/models/medical.dart';
 import 'package:pry20220116/screens/profile.dart';
+import 'package:pry20220116/screens/profile_patient.dart';
 import 'package:pry20220116/widgets/nav_bar_patient.dart';
 
 import '../widgets/medical_card.dart';
@@ -27,12 +28,11 @@ class _ListMedical extends State<ListMedical> {
         title: Text('MEDICOS'),
         centerTitle: true,
         actions: [
-
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Profile()));
+                  builder: (BuildContext context) => ProfilePatient()));
             },
           ),
         ],

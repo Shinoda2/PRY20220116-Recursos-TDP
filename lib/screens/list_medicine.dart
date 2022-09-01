@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/models/medicine.dart';
 import 'package:pry20220116/screens/profile.dart';
-import 'package:pry20220116/widgets/nav_bar.dart';
+import 'package:pry20220116/screens/profile_patient.dart';
 import 'package:pry20220116/widgets/nav_bar_patient.dart';
 
 class ListMedicine extends StatefulWidget{
@@ -28,7 +27,7 @@ class _ListMedicine extends State<ListMedicine>{
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Profile()));
+                  builder: (BuildContext context) => ProfilePatient()));
             },
           ),
         ],
@@ -48,12 +47,13 @@ class _ListMedicine extends State<ListMedicine>{
                 child: Image.asset(
                   '${item.icon}',
                   height: 20,
-                  //fit: BoxFit.cover,
+                  fit: BoxFit.cover,
               ),
                 footer: Text(item.name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
+                    color: Colors.amber
                   ),
                   textAlign: TextAlign.center,
                 ),

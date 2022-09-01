@@ -3,14 +3,14 @@ import 'package:pry20220116/widgets/nav_bar.dart';
 
 import '../widgets/navigation_bar.dart';
 
-class Profile extends StatefulWidget{
-  const Profile({Key? key}) : super(key: key);
+class ProfilePatient extends StatefulWidget{
+  const ProfilePatient({Key? key}) : super(key: key);
 
   @override
-  _LoginMedicoState createState() => _LoginMedicoState();
+  _ProfilePatient createState() => _ProfilePatient();
 }
 
-class _LoginMedicoState extends State<Profile>{
+class _ProfilePatient extends State<ProfilePatient>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class _LoginMedicoState extends State<Profile>{
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Profile()));
+                  builder: (BuildContext context) => ProfilePatient()));
             },
           ),
         ],
@@ -37,35 +37,30 @@ class _LoginMedicoState extends State<Profile>{
             Container(
               child: Column(
                 children: [
-                  Text('José Juarez',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),),
+                  Text('Sebastian Jara',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),),
                   SizedBox(height: 10),
-                  Text('DERMATÓLOGO',
+                  Text('Usuario',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),),
                   SizedBox(height: 20),
-                  Text('NOMBRE COMPLETO: JOSÉ LUIS JUAREZ MATOS',
+                  Text('NOMBRE COMPLETO: Sebastian Jara Calderon',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      ),),
+                    ),),
                   SizedBox(height: 10),
-                  Text('DNI: 70130621',
+                  Text('DNI: 72123691',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      ),),
+                    ),),
                   SizedBox(height: 10),
-                  Text('ESPECIALIDAD: DERMATOLOGÍA',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                     ),),
                 ],
               ),
             )
