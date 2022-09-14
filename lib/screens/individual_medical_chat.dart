@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pry20220116/models/medical.dart';
 import 'package:pry20220116/models/message.dart';
 import 'package:pry20220116/models/patients.dart';
+import 'package:pry20220116/screens/camera_screen.dart';
 
 class IndividualMedicalChat extends StatefulWidget{
   const IndividualMedicalChat({Key? key , required this.medical}) : super(key: key);
@@ -11,6 +12,7 @@ class IndividualMedicalChat extends StatefulWidget{
 
 class _IndividualMedicalChat extends State<IndividualMedicalChat>{
   //List<Patient> patients ;
+
   @override
   Widget build(BuildContext context) {
     //var patients=patient;
@@ -78,9 +80,14 @@ class _IndividualMedicalChat extends State<IndividualMedicalChat>{
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(icon: Icon(Icons.attach_file),
-                                onPressed: (){},),
+                                onPressed: (){
+
+                                },),
                               IconButton(icon: Icon(Icons.camera_alt),
-                                onPressed: (){},)
+                                onPressed: (){
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) => CameraScreen()));
+                                },)
                             ],
                           ),
                           contentPadding: EdgeInsets.all(5),

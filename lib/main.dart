@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/calendar.dart';
 import 'package:pry20220116/screens/calendar_patient.dart';
@@ -10,19 +11,13 @@ import 'package:pry20220116/screens/list_patient.dart';
 import 'dart:ui';
 import 'dart:io';
 import 'package:flutter/material.dart';
+//import 'package:pry20220116/widgets/camera_sc.dart';
 //import 'package:path/path.dart';
 //import 'package:path_provider/path_provider.dart';
 
 void main() {
-
   runApp(const MyApp());
 }
-
-/*Future<void> main() async{
-  final cameras = await availableCameras();
-  final firstCamera= cameras.first;
-  runApp(const MyApp());
-}*/
 
 class MyApp extends StatelessWidget {
 
@@ -97,7 +92,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      home: ListAppointment(),
+      home: const ListAppointment(),
       //initialRoute: '/home',
       /*routes: {
         '/': (context) => const Login(),

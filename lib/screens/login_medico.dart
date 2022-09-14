@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:pry20220116/screens/list_patient.dart';
 import 'package:pry20220116/widgets/input_with_help.dart';
 import 'package:pry20220116/widgets/primary_button.dart';
 import 'package:pry20220116/widgets/with_tooltip.dart';
@@ -73,7 +74,7 @@ class _LoginMedicoState extends State<LoginMedico> {
                     SizedBox(height: 60),
                     ElevatedButton(
                         onPressed: (){
-                          showDialog(
+                          /*showDialog(
                               context: context,
                               builder: (context)=> AlertDialog(
                                 title: Text('Error'),
@@ -85,7 +86,9 @@ class _LoginMedicoState extends State<LoginMedico> {
                                   child: Text('Ok')),
                                 ],
                               ),
-                          );
+                          );*/
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) => ListPatient()));
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.greenAccent),

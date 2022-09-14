@@ -3,6 +3,8 @@ import 'package:pry20220116/widgets/input_with_help.dart';
 import 'package:pry20220116/widgets/primary_button.dart';
 import 'package:pry20220116/widgets/with_tooltip.dart';
 
+import 'list_medical.dart';
+
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -44,7 +46,9 @@ class _LoginState extends State<Login> {
                       child: PrimaryButton(
                         text: 'Ingresar',
                         onPressed: () {
-                          Navigator.pushNamed(context, '/home');
+                          //Navigator.pushNamed(context, '/home');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) => ListMedical()));
                         },
                       ),
                       tooltipMessage: 'Ayuda')

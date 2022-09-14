@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pry20220116/models/message.dart';
 import 'package:pry20220116/models/patients.dart';
 
+import 'camera_screen.dart';
+
 class IndividualPatientChat extends StatefulWidget{
   const IndividualPatientChat({Key? key , required this.patient}) : super(key: key);
   final Patient patient;
@@ -79,7 +81,10 @@ class _IndividualPatientChat extends State<IndividualPatientChat>{
                               IconButton(icon: Icon(Icons.attach_file),
                                   onPressed: (){},),
                               IconButton(icon: Icon(Icons.camera_alt),
-                                onPressed: (){},)
+                                onPressed: (){
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (BuildContext context) => CameraScreen()));
+                                },)
                             ],
                           ),
                           contentPadding: EdgeInsets.all(5),
