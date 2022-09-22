@@ -15,7 +15,11 @@ import 'package:flutter/material.dart';
 //import 'package:path/path.dart';
 //import 'package:path_provider/path_provider.dart';
 
-void main() {
+/*void main() {
+  runApp(const MyApp());
+}*/
+
+Future<void> main()async {
   runApp(const MyApp());
 }
 

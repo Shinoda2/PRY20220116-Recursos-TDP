@@ -12,9 +12,7 @@ class _CameraScreen extends State<CameraScreen>{
 
   late List<CameraDescription> cameras;
   late CameraController cameraController;
-
-  late int direction;
-
+  late int direction =0;
   @override
   void initState(){
     startCamera(0);
@@ -25,9 +23,9 @@ class _CameraScreen extends State<CameraScreen>{
     cameras = await availableCameras();
 
     cameraController = CameraController(
-      cameras[direction],
-      ResolutionPreset.high,
-      enableAudio: false,
+        cameras[direction],
+        ResolutionPreset.high,
+        enableAudio: false,
     );
 
     await cameraController.initialize().then((value) {
@@ -41,7 +39,7 @@ class _CameraScreen extends State<CameraScreen>{
   }
 
   @override
-  void dispose() {
+  void dispose(){
     cameraController.dispose();
     super.dispose();
   }
@@ -50,14 +48,14 @@ class _CameraScreen extends State<CameraScreen>{
   Widget build(BuildContext context) {
     if(cameraController.value.isInitialized){
       return Scaffold(
-
         body: Stack(
-
           children: [
             CameraPreview(cameraController),
             GestureDetector(
               onTap: (){
                 setState(() {
+                  /*direction = direction == 0 ? 1 == 0;
+                  startCamera(direction);*/
                   direction = direction == 0 ? 1 : 0;
                   startCamera(direction);
                 });
@@ -66,7 +64,7 @@ class _CameraScreen extends State<CameraScreen>{
             ),
             GestureDetector(
               onTap: (){
-                cameraController.takePicture().then((XFile? file){
+                cameraController.takePicture().then((XFile? file) {
                   if(mounted){
                     if(file != null){
                       print("Picture saved to ${file.path}");
@@ -74,27 +72,17 @@ class _CameraScreen extends State<CameraScreen>{
                   }
                 });
               },
-              child: button(Icons.flip_camera_ios_outlined, Alignment.bottomCenter),
-            ),
-            Align(
-              alignment: AlignmentDirectional.topCenter,
-              child: Text(
-                "MY CAMERA",
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
+              child: button(Icons.camera_alt_outlined, Alignment.bottomCenter),
             ),
           ],
         ),
       );
     }else{
-      return SizedBox(
-      );
+      return SizedBox();
     }
   }
 
-  Widget button(IconData icon, Alignment alignment){
+  Widget button(IconData icon, Alignment alignment ){
     return Align(
       alignment: alignment,
       child: Container(
@@ -112,17 +100,16 @@ class _CameraScreen extends State<CameraScreen>{
                 color: Colors.black26,
                 offset: Offset(2, 2),
                 blurRadius: 10,
-              )
+              ),
             ]
         ),
-        child: Center(
-          child: Icon(
-            icon,
-            color: Colors.black54,
-          ),
+        child: Icon(
+          icon,
+          color: Colors.black54,
         ),
       ),
     );
   }
 
 }
+

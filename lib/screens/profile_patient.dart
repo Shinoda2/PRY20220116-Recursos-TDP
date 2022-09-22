@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/widgets/nav_bar.dart';
+import 'package:pry20220116/widgets/nav_bar_patient.dart';
+import 'package:pry20220116/widgets/navigation_bar_patient.dart';
 
 import '../widgets/navigation_bar.dart';
 
@@ -14,7 +16,7 @@ class _ProfilePatient extends State<ProfilePatient>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
+      drawer: NavBarPatient(),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -67,7 +69,7 @@ class _ProfilePatient extends State<ProfilePatient>{
           ],
         ),
       ),
-      bottomNavigationBar: NavigationBarB(),
+      bottomNavigationBar: NavigationBarPatient(),
     );
   }
 }
