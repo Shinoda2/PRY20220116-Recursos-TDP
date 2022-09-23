@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      home: const ListAppointment(),
+      home: const Home(),
       //initialRoute: '/home',
       /*routes: {
         '/': (context) => const Login(),
