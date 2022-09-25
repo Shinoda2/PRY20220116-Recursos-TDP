@@ -12,6 +12,18 @@ class IndividualPatientChat extends StatefulWidget{
 
 class _IndividualPatientChat extends State<IndividualPatientChat>{
   //List<Patient> patients ;
+  final inputTextController = TextEditingController();
+
+  Future<void> navigateResult(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CameraScreen()),
+    ).then((value) {setState(() {
+      inputTextController.text = value;
+    });});
+
+
+  }
   @override
   Widget build(BuildContext context) {
     //var patients=patient;
@@ -68,6 +80,7 @@ class _IndividualPatientChat extends State<IndividualPatientChat>{
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: TextFormField(
+                        controller: inputTextController,
                         textAlignVertical: TextAlignVertical.center,
                         keyboardType: TextInputType.multiline,
                         maxLines: 5,
@@ -82,8 +95,7 @@ class _IndividualPatientChat extends State<IndividualPatientChat>{
                                   onPressed: (){},),
                               IconButton(icon: Icon(Icons.camera_alt),
                                 onPressed: (){
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (BuildContext context) => CameraScreen()));
+                                  navigateResult(context);
                                 },)
                             ],
                           ),

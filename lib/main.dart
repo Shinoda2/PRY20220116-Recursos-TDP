@@ -87,6 +87,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: Option(),
+
       //initialRoute: '/home',
       /*routes: {
         '/': (context) => const Login(),

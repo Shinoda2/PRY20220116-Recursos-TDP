@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:tflite/tflite.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({Key? key}) : super(key: key);
@@ -13,11 +14,38 @@ class _CameraScreen extends State<CameraScreen>{
   late List<CameraDescription> cameras;
   late CameraController cameraController;
   late int direction =0;
+  int _imageCount = 0;
   @override
   void initState(){
     startCamera(0);
+    _initTensorFlow();
     super.initState();
   }
+
+  Future<String> _objectRecognition(CameraImage cameraImage) async{
+    var recognitions = await Tflite.runModelOnFrame(
+      bytesList: cameraImage.planes.map((plane) {return plane.bytes;}).toList(),
+      imageHeight: cameraImage.height,
+      imageWidth: cameraImage.width,
+      imageMean: 127.5,
+      imageStd: 127.5,
+      numResults: 2,
+      threshold: 0.2,
+    );
+
+    var resultado = '';
+
+    if(recognitions != null){
+      if(recognitions[0]['confidence'] > 0.6){
+        print(recognitions[0]['label']);
+        print(recognitions[0]['confidence']);
+        resultado = recognitions[0]['label'];
+      }
+    }
+    return resultado;
+  }
+
+  var resultadoFinal = '';
 
   void startCamera(int direction) async{
     cameras = await availableCameras();
@@ -28,7 +56,17 @@ class _CameraScreen extends State<CameraScreen>{
         enableAudio: false,
     );
 
+
+
     await cameraController.initialize().then((value) {
+      cameraController.startImageStream((image) async{
+        _imageCount++;
+        if(_imageCount % 30 == 0){
+          _imageCount = 0;
+
+          resultadoFinal = await _objectRecognition(image);
+        }
+      });
       if(!mounted){
         return;
       }
@@ -41,7 +79,18 @@ class _CameraScreen extends State<CameraScreen>{
   @override
   void dispose(){
     cameraController.dispose();
+    Tflite.close();
     super.dispose();
+  }
+
+  Future<void> _initTensorFlow() async {
+    String? res = await Tflite.loadModel(
+      model: 'assets/model_unquant.tflite',
+      labels: 'assets/labels.txt',
+      numThreads: 1,
+      isAsset: true,
+      useGpuDelegate: false
+    );
   }
 
   @override
@@ -64,13 +113,7 @@ class _CameraScreen extends State<CameraScreen>{
             ),
             GestureDetector(
               onTap: (){
-                cameraController.takePicture().then((XFile? file) {
-                  if(mounted){
-                    if(file != null){
-                      print("Picture saved to ${file.path}");
-                    }
-                  }
-                });
+                cameraController.stopImageStream().then((value) => Navigator.pop(context, resultadoFinal));
               },
               child: button(Icons.camera_alt_outlined, Alignment.bottomCenter),
             ),
