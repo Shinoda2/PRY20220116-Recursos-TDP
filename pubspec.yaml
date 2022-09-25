@@ -37,10 +37,11 @@ dependencies:
   table_calendar: ^3.0.0
   flutter_chat_ui: ^1.6.2
   camera: ^0.10.0+1
-  #esys_flutter_share_plus: ^2.2.0
+  firebase_core:
+  cloud_firestore:
+  firebase_auth:
   path_provider: ^2.0.11
   path: ^1.8.1
-  flutter_svg: ^0.19.0
   http: ^0.13.4
 dev_dependencies:
   flutter_test:
