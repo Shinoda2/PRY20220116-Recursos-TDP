@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/login.dart';
 import 'package:pry20220116/screens/login_medico.dart';
 import 'package:pry20220116/widgets/analisis.dart';
+import 'package:pry20220116/widgets/analisis_medico.dart';
 
 class Option extends StatefulWidget{
   const Option({Key? key}) : super(key: key);
@@ -37,7 +38,7 @@ class _Option extends State<Option>{
                   children: [
                     ElevatedButton(
                         onPressed: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>Login()));
+                          Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>Analisis()));
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(Colors.indigoAccent),
@@ -53,7 +54,7 @@ class _Option extends State<Option>{
                     const SizedBox(height: 30,),
                     ElevatedButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>Analisis()));
+                        Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>AnalisisMedico()));
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.greenAccent),

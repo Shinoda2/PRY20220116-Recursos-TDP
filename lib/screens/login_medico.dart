@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:pry20220116/screens/list_patient.dart';
-import 'package:pry20220116/screens/signup_medico.dart';
 
 class LoginMedico extends StatefulWidget {
   const LoginMedico({Key? key}) : super(key: key);
@@ -78,7 +76,7 @@ class _LoginMedicoState extends State<LoginMedico> {
                         borderSide: BorderSide(color: Colors.blueAccent),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      hintText: 'Email',
+                      hintText: 'User',
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
@@ -87,22 +85,6 @@ class _LoginMedicoState extends State<LoginMedico> {
                 const SizedBox(height: 20,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  /*child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white70,
-                      border: Border.all(color: Colors.blueAccent),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Contraseña',
-                        ),
-                      ),
-                    ),
-                  ),*/
                   child: TextField(
                     controller: passwordController,
                     decoration: InputDecoration(

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/list_patient.dart';
-import 'package:pry20220116/screens/login_medico.dart';
+import 'package:pry20220116/screens/list_medical.dart';
+import 'package:pry20220116/screens/login.dart';
 
 class Analisis extends StatelessWidget{
   const Analisis({Key? key}) : super(key: key);
@@ -13,9 +13,9 @@ class Analisis extends StatelessWidget{
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
-            return ListPatient();
+            return ListMedical();
           }else{
-            return const LoginMedico();
+            return const Login();
           }
         }
       ),

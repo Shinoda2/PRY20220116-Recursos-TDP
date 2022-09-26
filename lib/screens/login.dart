@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/widgets/input_with_help.dart';
 import 'package:pry20220116/widgets/primary_button.dart';
@@ -13,51 +14,122 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future signIn() async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+  }
+
+  @override
+  void dispose(){
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30),
-        child: Column(
-          children: [
-            WithTooltip(
-                child: Text('BIENVENIDO',
-                    style: Theme.of(context).textTheme.headline1),
-                tooltipMessage: 'Ayuda'),
-            const SizedBox(
-              height: 40.00,
-            ),
-            Form(
-              key: _formKey,
+        appBar: AppBar(),
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add TextFormFields and ElevatedButton here.
-                  const InputWithHelp(
-                      placeholder: 'DNI', tooltipMessage: 'Ayuda'),
-                  const InputWithHelp(
-                      placeholder: 'FECHA DE EMISION', tooltipMessage: 'Ayuda'),
-                  const SizedBox(
-                    height: 70,
-                  ),
-                  WithTooltip(
-                      child: PrimaryButton(
-                        text: 'Ingresar',
-                        onPressed: () {
-                          //Navigator.pushNamed(context, '/home');
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) => ListMedical()));
-                        },
+                  const SizedBox(height: 40,),
+                  const Text('BIENVENIDO',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 40,
+                    ),),
+                  const SizedBox(height: 40,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white70),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueAccent),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Email',
+                        fillColor: Colors.grey[200],
+                        filled: true,
                       ),
-                      tooltipMessage: 'Ayuda')
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: TextField(
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white70),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blueAccent),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Password',
+                        fillColor: Colors.grey[200],
+                        filled: true,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: GestureDetector(
+                      onTap: signIn,
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: Colors.greenAccent,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Center(
+                            child: Text('INGRESAR',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),)
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text('No estas registrado? ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),),
+                      Text('SignUp',
+                        style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold
+                        ),),
+                    ],
+                  ),
                 ],
               ),
-            )
-          ],
-        ),
-      ),
+            ),
+          ),
+        )
     );
   }
 }
