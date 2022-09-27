@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/chatbot_patient.dart';
 import 'package:pry20220116/widgets/input_with_help.dart';
 import 'package:pry20220116/widgets/primary_button.dart';
 import 'package:pry20220116/widgets/with_tooltip.dart';
@@ -48,7 +49,7 @@ class _LoginState extends State<Login> {
                         onPressed: () {
                           //Navigator.pushNamed(context, '/home');
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) => ListMedical()));
+                              builder: (BuildContext context) => ChatBotPatient()));
                         },
                       ),
                       tooltipMessage: 'Ayuda')

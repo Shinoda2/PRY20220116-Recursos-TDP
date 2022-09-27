@@ -22,7 +22,7 @@ class _IndividualMedicalChat extends State<IndividualMedicalChat>{
       context,
       MaterialPageRoute(builder: (context) => const CameraScreen()),
     ).then((value) {setState(() {
-      inputTextController.text = value;
+      inputTextController.text += value;
     });});
 
 

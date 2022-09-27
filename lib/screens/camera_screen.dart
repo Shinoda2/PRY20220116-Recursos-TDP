@@ -15,6 +15,7 @@ class _CameraScreen extends State<CameraScreen>{
   late CameraController cameraController;
   late int direction =0;
   int _imageCount = 0;
+  var resultadoRT = "";
   @override
   void initState(){
     startCamera(0);
@@ -42,6 +43,9 @@ class _CameraScreen extends State<CameraScreen>{
         resultado = recognitions[0]['label'];
       }
     }
+    setState(() {
+      resultadoRT = resultado;
+    });
     return resultado;
   }
 
@@ -51,9 +55,9 @@ class _CameraScreen extends State<CameraScreen>{
     cameras = await availableCameras();
 
     cameraController = CameraController(
-        cameras[direction],
-        ResolutionPreset.high,
-        enableAudio: false,
+      cameras[direction],
+      ResolutionPreset.high,
+      enableAudio: false,
     );
 
 
@@ -85,11 +89,11 @@ class _CameraScreen extends State<CameraScreen>{
 
   Future<void> _initTensorFlow() async {
     String? res = await Tflite.loadModel(
-      model: 'assets/model_unquant.tflite',
-      labels: 'assets/labels.txt',
-      numThreads: 1,
-      isAsset: true,
-      useGpuDelegate: false
+        model: 'assets/model_unquant.tflite',
+        labels: 'assets/labels.txt',
+        numThreads: 1,
+        isAsset: true,
+        useGpuDelegate: false
     );
   }
 
@@ -116,6 +120,18 @@ class _CameraScreen extends State<CameraScreen>{
                 cameraController.stopImageStream().then((value) => Navigator.pop(context, resultadoFinal));
               },
               child: button(Icons.camera_alt_outlined, Alignment.bottomCenter),
+            ),
+            Align(
+              alignment: AlignmentDirectional.topCenter,
+              child: Container(
+                color: Colors.white,
+                margin: EdgeInsets.only(top: 30),
+                child: Text(
+                resultadoRT,
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),)
             ),
           ],
         ),
@@ -155,4 +171,3 @@ class _CameraScreen extends State<CameraScreen>{
   }
 
 }
-

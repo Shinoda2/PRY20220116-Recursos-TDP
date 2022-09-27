@@ -11,6 +11,7 @@ import 'package:pry20220116/screens/list_patient.dart';
 import 'dart:ui';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/option.dart';
 //import 'package:pry20220116/widgets/camera_sc.dart';
 //import 'package:path/path.dart';
 //import 'package:path_provider/path_provider.dart';
@@ -96,7 +97,7 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      home: Home(),
       //initialRoute: '/home',
       /*routes: {
         '/': (context) => const Login(),

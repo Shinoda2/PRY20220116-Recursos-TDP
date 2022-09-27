@@ -6,6 +6,7 @@ import 'package:pry20220116/widgets/navigation_bar_patient.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPatient extends StatefulWidget{
+  const CalendarPatient({Key? key}) : super(key: key);
   @override
   _CalendarPatient createState() => _CalendarPatient();
 

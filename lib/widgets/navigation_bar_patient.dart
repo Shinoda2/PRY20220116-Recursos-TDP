@@ -5,6 +5,7 @@ import 'package:pry20220116/screens/chatbot.dart';
 import 'package:pry20220116/screens/chatbot_patient.dart';
 import 'package:pry20220116/screens/list_medical.dart';
 import 'package:pry20220116/screens/list_patient.dart';
+import 'package:pry20220116/screens/solicitud.dart';
 
 class NavigationBarPatient extends StatefulWidget{
   const NavigationBarPatient({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _NavigationBarPatient extends State<NavigationBarPatient>{
             Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>ChatBotPatient()));
           }
           else if (index==2){
-            Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>ListMedical()));
+            Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>Solicitud()));
           }
         },
         type: BottomNavigationBarType.fixed,

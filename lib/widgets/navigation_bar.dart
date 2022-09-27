@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/calendar.dart';
 import 'package:pry20220116/screens/chatbot.dart';
 import 'package:pry20220116/screens/list_patient.dart';
+import 'package:pry20220116/screens/solicitud.dart';
 
 class NavigationBarB extends StatefulWidget{
   @override
@@ -26,7 +27,7 @@ class _NavigationBarB extends State<NavigationBarB>{
             Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>ChatBot()));
           }
           else if (index==2){
-            Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>ListPatient()));
+            Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>Solicitud()));
           }
         },
         type: BottomNavigationBarType.fixed,
