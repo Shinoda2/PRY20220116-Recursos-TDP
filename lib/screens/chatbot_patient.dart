@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:pry20220116/screens/profile.dart';
-import 'package:pry20220116/widgets/nav_bar.dart';
+import 'package:pry20220116/screens/profile_patient.dart';
+import 'package:pry20220116/widgets/nav_bar_patient.dart';
+import 'package:pry20220116/widgets/navigation_bar_patient.dart';
 
-import '../widgets/navigation_bar.dart';
-
-class ChatBot extends StatefulWidget {
-  const ChatBot({Key? key}) : super(key: key);
+class ChatBotPatient extends StatefulWidget {
+  const ChatBotPatient({Key? key}) : super(key: key);
 
   @override
-  State<ChatBot> createState() => _ChatBotState();
+  State<ChatBotPatient> createState() => _ChatBotPatient();
 }
 
-class _ChatBotState extends State<ChatBot> {
+class _ChatBotPatient extends State<ChatBotPatient> {
   List<types.Message> _messages = [];
   final _user = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3ac');
 
@@ -51,14 +51,14 @@ class _ChatBotState extends State<ChatBot> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
+      drawer: NavBarPatient(),
       appBar: AppBar(
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Profile()));
+                  builder: (BuildContext context) => ProfilePatient()));
             },
           ),
         ],
@@ -75,7 +75,7 @@ class _ChatBotState extends State<ChatBot> {
         ),
 
       ),
-      bottomNavigationBar: NavigationBarB(),
+      bottomNavigationBar: NavigationBarPatient(),
     );
 
 

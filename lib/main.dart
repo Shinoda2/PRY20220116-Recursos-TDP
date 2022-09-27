@@ -1,16 +1,27 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/home.dart';
-import 'package:pry20220116/screens/login.dart';
 import 'dart:ui';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/option.dart';
+//import 'package:pry20220116/widgets/camera_sc.dart';
+//import 'package:path/path.dart';
+//import 'package:path_provider/path_provider.dart';
+import 'package:pry20220116/screens/option.dart';
 
-void main() {
+/*void main() {
+  runApp(const MyApp());
+}*/
+
+Future<void> main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({Key? key}) : super(key: key);
-
-
 
   // This widget is the root of your application.
   @override
@@ -81,11 +92,13 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
-      routes: {
+
+      home: Option(),
+      //initialRoute: '/home',
+      /*routes: {
         '/': (context) => const Login(),
         '/home': (context) => const Home()
-      },
+      },*/
     );
   }
 }
