@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/list_patient.dart';
@@ -53,9 +54,10 @@ class NavBar extends StatelessWidget{
               fontWeight: FontWeight.bold
             ),),
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Option()
-              ));
+              /*Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Option())*/
+              FirebaseAuth.instance.signOut();
+
             },
           ),
         ],

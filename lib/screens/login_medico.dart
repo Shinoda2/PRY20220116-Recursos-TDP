@@ -1,114 +1,155 @@
-//import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:pry20220116/screens/list_patient.dart';
-import 'package:pry20220116/widgets/input_with_help.dart';
-import 'package:pry20220116/widgets/primary_button.dart';
-import 'package:pry20220116/widgets/with_tooltip.dart';
 
 class LoginMedico extends StatefulWidget {
+  const LoginMedico({Key? key}) : super(key: key);
+
   @override
   _LoginMedicoState createState() => _LoginMedicoState();
 }
 
 class _LoginMedicoState extends State<LoginMedico> {
 
-  String user = '';
-  String password = '';
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future signIn() async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+  }
+
+  @override
+  void dispose(){
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 60, bottom: 60),
-              child: Text( "BIENVENIDO",
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 40,),
+                const Text('BIENVENIDO',
                 style: TextStyle(
+                  fontWeight: FontWeight.bold,
                   fontSize: 40,
-                  fontWeight: FontWeight.bold
+                ),),
+                const SizedBox(height: 40,),
+                Padding(
+                  /*padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white70,
+                      border: Border.all(color: Colors.blueAccent),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Email',
+                        ),
+                      ),
+                    ),
+                  ),*/
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white70),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      hintText: 'User',
+                      fillColor: Colors.grey[200],
+                      filled: true,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Form(
-              child: Padding(
-                padding: EdgeInsets.only(left: 40, right: 40),
-                child: Column(
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: "USUARIO",
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true
+                const SizedBox(height: 20,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white70),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      keyboardType: TextInputType.name,
-                      onChanged: (value) => setState(()=>user = value),
-                    ),
-                    SizedBox(height: 30),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: "CONTRASEÑA",
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueAccent),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: true,
-                      onChanged: (value) => setState(()=> password = value),
+                      hintText: 'Password',
+                      fillColor: Colors.grey[200],
+                      filled: true,
                     ),
-                    SizedBox(height: 60),
-                    ElevatedButton(
-                        onPressed: (){
-                          /*showDialog(
-                              context: context,
-                              builder: (context)=> AlertDialog(
-                                title: Text('Error'),
-                                content: Text('Usuario o contraseña incorrectos. Inténtelo nuevamente',
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(onPressed: () {  },
-                                  child: Text('Ok')),
-                                ],
-                              ),
-                          );*/
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) => ListPatient()));
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.greenAccent),
-                          fixedSize: MaterialStateProperty.all<Size>(Size.fromWidth(300)),
-                          foregroundColor: MaterialStateProperty.all(Colors.black)
-                        ),
-                        child: Text("INGRESAR",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                            ),
-                        ),
+                  ),
+                ),
+                const SizedBox(height: 40,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: GestureDetector(
+                    onTap: signIn,
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.greenAccent,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Center(
+                          child: Text('INGRESAR',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
+                          ),)
+                      ),
                     ),
+                  ),
+                ),
+                const SizedBox(height: 10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text('No estas registrado? ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold
+                      ),),
+                    Text('SignUp',
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.bold
+                    ),),
                   ],
                 ),
-              )
-            )
-          ],
+             ],
+            ),
+          ),
         ),
-      ),
+      )
     );
   }
 }
+
+
+
+
+
+

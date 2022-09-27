@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "340493700277",
+    "project_id": "wisha-database",
+    "storage_bucket": "wisha-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340493700277:android:37e3aea13ec36f5ba342fc",
+        "android_client_info": {
+          "package_name": "com.upc.pry20220116"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340493700277-mbbsk87t7d3q63raiu709a6b1lq5u7eq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAkVaZFWRkA2rWnH3fKMIOEH2wpc9CSG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340493700277-mbbsk87t7d3q63raiu709a6b1lq5u7eq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

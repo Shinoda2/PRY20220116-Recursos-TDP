@@ -1,13 +1,5 @@
-import 'package:camera/camera.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/calendar.dart';
-import 'package:pry20220116/screens/calendar_patient.dart';
-import 'package:pry20220116/screens/home.dart';
-import 'package:pry20220116/screens/individual_appointment.dart';
-import 'package:pry20220116/screens/list_appointment.dart';
-import 'package:pry20220116/screens/list_medical.dart';
-import 'package:pry20220116/screens/list_medicine.dart';
-import 'package:pry20220116/screens/list_patient.dart';
 import 'dart:ui';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -15,12 +7,15 @@ import 'package:pry20220116/screens/option.dart';
 //import 'package:pry20220116/widgets/camera_sc.dart';
 //import 'package:path/path.dart';
 //import 'package:path_provider/path_provider.dart';
+import 'package:pry20220116/screens/option.dart';
 
 /*void main() {
   runApp(const MyApp());
 }*/
 
 Future<void> main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -97,7 +92,12 @@ class MyApp extends StatelessWidget {
         )
       ),
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       home: Home(),
+=======
+      home: Option(),
+
+>>>>>>> 000e6f50e176097d2f97344e87ffe5be1db3874c
       //initialRoute: '/home',
       /*routes: {
         '/': (context) => const Login(),
