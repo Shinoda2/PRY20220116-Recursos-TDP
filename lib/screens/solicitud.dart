@@ -9,6 +9,8 @@ import 'package:pry20220116/widgets/navigation_bar_patient.dart';
 import 'package:pry20220116/widgets/with_tooltip.dart';
 import 'package:pry20220116/widgets/input_with_help.dart';
 import 'package:pry20220116/widgets/primary_button.dart';
+import 'package:pry20220116/models/paciente.dart';
+import 'package:pry20220116/services/datos-paciente.dart';
 
 import '../widgets/nav_bar.dart';
 import '../widgets/nav_bar_patient.dart';
@@ -18,33 +20,6 @@ class Solicitud extends StatefulWidget {
 
   @override
   State<Solicitud> createState() => _Solicitud();
-}
-
-class Paciente{
-  final String? nombre;
-  final int? edad;
-  final String? direccion;
-  final int? dni;
-
-  const Paciente(
-      {this.nombre,
-    this.edad,
-        this.direccion,
-        this.dni,
-});
-
-  factory Paciente.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
-      ){
-    final data = snapshot.data();
-    return Paciente(
-  nombre: data?['nombre'],
-  edad: data?['edad'],
-      direccion: data?['direccion'],
-      dni: data?['dni_paciente'],
-  );
-  }
 }
 
 final db = FirebaseFirestore.instance;
@@ -71,43 +46,7 @@ class _Solicitud extends State<Solicitud> {
     });
   }
 
-  CollectionReference solicitud = FirebaseFirestore.instance.collection("solicitud");
 
-  Future<void> crearSolicitud(String direccion, int dni, int edad, String nombre, String sintomas){
-    return solicitud
-        .add({
-      'direccion': direccion,
-      'dni_paciente': dni,
-      'edad': edad,
-      'nombre': nombre,
-      'sintomas': sintomas,
-    })
-        .then((value) => print('Solicitud generada correctamente.'))
-        .catchError((error) => print('Solicitud no fue generada'));
-  }
-
-  Future<Paciente> getUserName(String email) async {
-    var username = '';
-    int edad = 0;
-    var direccion = '';
-    int dni = 0;
-    try {
-      await db.collection("paciente").where("email", isEqualTo: email)
-          .get()
-          .then((event) {
-        for (var doc in event.docs) {
-          username = doc.data()["nombre"];
-          edad = doc.data()["edad"];
-          direccion = doc.data()["direccion"];
-          dni = doc.data()["dni_paciente"];
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
-    var paciente = Paciente(nombre: username, edad: edad, direccion: direccion, dni: dni);
-    return paciente;
-  }
 
   var email = FirebaseAuth.instance.currentUser!.email!;
   @override
