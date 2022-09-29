@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 
+import '../screens/camera_screen.dart';
+
 class InputWithHelp extends StatelessWidget {
+
+  final TextEditingController? inputTextController;
+
+  Future<void> navigateResult(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CameraScreen()),
+    ).then((value) {
+      inputTextController?.text += value;
+    });
+  }
   final String? placeholder;
   final String? tooltipMessage;
   final bool? multiline;
   final TextEditingController? controlador;
 
   const InputWithHelp(
-      {Key? key, @required this.placeholder, @required this.tooltipMessage,this.multiline, @required this.controlador,})
+      {Key? key, @required this.placeholder, @required this.tooltipMessage,this.multiline, @required this.controlador, this.inputTextController,})
       : super(key: key);
 
   @override
@@ -17,7 +30,12 @@ class InputWithHelp extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.camera_alt_outlined),
+          IconButton(icon: const Icon(Icons.camera_alt_outlined),
+          tooltip: 'Acceder a cámara',
+          onPressed: (){
+            navigateResult(context);
+            print('Abrir camara.');
+          },),
           const SizedBox(
             width: 10.00,
           ),

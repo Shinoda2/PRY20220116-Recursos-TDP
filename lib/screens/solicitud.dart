@@ -25,6 +25,8 @@ class Solicitud extends StatefulWidget {
 final db = FirebaseFirestore.instance;
 
 class _Solicitud extends State<Solicitud> {
+
+
   final direccionController = TextEditingController();
   String _selectedMenu = '';
   int _selectedIndex = 0;
@@ -96,7 +98,7 @@ class _Solicitud extends State<Solicitud> {
                         InputWithHelp(placeholder: 'NOMBRE COMPLETO', tooltipMessage: 'Ayuda', controlador: nombreController,),
                         InputWithHelp(placeholder: 'EDAD', tooltipMessage: 'Ayuda', controlador: edadController,),
                         InputWithHelp(placeholder: 'DIRECCION', tooltipMessage: 'Ayuda', controlador: direccionController,),
-                        InputWithHelp(placeholder: 'SINTOMAS', tooltipMessage: 'Ayuda', multiline: true, controlador: sintomasController,),
+                        InputWithHelp(placeholder: 'SINTOMAS', tooltipMessage: 'Ayuda', multiline: true, controlador: sintomasController, inputTextController: sintomasController,),
                         const SizedBox(height: 15,),
                         PrimaryButton(text: 'ENVIAR', onPressed: () {
                           crearSolicitud(direccionController.text, snapshot.data!.dni!, snapshot.data!.edad!, nombreController.text, sintomasController.text);

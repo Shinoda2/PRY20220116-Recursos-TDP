@@ -9,6 +9,7 @@ import 'package:bubble/bubble.dart';
 import 'dart:convert';
 
 import '../widgets/navigation_bar.dart';
+import 'camera_screen.dart';
 
 class ChatBot extends StatefulWidget {
   const ChatBot({Key? key}) : super(key: key);
@@ -18,11 +19,23 @@ class ChatBot extends StatefulWidget {
 }
 
 class _ChatBotState extends State<ChatBot> {
-  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
+  final inputTextController = TextEditingController();
+  TextEditingController queryController = TextEditingController();
+
+  Future<void> navigateResult(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CameraScreen()),
+    ).then((value) {setState(() {
+      queryController.text += value;
+    });});
+
+
+  }  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<String> _data = [];
   static const String BOT_URL =
       "https://chatbot-wisha.azurewebsites.net/api/tp2-chatbot-wisha";
-  TextEditingController queryController = TextEditingController();
+
 
   @override
   void initState() {
@@ -64,10 +77,10 @@ class _ChatBotState extends State<ChatBot> {
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
                         // ignore: prefer_const_constructors
-                        icon: Icon(
-                          Icons.message,
-                          color: Colors.blue,
-                        ),
+                        icon: IconButton(icon: Icon(Icons.camera_alt),
+                          onPressed: (){
+                            navigateResult(context);
+                          },),
                         hintText: "¡Hola Bot!",
                         fillColor: Colors.white12,
                       ),
