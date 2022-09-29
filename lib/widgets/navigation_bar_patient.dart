@@ -49,7 +49,7 @@ class _NavigationBarPatient extends State<NavigationBarPatient>{
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.playlist_add_check_rounded),
-              label: 'Chat Doctor'
+              label: 'Solicitud'
           ),
         ]
     );

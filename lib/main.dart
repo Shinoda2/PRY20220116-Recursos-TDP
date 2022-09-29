@@ -15,7 +15,9 @@ import 'package:pry20220116/screens/option.dart';
 
 Future<void> main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(apiKey: "AIzaSyDAkVaZFWRkA2rWnH3fKMIOEH2wpc9CSG0", appId: "1:340493700277:android:37e3aea13ec36f5ba342fc", messagingSenderId: "340493700277", projectId: "wisha-database")
+  );
   runApp(const MyApp());
 }
 

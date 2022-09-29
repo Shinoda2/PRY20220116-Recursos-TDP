@@ -4,9 +4,10 @@ class InputWithHelp extends StatelessWidget {
   final String? placeholder;
   final String? tooltipMessage;
   final bool? multiline;
+  final TextEditingController? controlador;
 
   const InputWithHelp(
-      {Key? key, @required this.placeholder, @required this.tooltipMessage,this.multiline})
+      {Key? key, @required this.placeholder, @required this.tooltipMessage,this.multiline, @required this.controlador,})
       : super(key: key);
 
   @override
@@ -21,9 +22,17 @@ class InputWithHelp extends StatelessWidget {
             width: 10.00,
           ),
           Flexible(child: TextFormField(
+            controller: controlador,
             maxLines: multiline == null ? null : 5,
             decoration: InputDecoration(hintText: placeholder!),
-          ),),
+            validator: (value){
+              if(value!.isEmpty){
+                return 'Ingrese los síntomas.';
+              }
+              return null;
+            },
+          ),
+          ),
           const SizedBox(
             width: 10.00,
           ),

@@ -37,16 +37,17 @@ dependencies:
   table_calendar: ^3.0.0
   flutter_chat_ui: ^1.6.2
   camera: ^0.10.0+1
-  firebase_core:
-  cloud_firestore:
-  firebase_auth:
+  firebase_core: ^1.13.1
+  cloud_firestore: ^3.1.10
+  firebase_auth: 3.3.11
+  http: ^0.13.5
+  bubble: ^1.0.9+1
 
   tflite: ^1.1.2
   #esys_flutter_share_plus: ^2.2.0
 
   path_provider: ^2.0.11
   path: ^1.8.1
-  http: ^0.13.4
   image_picker: ^0.7.3
 dev_dependencies:
   flutter_test:

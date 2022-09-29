@@ -54,6 +54,8 @@ class NavBar extends StatelessWidget{
               fontWeight: FontWeight.bold
             ),),
             onTap: (){
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Option()));
               /*Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => Option())*/
               FirebaseAuth.instance.signOut();

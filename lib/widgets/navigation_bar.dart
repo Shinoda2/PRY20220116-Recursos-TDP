@@ -27,7 +27,7 @@ class _NavigationBarB extends State<NavigationBarB>{
             Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>ChatBot()));
           }
           else if (index==2){
-            Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>Solicitud()));
+            Navigator.of(context).push(MaterialPageRoute(builder:(BuildContext context)=>ListPatient()));
           }
         },
         type: BottomNavigationBarType.fixed,
