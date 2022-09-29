@@ -1,27 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:pry20220116/widgets/nav_bar.dart';
 import 'package:pry20220116/models/medico.dart';
 import 'package:pry20220116/services/datos-medico.dart';
-import 'package:pry20220116/screens/edit_profile.dart';
+import 'package:pry20220116/screens/profile.dart';
 
+import '../widgets/input_with_help.dart';
 import '../widgets/navigation_bar.dart';
+import '../widgets/primary_button.dart';
+import '../widgets/with_tooltip.dart';
 
-class Profile extends StatefulWidget{
-  const Profile({Key? key}) : super(key: key);
+class EditProfile extends StatefulWidget{
+  const EditProfile({Key? key}) : super(key: key);
 
   @override
-  _LoginMedicoState createState() => _LoginMedicoState();
+  _EditMedicProfile createState() => _EditMedicProfile();
 }
 
-class _LoginMedicoState extends State<Profile>{
+class _EditMedicProfile extends State<EditProfile>{
   var email = FirebaseAuth.instance.currentUser!.email!;
+
+
   @override
   Widget build(BuildContext context) {
     final nombreController = TextEditingController();
     final edadController = TextEditingController();
     final direccionController = TextEditingController();
     final dniController = TextEditingController();
+    final docController = TextEditingController();
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
@@ -55,6 +62,7 @@ class _LoginMedicoState extends State<Profile>{
               edadController.text = snapshot.data!.edad!.toString();
               direccionController.text = snapshot.data!.direccion!;
               dniController.text = snapshot.data!.dni!.toString();
+              docController.text = snapshot.data!.docid!;
               return Column(
                 children: [
                   Padding(
@@ -64,47 +72,26 @@ class _LoginMedicoState extends State<Profile>{
                   Container(
                     child: Column(
                       children: [
-                        Text(nombreController.text,
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        SizedBox(height: 10),
-                        Text('EMAIL:'+email,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        SizedBox(height: 20),
-                        Text('NOMBRE COMPLETO: '+nombreController.text,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        SizedBox(height: 10),
-                        Text('EDAD: '+edadController.text,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        SizedBox(height: 10),
-                        Text('DNI: '+dniController.text,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        SizedBox(height: 10),
-                        Text('DIRECCIÓN: '+direccionController.text,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),),
-                        SizedBox(height: 10),
-                        ElevatedButton(onPressed: (){
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => EditProfile()
-                          ));
-                        }, child: Text('Editar'))
+                        WithTooltip(child: Text('EDITAR PERFIL', style: Theme.of(context).textTheme.headline1,), tooltipMessage: 'Ayuda'),
+                        const SizedBox(height: 15,),
+                        Form(
+                          child: Column(
+                            children: [
+                              InputWithHelp(placeholder: 'NOMBRE COMPLETO', tooltipMessage: 'Ayuda', controlador: nombreController,),
+                              InputWithHelp(placeholder: 'EDAD', tooltipMessage: 'Ayuda', controlador: edadController,),
+                              InputWithHelp(placeholder: 'DIRECCION', tooltipMessage: 'Ayuda', controlador: direccionController,),
+                              const SizedBox(height: 15,),
+                              ElevatedButton(onPressed: (){
+                                var edad = int.tryParse(edadController.text);
+                                print(docController.text);
+                                editarMedico(docController.text, nombreController.text, edad!, direccionController.text);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (BuildContext context) => Profile()
+                                ));
+                              }, child: Text('Guardar'))
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   )
