@@ -39,7 +39,7 @@ class _ChatBotState extends State<ChatBot> {
 
   @override
   void initState() {
-    insertSingleItem('Bienvenido. Soy Dylan el Chatbot.' + '<bot>');
+    insertSingleItem('Bienvenido. Soy el Chatbot de Wisha, pregúntame algo...' + '<bot>');
     super.initState();
   }
   @override

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pry20220116/models/medical.dart';
 import 'package:pry20220116/screens/profile.dart';
@@ -18,31 +19,111 @@ class ListMedical extends StatefulWidget{
 }
 
 class _ListMedical extends State<ListMedical> {
-  List<Medical> medicals = Medical.generateMedical();
+  String name = '';
+  bool isGrid=true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavBarPatient(),
       appBar: AppBar(
-        title: Text('MEDICOS'),
         centerTitle: true,
+        title: Text('MÉDICOS'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => ProfilePatient()));
+              icon: const Icon(Icons.person),
+              onPressed:(){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) => ProfilePatient()
+                ));
+              }),
+        ],
+      ),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search), hintText: 'Buscar...'),
+            onChanged: (val) {
+              setState(() {
+                name = val;
+              });
+            },
+          ),
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('medico').snapshots(),
+            builder: (context, snapshots) {
+              return (snapshots.connectionState == ConnectionState.waiting)
+                  ? Center(
+                child: CircularProgressIndicator(),
+              )
+                  : ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: snapshots.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    var data = snapshots.data!.docs[index].data()
+                    as Map<String, dynamic>;
+
+                    if (name.isEmpty) {
+                      return ListTile(
+                        title: Text(
+                          data['nombre'],
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text('Especialidad: '+
+                            data['especialidad_codigo'].toString(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(data['imagen']),
+                        ),
+                      );
+                    }
+                    if (data['nombre']
+                        .toString()
+                        .toLowerCase()
+                        .startsWith(name.toLowerCase())) {
+                      return ListTile(
+                        title: Text(
+                          data['nombre'],
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text('Especialidad: '+
+                            data['especialidad_codigo'].toString(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(data['imagen']),
+                        ),
+                      );
+                    }
+                    return Container();
+                  });
             },
           ),
         ],
       ),
-
-      body: ListView.builder(
-        itemCount: medicals.length,
-        itemBuilder: (context,index)=> MedicalCard(medicals[index]),
-     ),
-      bottomNavigationBar: NavigationBarPatient(),
-    );
+      bottomNavigationBar: NavigationBarPatient(),);
   }
 }

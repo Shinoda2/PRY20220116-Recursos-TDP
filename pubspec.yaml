@@ -42,6 +42,10 @@ dependencies:
   firebase_auth: 3.3.11
   http: ^0.13.5
   bubble: ^1.0.9+1
+  intl: ^0.17.0
+  syncfusion_flutter_calendar: ^19.1.58
+  firebase_database: ^6.1.2
+  shared_preferences: ^0.5.4+5
 
   tflite: ^1.1.2
   #esys_flutter_share_plus: ^2.2.0

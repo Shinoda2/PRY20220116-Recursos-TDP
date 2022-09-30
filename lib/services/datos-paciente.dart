@@ -30,7 +30,7 @@ Future<Paciente> getUserName(String email) async {
 
 CollectionReference solicitud = FirebaseFirestore.instance.collection("solicitud");
 
-Future<void> crearSolicitud(String direccion, int dni, int edad, String nombre, String sintomas){
+Future<void> crearSolicitud(String direccion, int dni, int edad, String nombre, String sintomas, Timestamp fecha_hora){
   return solicitud
       .add({
     'direccion': direccion,
@@ -38,6 +38,7 @@ Future<void> crearSolicitud(String direccion, int dni, int edad, String nombre, 
     'edad': edad,
     'nombre': nombre,
     'sintomas': sintomas,
+    'fecha_hora': fecha_hora
   })
       .then((value) => print('Solicitud generada correctamente.'))
       .catchError((error) => print('Solicitud no fue generada'));

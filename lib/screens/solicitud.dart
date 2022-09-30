@@ -101,7 +101,7 @@ class _Solicitud extends State<Solicitud> {
                         InputWithHelp(placeholder: 'SINTOMAS', tooltipMessage: 'Ayuda', multiline: true, controlador: sintomasController, inputTextController: sintomasController,),
                         const SizedBox(height: 15,),
                         PrimaryButton(text: 'ENVIAR', onPressed: () {
-                          crearSolicitud(direccionController.text, snapshot.data!.dni!, snapshot.data!.edad!, nombreController.text, sintomasController.text);
+                          crearSolicitud(direccionController.text, snapshot.data!.dni!, snapshot.data!.edad!, nombreController.text, sintomasController.text, Timestamp.now());
                         })
                       ],
                     ),

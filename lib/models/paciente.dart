@@ -6,6 +6,7 @@ class Paciente{
   final String? direccion;
   final int? dni;
   final String? docid;
+  final Timestamp? fecha_hora;
 
   const Paciente(
       {this.nombre,
@@ -13,6 +14,7 @@ class Paciente{
         this.direccion,
         this.dni,
         this.docid,
+        this.fecha_hora,
       });
 
   factory Paciente.fromFirestore(
@@ -26,6 +28,7 @@ class Paciente{
       direccion: data?['direccion'],
       dni: data?['dni_paciente'],
       docid: data?['uid'],
+      fecha_hora: data?['fecha_hora'],
     );
   }
 }
