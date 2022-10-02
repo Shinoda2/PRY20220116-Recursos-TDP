@@ -1,33 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Medicine {
-  final int? stock;
+class Especialidad {
   final String? nombre;
-  final String? imagen;
+  final String? descripcion;
 
-  Medicine({
-    this.stock,
+  Especialidad({
     this.nombre,
-    this.imagen,
+    this.descripcion,
   });
 
-  factory Medicine.fromFirestore(
+  factory Especialidad.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return Medicine(
-      stock: data?['stock'],
+    return Especialidad(
       nombre: data?['nombre'],
-      imagen: data?['imagen'],
+      descripcion: data?['descripcion'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
-      if (stock != null) "stock": stock,
       if (nombre != null) "nombre": nombre,
-      if (imagen != null) "imagen": imagen,
+      if (descripcion != null) "descripcion": descripcion,
     };
   }
 }
