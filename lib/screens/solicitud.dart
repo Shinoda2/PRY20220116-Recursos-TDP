@@ -101,7 +101,9 @@ class _Solicitud extends State<Solicitud> {
                         InputWithHelp(placeholder: 'SINTOMAS', tooltipMessage: 'Ayuda', multiline: true, controlador: sintomasController, inputTextController: sintomasController,),
                         const SizedBox(height: 15,),
                         PrimaryButton(text: 'ENVIAR', onPressed: () {
-                          crearSolicitud(direccionController.text, snapshot.data!.dni!, snapshot.data!.edad!, nombreController.text, sintomasController.text, Timestamp.now());
+                          crearSolicitud(direccionController.text, snapshot.data!.dni!, snapshot.data!.edad!, nombreController.text, sintomasController.text, Timestamp.now())
+                          .then((value) => _updateObsSuccess(context))
+                          .onError((error, stackTrace) => _updateObsSuccess(context));
                         })
                       ],
                     ),
@@ -117,3 +119,34 @@ class _Solicitud extends State<Solicitud> {
 
 }
 
+Future<void> _updateObsSuccess(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        contentPadding: EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 10),
+        actionsPadding: EdgeInsets.only(bottom: 10),
+        title: Text(
+          'Solicitud Registrada',
+          style: TextStyle(fontSize: 13),
+        ),
+        content: RichText(
+          text: TextSpan(
+            text: 'Su solicitud se registró correctamente.',
+            style: DefaultTextStyle.of(context).style,
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text("ACEPTAR", style: TextStyle(fontSize: 10)),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Solicitud()));
+            },
+          )
+        ],
+      );
+    },
+  );
+}
