@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 
 import '../models/cita.dart';
 import '../models/medical.dart';
+import 'individual_medical_chat.dart';
 
 class CalendarPatient extends StatefulWidget {
   const CalendarPatient({Key? key}) : super(key: key);
@@ -177,12 +178,20 @@ class _CalendarPatient extends State<CalendarPatient> {
                                         ),
                                         Expanded(
                                           child: ListTile(
-                                            onTap: () => print('${cita.fecha}'),
+                                            onTap: () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        IndividualMedicalChat(
+                                                            medical: medicals[
+                                                                cita.codigo_medico! -
+                                                                    1]))),
                                             title: Text(medicals[
                                                     cita.codigo_medico! - 1]
                                                 .nombre!),
                                             subtitle: Text("Diagnóstico: " +
                                                 cita.diagnostico!),
+                                            trailing: Text("Ir al chat"),
                                           ),
                                         ),
                                       ],
