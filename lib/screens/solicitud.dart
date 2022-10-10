@@ -118,14 +118,42 @@ class _Solicitud extends State<Solicitud> {
                               content: Text('Solicitud enviada'),
                             );
 
+                            showDialog(
+                                // The user CANNOT close this dialog  by pressing outsite it
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (_) {
+                                  return Dialog(
+                                      child: Container(
+                                    height: 200,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        CircularProgressIndicator(),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          'Enviando solicitud',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ));
+                                });
+
                             db
                                 .collection("solicitud")
                                 .doc()
                                 .set(solicitud)
-                                .whenComplete(() =>
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(snackBar))
-                                .onError((e, _) =>
+                                .whenComplete(() {
+                              Navigator.of(context).pop();
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }).onError((e, _) =>
                                     print("Error writing document: $e"));
                           })
                     ],

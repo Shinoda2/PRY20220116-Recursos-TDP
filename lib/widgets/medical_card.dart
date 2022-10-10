@@ -8,9 +8,10 @@ import 'package:pry20220116/screens/individual_patient_chat.dart';
 
 class MedicalCard extends StatelessWidget {
   final Medical medical;
+  final Especialidad especialidad;
   //late Future<Especialidad> especialidad;
   final db = FirebaseFirestore.instance;
-  MedicalCard(this.medical);
+  MedicalCard({required this.medical, required this.especialidad});
 
   // Future<Especialidad> getEspecialidad() async {
   //   Especialidad especialidad = Especialidad();
@@ -27,10 +28,6 @@ class MedicalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return FutureBuilder<Especialidad>(
-    //     future: especialidad,
-    //     builder: (context, snapshot) {
-    //       if (snapshot.hasData) {
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -43,9 +40,26 @@ class MedicalCard extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               radius: 30,
+              backgroundColor: Colors.grey,
               child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  child: Image.network('${medical.imagen}')),
+                borderRadius: const BorderRadius.all(Radius.circular(30)),
+                child: Image.network(
+                  '${medical.imagen}',
+                  fit: BoxFit.fill,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
             title: Text(
               '${medical.nombre}',
@@ -57,7 +71,7 @@ class MedicalCard extends StatelessWidget {
             subtitle: Row(
               children: [
                 Text(
-                  '${medical.especialidadCodigo}',
+                  '${especialidad.nombre}',
                   style: TextStyle(
                     fontSize: 13,
                   ),
@@ -73,10 +87,5 @@ class MedicalCard extends StatelessWidget {
         ],
       ),
     );
-    // } else if (snapshot.hasError) {
-    //   return const Text("Error");
-    // }
-    // return const Center(child: CircularProgressIndicator());
-    // });
   }
 }

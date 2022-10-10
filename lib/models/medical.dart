@@ -4,7 +4,7 @@ import 'package:pry20220116/models/especialidad.dart';
 class Medical {
   final int? codigoDistrito;
   final String? direccion;
-  final String? dniMedico;
+  final int? dniMedico;
   final int? edad;
   final String? email;
   final int? especialidadCodigo;
