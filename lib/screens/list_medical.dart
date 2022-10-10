@@ -113,6 +113,7 @@ class _ListMedical extends State<ListMedical> {
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
+
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(data['imagen']),
                         ),

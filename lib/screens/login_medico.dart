@@ -76,7 +76,7 @@ class _LoginMedicoState extends State<LoginMedico> {
                         borderSide: BorderSide(color: Colors.blueAccent),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      hintText: 'User',
+                      hintText: 'Email',
                       fillColor: Colors.grey[200],
                       filled: true,
                     ),
@@ -125,20 +125,6 @@ class _LoginMedicoState extends State<LoginMedico> {
                   ),
                 ),
                 const SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('No estas registrado? ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold
-                      ),),
-                    Text('SignUp',
-                    style: TextStyle(
-                      color: Colors.blueAccent,
-                      fontWeight: FontWeight.bold
-                    ),),
-                  ],
-                ),
              ],
             ),
           ),
