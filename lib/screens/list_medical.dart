@@ -1,5 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pry20220116/models/especialidad.dart';
+
 import 'package:pry20220116/models/medical.dart';
 import 'package:pry20220116/screens/profile.dart';
 import 'package:pry20220116/screens/profile_patient.dart';
@@ -12,119 +14,89 @@ import 'package:flutter/material.dart';
 
 import '../widgets/navigation_bar_patient.dart';
 
-class ListMedical extends StatefulWidget{
+class ListMedical extends StatefulWidget {
   //ListPatient(Key key): super(key: key);
+
   @override
   _ListMedical createState() => _ListMedical();
 }
 
 class _ListMedical extends State<ListMedical> {
-  String name = '';
-  bool isGrid=true;
+  List<Medical> medicals = [];
+  List<Especialidad> especialidades = [];
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    //ga();
+  }
+
+  Future<String> getMedicals() async {
+    await db.collection('medico').get().then((QuerySnapshot res) {
+      res.docs.forEach((doc) {
+        medicals.add(
+          Medical.fromFirestore(
+              doc as DocumentSnapshot<Map<String, dynamic>>, null),
+        );
+        print('Document data doctor: ${doc.data()}');
+        print(doc["especialidad_codigo"].toString());
+      });
+    });
+    return "Success!";
+  }
+
+  Future<String> getEspecialidades() async {
+    await db.collection('especialidad').get().then((QuerySnapshot res) {
+      res.docs.forEach((doc) {
+        especialidades.add(
+          Especialidad.fromFirestore(
+              doc as DocumentSnapshot<Map<String, dynamic>>, null),
+        );
+        print('Document data especialidad: ${doc.data()}');
+      });
+    });
+    return "Success!";
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavBarPatient(),
       appBar: AppBar(
+        title: Text('MEDICOS'),
         centerTitle: true,
-        title: Text('MÉDICOS'),
         actions: [
           IconButton(
-              icon: const Icon(Icons.person),
-              onPressed:(){
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => ProfilePatient()
-                ));
-              }),
-        ],
-      ),
-      body: Column(
-        children: <Widget>[
-          TextField(
-            decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search), hintText: 'Buscar...'),
-            onChanged: (val) {
-              setState(() {
-                name = val;
-              });
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => ProfilePatient()));
             },
           ),
-          StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('medico').snapshots(),
-            builder: (context, snapshots) {
-              return (snapshots.connectionState == ConnectionState.waiting)
-                  ? Center(
+        ],
+      ),
+      body: FutureBuilder<Object>(
+          future: Future.wait([getEspecialidades(), getMedicals()]),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: medicals.length,
+                itemBuilder: (context, index) {
+                  return MedicalCard(
+                    medical: medicals[index],
+                    especialidad:
+                        especialidades[medicals[index].especialidadCodigo! - 1],
+                  );
+                },
+              );
+            } else {
+              return Center(
                 child: CircularProgressIndicator(),
-              )
-                  : ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: snapshots.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    var data = snapshots.data!.docs[index].data()
-                    as Map<String, dynamic>;
-
-                    if (name.isEmpty) {
-                      return ListTile(
-                        title: Text(
-                          data['nombre'],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text('Especialidad: '+
-                            data['especialidad_codigo'].toString(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(data['imagen']),
-                        ),
-                      );
-                    }
-                    if (data['nombre']
-                        .toString()
-                        .toLowerCase()
-                        .startsWith(name.toLowerCase())) {
-                      return ListTile(
-                        title: Text(
-                          data['nombre'],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text('Especialidad: '+
-                            data['especialidad_codigo'].toString(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(data['imagen']),
-                        ),
-                      );
-                    }
-                    return Container();
-                  });
-            },
-          ),
-        ],
-      ),
-      bottomNavigationBar: NavigationBarPatient(),);
+              );
+            }
+          }),
+      bottomNavigationBar: NavigationBarPatient(),
+    );
   }
 }

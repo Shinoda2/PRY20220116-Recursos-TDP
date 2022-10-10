@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../screens/camera_screen.dart';
-
 class InputWithHelp extends StatelessWidget {
-
-  final TextEditingController? inputTextController;
-
-  Future<void> navigateResult(BuildContext context) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const CameraScreen()),
-    ).then((value) {
-      inputTextController?.text += value;
-    });
-  }
   final String? placeholder;
   final String? tooltipMessage;
   final bool? multiline;
-  final TextEditingController? controlador;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
 
   const InputWithHelp(
-      {Key? key, @required this.placeholder, @required this.tooltipMessage,this.multiline, @required this.controlador, this.inputTextController,})
+      {Key? key,
+      required this.placeholder,
+      required this.tooltipMessage,
+      required this.controller,
+      this.validator,
+      this.keyboardType,
+      this.multiline = false})
       : super(key: key);
 
   @override
@@ -30,26 +25,19 @@ class InputWithHelp extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          IconButton(icon: const Icon(Icons.camera_alt_outlined),
-          tooltip: 'Acceder a cámara',
-          onPressed: (){
-            navigateResult(context);
-            print('Abrir camara.');
-          },),
+          const Icon(Icons.camera_alt_outlined),
           const SizedBox(
             width: 10.00,
           ),
-          Flexible(child: TextFormField(
-            controller: controlador,
-            maxLines: multiline == null ? null : 5,
-            decoration: InputDecoration(hintText: placeholder!),
-            validator: (value){
-              if(value!.isEmpty){
-                return 'Ingrese los síntomas.';
-              }
-              return null;
-            },
-          ),
+          Flexible(
+            child: TextFormField(
+              controller: controller,
+              textInputAction: TextInputAction.done,
+              maxLines: multiline == false ? 1 : 5,
+              decoration: InputDecoration(hintText: placeholder!),
+              validator: validator,
+              keyboardType: keyboardType,
+            ),
           ),
           const SizedBox(
             width: 10.00,
