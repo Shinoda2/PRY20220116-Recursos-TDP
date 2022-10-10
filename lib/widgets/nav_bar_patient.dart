@@ -76,7 +76,7 @@ class NavBarPatient extends StatelessWidget{
             },
           ),
           Divider(),
-          SizedBox(height: 200,),
+          SizedBox(height: 100,),
           Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app),
