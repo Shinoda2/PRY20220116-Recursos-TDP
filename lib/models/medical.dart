@@ -8,22 +8,27 @@ class Medical {
   final int? edad;
   final String? email;
   final int? especialidadCodigo;
+  Especialidad? especialidad;
   final String? imagen;
   final String? nombre;
   final int? numero;
   final int? tiempoTrabajado;
 
+  set setEspecialidad(Especialidad especialidad) {
+    this.especialidad = especialidad;
+  }
+
   Medical(
-      {required this.codigoDistrito,
-      required this.direccion,
-      required this.dniMedico,
-      required this.edad,
-      required this.email,
-      required this.especialidadCodigo,
-      required this.imagen,
-      required this.nombre,
-      required this.numero,
-      required this.tiempoTrabajado});
+      {this.codigoDistrito,
+      this.direccion,
+      this.dniMedico,
+      this.edad,
+      this.email,
+      this.especialidadCodigo,
+      this.imagen,
+      this.nombre,
+      this.numero,
+      this.tiempoTrabajado});
 
   factory Medical.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,

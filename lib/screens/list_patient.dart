@@ -1,48 +1,119 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pry20220116/models/patient.dart';
 import 'package:pry20220116/models/patients.dart';
 import 'package:pry20220116/screens/profile.dart';
 import 'package:pry20220116/widgets/nav_bar.dart';
 import 'package:pry20220116/widgets/patient_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/cita.dart';
+import '../models/medical.dart';
 import '../widgets/navigation_bar.dart';
 
-class ListPatient extends StatefulWidget{
-  //ListPatient(Key key): super(key: key);
+class ListPatient extends StatefulWidget {
+  const ListPatient({Key? key, this.email}) : super(key: key);
+  final String? email;
   @override
   _ListPatient createState() => _ListPatient();
 }
 
 class _ListPatient extends State<ListPatient> {
-  /*List<Patient> patients=[
-    Patient('Elizabeth','assets/image/icon.png','16:00','Hola'),
-    Patient('Jose Carlos','assets/image/icon.png','17:00','Hola'),
-    Patient('Patricio','assets/image/icon.png','13:00','Hola'),
-    Patient('Maria','assets/image/icon.png','10:30','Hola'),
-    Patient('Miguel','assets/image/icon.png','9:23','Hola'),
-  ];*/
-  List<Patient> patients = Patient.generatePatient();
+  //List<Patient> patients = Patient.generatePatient();
+  String id = "1";
+  late SharedPreferences prefs;
+  final db = FirebaseFirestore.instance;
+  late Medical medical;
+  List<Patient> patients = [];
+  List<Cita> citas = [];
+  late Future<bool> isDone;
+
+  @override
+  void initState() {
+    super.initState();
+    isDone = getAll();
+  }
+
+  Future<bool> getAll() async {
+    await db
+        .collection("medico")
+        .where("email", isEqualTo: widget.email)
+        .get()
+        .then(
+      (res) {
+        medical = Medical.fromFirestore(res.docs[0], null);
+        id = res.docs[0].id;
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+    await db
+        .collection('cita')
+        .where("codigo_medico", isEqualTo: int.parse(id))
+        .get()
+        .then((QuerySnapshot res) {
+      res.docs.forEach((doc) {
+        citas.add(
+          Cita.fromFirestore(
+              doc as DocumentSnapshot<Map<String, dynamic>>, null),
+        );
+        print('Document data cita: ${doc.data()}');
+      });
+    });
+    List<String> codigos = [];
+    citas.forEach(
+      (element) {
+        codigos.add(element.codigo_paciente.toString());
+      },
+    );
+    debugPrint(codigos.toString());
+    codigos = codigos.toSet().toList();
+    debugPrint(codigos.toString());
+    await db
+        .collection('paciente')
+        .where(FieldPath.documentId, whereIn: codigos)
+        .get()
+        .then((QuerySnapshot res) {
+      res.docs.forEach((doc) {
+        patients.add(
+          Patient.fromFirestore(
+              doc as DocumentSnapshot<Map<String, dynamic>>, null),
+        );
+        print('Document data paciente: ${doc.data()}');
+      });
+    });
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: NavBar(),
-        appBar: AppBar(
-           actions: [
-             IconButton(
-               icon: const Icon(Icons.person),
-                 onPressed: () {
-                   Navigator.of(context).push(MaterialPageRoute(
-                       builder: (BuildContext context) => Profile()));
-                 },
-             ),
-           ],
-        ),
-
-      body: ListView.builder(
-        itemCount: patients.length,
-        itemBuilder: (context,index)=> PatientCard(patients[index]),
+      drawer: NavBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Profile()));
+            },
+          ),
+        ],
       ),
+      body: FutureBuilder<bool>(
+          future: isDone,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                itemCount: patients.length,
+                itemBuilder: (context, index) =>
+                    PatientCard(patients[index], "medico_paciente"),
+              );
+            } else if (snapshot.hasError) {
+              return const Text("Error");
+            }
+            return const Center(child: CircularProgressIndicator());
+          }),
       bottomNavigationBar: NavigationBarB(),
-      );
+    );
   }
 }
