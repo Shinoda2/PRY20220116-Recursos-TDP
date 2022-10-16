@@ -66,8 +66,8 @@ class _ListPatient extends State<ListPatient> {
       },
     );
     debugPrint(codigos.toString());
-    codigos = codigos.toSet().toList();
-    debugPrint(codigos.toString());
+    //codigos = codigos.toSet().toList();
+    //debugPrint(codigos.toString());
     await db
         .collection('paciente')
         .where(FieldPath.documentId, whereIn: codigos)

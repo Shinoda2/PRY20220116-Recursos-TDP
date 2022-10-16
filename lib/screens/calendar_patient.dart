@@ -183,9 +183,12 @@ class _CalendarPatient extends State<CalendarPatient> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         IndividualMedicalChat(
-                                                            medical: medicals[
-                                                                cita.codigo_medico! -
-                                                                    1]))),
+                                                          medical: medicals[
+                                                              cita.codigo_medico! -
+                                                                  1],
+                                                          chatRoomId:
+                                                              "medico_paciente",
+                                                        ))),
                                             title: Text(medicals[
                                                     cita.codigo_medico! - 1]
                                                 .nombre!),

@@ -87,6 +87,7 @@ class _ListMedical extends State<ListMedical> {
                     medical: medicals[index],
                     especialidad:
                         especialidades[medicals[index].especialidadCodigo! - 1],
+                    chatRoomId: "medico_paciente",
                   );
                 },
               );

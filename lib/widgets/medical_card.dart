@@ -9,22 +9,13 @@ import 'package:pry20220116/screens/individual_patient_chat.dart';
 class MedicalCard extends StatelessWidget {
   final Medical medical;
   final Especialidad especialidad;
+  final String chatRoomId;
   //late Future<Especialidad> especialidad;
   final db = FirebaseFirestore.instance;
-  MedicalCard({required this.medical, required this.especialidad});
-
-  // Future<Especialidad> getEspecialidad() async {
-  //   Especialidad especialidad = Especialidad();
-  //   final docRef = db.collection("especialidad").doc("1");
-  //   await docRef.get().then(
-  //     (DocumentSnapshot doc) {
-  //       final data = doc.data() as DocumentSnapshot<Map<String, dynamic>>;
-  //       especialidad = Especialidad.fromFirestore(data, null);
-  //     },
-  //     onError: (e) => print("Error getting document: $e"),
-  //   );
-  //   return especialidad;
-  // }
+  MedicalCard(
+      {required this.medical,
+      required this.especialidad,
+      required this.chatRoomId});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +24,10 @@ class MedicalCard extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => IndividualMedicalChat(medical: medical)));
+                builder: (context) => IndividualMedicalChat(
+                      medical: medical,
+                      chatRoomId: chatRoomId,
+                    )));
       },
       child: Column(
         children: [

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/models/message.dart';
 import 'package:pry20220116/models/patients.dart';
+import 'package:pry20220116/utils/constants.dart';
 
 import '../models/patient.dart';
 import 'camera_screen.dart';
@@ -19,27 +20,42 @@ class _IndividualPatientChat extends State<IndividualPatientChat> {
   //List<Patient> patients ;
   final inputTextController = TextEditingController();
 
-  Stream? chatMessagesStream;
+  Stream<QuerySnapshot<Map<String, dynamic>>>? chatMessagesStream;
 
-  // Widget ChatMessageList() {
-  //   return StreamBuilder(
-  //     stream: chatMessagesStream,
-  //     builder: (context,  snapshot) {
-  //       ListView.builder(
-  //         itemCount: snapshot.data!.length;
-  //         itemBuilder: (context, index) {
-  //         return
-  //       });
-  //     },
-  //   );
-  // }
+  Widget chatMessageList() {
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: chatMessagesStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  final data = snapshot.data!.docs[index].data();
+                  return MessageTile(
+                    message: snapshot.data!.docs[index].data()["message"],
+                    sendByMe: Constants.name ==
+                        snapshot.data!.docs[index].data()["sentBy"],
+                  );
+                })
+            : Container();
+      },
+    );
+  }
 
   sendMessage() {
     if (inputTextController.text.isNotEmpty) {
       Map<String, dynamic> messageMap = {
         "message": inputTextController.text,
-        "sentBy": widget.patient.nombre,
+        "sentBy": "medico",
+        'time': Timestamp.fromMillisecondsSinceEpoch(
+            DateTime.now().millisecondsSinceEpoch),
       };
+
+      addConversationMessages(widget.chatRoomId, messageMap);
+
+      setState(() {
+        inputTextController.text = "";
+      });
     }
   }
 
@@ -64,11 +80,12 @@ class _IndividualPatientChat extends State<IndividualPatientChat> {
     });
   }
 
-  getConversationMessages(String chatRoomId) {
-    FirebaseFirestore.instance
+  getConversationMessages(String chatRoomId) async {
+    return FirebaseFirestore.instance
         .collection("chatRoom")
         .doc(chatRoomId)
         .collection("chats")
+        .orderBy("time")
         .snapshots();
   }
 
@@ -76,7 +93,9 @@ class _IndividualPatientChat extends State<IndividualPatientChat> {
   void initState() {
     super.initState();
     getConversationMessages(widget.chatRoomId).then((value) {
-      chatMessagesStream = value;
+      setState(() {
+        chatMessagesStream = value;
+      });
     });
   }
 
@@ -134,7 +153,7 @@ class _IndividualPatientChat extends State<IndividualPatientChat> {
         width: MediaQuery.of(context).size.width,
         child: Stack(
           children: [
-            ListView(),
+            chatMessageList(),
             Align(
               alignment: Alignment.bottomCenter,
               child: Row(
@@ -149,7 +168,11 @@ class _IndividualPatientChat extends State<IndividualPatientChat> {
                       child: TextFormField(
                         controller: inputTextController,
                         textAlignVertical: TextAlignVertical.center,
-                        keyboardType: TextInputType.multiline,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.send,
+                        onEditingComplete: (() {
+                          sendMessage();
+                        }),
                         maxLines: 5,
                         minLines: 1,
                         decoration: InputDecoration(
@@ -193,6 +216,49 @@ class _IndividualPatientChat extends State<IndividualPatientChat> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MessageTile extends StatelessWidget {
+  final String message;
+  final bool sendByMe;
+
+  MessageTile({required this.message, required this.sendByMe});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(
+          top: 8, bottom: 8, left: sendByMe ? 0 : 24, right: sendByMe ? 24 : 0),
+      alignment: sendByMe ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        margin:
+            sendByMe ? EdgeInsets.only(left: 30) : EdgeInsets.only(right: 30),
+        padding: EdgeInsets.only(top: 17, bottom: 17, left: 20, right: 20),
+        decoration: BoxDecoration(
+            borderRadius: sendByMe
+                ? BorderRadius.only(
+                    topLeft: Radius.circular(23),
+                    topRight: Radius.circular(23),
+                    bottomLeft: Radius.circular(23))
+                : BorderRadius.only(
+                    topLeft: Radius.circular(23),
+                    topRight: Radius.circular(23),
+                    bottomRight: Radius.circular(23)),
+            gradient: LinearGradient(
+              colors: sendByMe
+                  ? [const Color(0xff007EF4), const Color(0xff2A75BC)]
+                  : [const Color(0x1AFFFFFF), const Color(0x1AFFFFFF)],
+            )),
+        child: Text(message,
+            textAlign: TextAlign.start,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontFamily: 'OverpassRegular',
+                fontWeight: FontWeight.w300)),
       ),
     );
   }

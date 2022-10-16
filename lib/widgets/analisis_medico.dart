@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/list_patient.dart';
 import 'package:pry20220116/screens/login_medico.dart';
+import 'package:pry20220116/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AnalisisMedico extends StatelessWidget {
@@ -20,6 +21,7 @@ class AnalisisMedico extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               //setEmail(snapshot.data!.email!);
+              Constants.name = "medico";
               return ListPatient(email: snapshot.data!.email!);
             } else {
               return const LoginMedico();
