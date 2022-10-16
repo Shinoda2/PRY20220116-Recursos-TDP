@@ -16,8 +16,8 @@ class NavBarPatient extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: const Text('Sebastian Jara'),
-            accountEmail: const Text('example@gmail.com'),
+            accountName: const Text('Sebastian Llanos'),
+            accountEmail: const Text('sebastian.llanos@gmail.com'),
             currentAccountPicture: CircleAvatar(
               child: Image.asset(
                 'assets/image/icon.png',
@@ -36,18 +36,6 @@ class NavBarPatient extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => ListMedical()));
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.description),
-            title: const Text(
-              'Mis Citas',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => ListAppointment()));
             },
           ),
           const Divider(),

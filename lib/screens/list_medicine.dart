@@ -5,6 +5,8 @@ import 'package:pry20220116/screens/profile.dart';
 import 'package:pry20220116/screens/profile_patient.dart';
 import 'package:pry20220116/widgets/nav_bar_patient.dart';
 
+import '../widgets/navigation_bar_patient.dart';
+
 class ListMedicine extends StatefulWidget {
   const ListMedicine({Key? key}) : super(key: key);
 
@@ -157,6 +159,7 @@ class _ListMedicine extends State<ListMedicine> {
             }
             return const Center(child: CircularProgressIndicator());
           }),
+      bottomNavigationBar: NavigationBarPatient(),
     );
   }
 }

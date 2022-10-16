@@ -67,6 +67,7 @@ class _LoginMedicoState extends State<LoginMedico> {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(
                     controller: emailController,
+                    autocorrect: false,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white70),
@@ -87,6 +88,8 @@ class _LoginMedicoState extends State<LoginMedico> {
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(
                     controller: passwordController,
+                    obscureText: true,
+                    autocorrect: false,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white70),

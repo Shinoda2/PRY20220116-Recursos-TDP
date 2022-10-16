@@ -36,7 +36,7 @@ class _NavigationBarPatient extends State<NavigationBarPatient>{
           }
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.white,
+        selectedItemColor: Colors.blue[900],
         backgroundColor: Colors.blueAccent,
         items: const [
           BottomNavigationBarItem(

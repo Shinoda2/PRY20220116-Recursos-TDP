@@ -181,7 +181,7 @@ class _CalendarPatient extends State<CalendarPatient> {
                                             title: Text(medicals[
                                                     cita.codigo_medico! - 1]
                                                 .nombre!),
-                                            subtitle: Text("Diagnóstico: " +
+                                            subtitle: Text("Sítnomas: " +
                                                 cita.diagnostico!),
                                           ),
                                         ),

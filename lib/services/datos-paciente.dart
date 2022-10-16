@@ -44,6 +44,20 @@ Future<void> crearSolicitud(String direccion, int dni, int edad, String nombre, 
       .catchError((error) => print('Solicitud no fue generada'));
 }
 
+CollectionReference cita = FirebaseFirestore.instance.collection("cita");
+
+Future<void> crearcita(String diagnostico, int codigo_paciente, int codigo_medico, Timestamp fecha){
+  return cita
+      .add({
+    'Diagnostico': diagnostico,
+    'codigo_paciente': codigo_paciente,
+    'codigo_medico': codigo_medico,
+    'fecha': fecha
+  })
+      .then((value) => print('Cita generada correctamente.'))
+      .catchError((error) => print('Cita no fue generada'));
+}
+
 CollectionReference paciente = FirebaseFirestore.instance.collection("paciente");
 
 Future<void> editarPaciente(String id, String nombre, int edad, String direccion){
