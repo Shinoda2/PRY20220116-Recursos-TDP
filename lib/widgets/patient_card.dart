@@ -1,5 +1,6 @@
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pry20220116/models/patients.dart';
 import 'package:pry20220116/screens/individual_patient_chat.dart';
 
@@ -8,7 +9,10 @@ import '../models/patient.dart';
 class PatientCard extends StatelessWidget {
   final Patient patient;
   final String chatRoomId;
-  PatientCard(this.patient, this.chatRoomId);
+  final String? lastMessage;
+  final DateTime? lastMessageTime;
+  PatientCard(
+      this.patient, this.chatRoomId, this.lastMessage, this.lastMessageTime);
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +47,14 @@ class PatientCard extends StatelessWidget {
                   width: 3,
                 ),
                 Text(
-                  'hola',
+                  lastMessage!,
                   style: TextStyle(
                     fontSize: 13,
                   ),
                 )
               ],
             ),
-            trailing: Text('10:00'),
+            trailing: Text(DateFormat.jm().format(lastMessageTime!)),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20, left: 80),

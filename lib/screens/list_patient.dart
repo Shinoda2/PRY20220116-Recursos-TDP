@@ -27,11 +27,28 @@ class _ListPatient extends State<ListPatient> {
   List<Patient> patients = [];
   List<Cita> citas = [];
   late Future<bool> isDone;
+  late String? lastMessage;
+  late DateTime? lastMessageDate;
 
   @override
   void initState() {
     super.initState();
     isDone = getAll();
+    getLastMessage("medico_paciente");
+  }
+
+  getLastMessage(String chatRoomId) async {
+    await FirebaseFirestore.instance
+        .collection("chatRoom")
+        .doc(chatRoomId)
+        .collection("chats")
+        .orderBy("time", descending: true)
+        .limit(1)
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              lastMessage = element["message"];
+              lastMessageDate = element["time"].toDate();
+            }));
   }
 
   Future<bool> getAll() async {
@@ -102,11 +119,13 @@ class _ListPatient extends State<ListPatient> {
       body: FutureBuilder<bool>(
           future: isDone,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasData &&
+                lastMessage != null &&
+                lastMessageDate != null) {
               return ListView.builder(
                 itemCount: patients.length,
-                itemBuilder: (context, index) =>
-                    PatientCard(patients[index], "medico_paciente"),
+                itemBuilder: (context, index) => PatientCard(patients[index],
+                    "medico_paciente", lastMessage, lastMessageDate),
               );
             } else if (snapshot.hasError) {
               return const Text("Error");
