@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 
 import '../models/cita.dart';
 import '../models/medical.dart';
+import 'individual_medical_chat.dart';
 
 class CalendarPatient extends StatefulWidget {
   const CalendarPatient({Key? key}) : super(key: key);
@@ -159,35 +160,46 @@ class _CalendarPatient extends State<CalendarPatient> {
                         return ListView(
                           children: value
                               .map((Cita cita) => Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(width: 0.8),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 12.0, vertical: 4.0),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 90,
-                                          child: Text(
-                                            DateFormat.jm()
-                                                .format(cita.fecha!.toDate()),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: ListTile(
-                                            onTap: () => print('${cita.fecha}'),
-                                            title: Text(medicals[
-                                                    cita.codigo_medico! - 1]
-                                                .nombre!),
-                                            subtitle: Text("Sítnomas: " +
-                                                cita.diagnostico!),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ))
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 0.8),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 4.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 90,
+                                  child: Text(
+                                    DateFormat.jm()
+                                        .format(cita.fecha!.toDate()),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: ListTile(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                IndividualMedicalChat(
+                                                  medical: medicals[
+                                                  cita.codigo_medico! -
+                                                      1],
+                                                  chatRoomId:
+                                                  "medico_paciente",
+                                                ))),
+                                    title: Text(medicals[
+                                    cita.codigo_medico! - 1]
+                                        .nombre!),
+                                    subtitle: Text("Diagnóstico: " +
+                                        cita.diagnostico!),
+                                    trailing: Text("Ir al chat"),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ))
                               .toList(),
                         );
                       },

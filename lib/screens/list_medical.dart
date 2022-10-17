@@ -86,7 +86,8 @@ class _ListMedical extends State<ListMedical> {
                   return MedicalCard(
                     medical: medicals[index],
                     especialidad:
-                        especialidades[medicals[index].especialidadCodigo! - 1],
+                    especialidades[medicals[index].especialidadCodigo! - 1],
+                    chatRoomId: "medico_paciente",
                   );
                 },
               );

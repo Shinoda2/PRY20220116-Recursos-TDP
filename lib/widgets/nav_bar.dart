@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/list_patient.dart';
 import 'package:pry20220116/screens/option.dart';
 
-class NavBar extends StatelessWidget{
+class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -12,59 +12,47 @@ class NavBar extends StatelessWidget{
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-              accountName: Text('José Juarez'),
-              accountEmail: Text('medico1@gmail.com'),
-              currentAccountPicture: CircleAvatar(
-                child: Image.asset('assets/image/icon.png',
-                  width: 90,
-                  height: 90,
-                  fit: BoxFit.cover,
-                ),
+            accountName: Text('Flor Ugarriza Torres'),
+            accountEmail: Text('medico@medico.com'),
+            currentAccountPicture: CircleAvatar(
+              child: Image.asset(
+                'assets/image/icon.png',
+                width: 90,
+                height: 90,
+                fit: BoxFit.cover,
               ),
+            ),
           ),
           ListTile(
             leading: Icon(Icons.people),
-            title: Text('Pacientes',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),),
-            onTap: (){
+            title: Text(
+              'Pacientes',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => ListPatient()));
             },
-
           ),
           Divider(),
-          ListTile(
-            leading: Icon(Icons.description),
-            title: Text('Historial',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),),
-            onTap: ()=>null,
+          SizedBox(
+            height: 270,
           ),
-          Divider(),
-          SizedBox(height: 270,),
           Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app),
-            title: Text('Cerrar Sesión',
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold
-            ),),
-            onTap: (){
+            title: Text(
+              'Cerrar Sesión',
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) => Option()));
-              /*Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Option())*/
               FirebaseAuth.instance.signOut();
-
             },
           ),
         ],
       ),
     );
   }
-
 }

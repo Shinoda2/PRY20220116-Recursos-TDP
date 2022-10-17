@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pry20220116/models/paciente.dart';
+import 'package:pry20220116/models/patient.dart';
 
 final db = FirebaseFirestore.instance;
 
@@ -24,7 +24,7 @@ Future<Paciente> getUserName(String email) async {
   } catch (e) {
     print(e);
   }
-  var paciente = Paciente(nombre: username, edad: edad, direccion: direccion, dni: dni, docid: document);
+  var paciente = Paciente(nombre: username, edad: edad, direccion: direccion, dniPaciente: dni, docid: document);
   return paciente;
 }
 

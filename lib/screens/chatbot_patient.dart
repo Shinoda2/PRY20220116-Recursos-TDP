@@ -38,7 +38,7 @@ class _ChatBotPatient extends State<ChatBotPatient> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<String> _data = [];
   static const String BOT_URL =
-      "https://chatbot-wisha.azurewebsites.net/api/tp2-chatbot-wisha";
+      "https://chatbot-wisha-tp.azurewebsites.net/api/tp2-chatbot-wisha";
 
   @override
   void initState() {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pry20220116/widgets/nav_bar.dart';
 import 'package:pry20220116/widgets/nav_bar_patient.dart';
 import 'package:pry20220116/widgets/navigation_bar_patient.dart';
-import 'package:pry20220116/models/paciente.dart';
+import 'package:pry20220116/models/patient.dart';
 import 'package:pry20220116/services/datos-paciente.dart';
 
 import '../widgets/navigation_bar.dart';
@@ -24,6 +24,7 @@ class _ProfilePatient extends State<ProfilePatient>{
     final edadController = TextEditingController();
     final direccionController = TextEditingController();
     final dniController = TextEditingController();
+    final docController = TextEditingController();
     return Scaffold(
       drawer: NavBarPatient(),
       appBar: AppBar(
@@ -56,7 +57,8 @@ class _ProfilePatient extends State<ProfilePatient>{
               case(ConnectionState.done):nombreController.text = snapshot.data!.nombre!;
               edadController.text = snapshot.data!.edad!.toString();
               direccionController.text = snapshot.data!.direccion!;
-              dniController.text = snapshot.data!.dni!.toString();
+              dniController.text = snapshot.data!.dniPaciente!.toString();
+              docController.text = snapshot.data!.docid!.toString();
               return Column(
                 children: [
                   Padding(
@@ -104,7 +106,7 @@ class _ProfilePatient extends State<ProfilePatient>{
                         SizedBox(height: 10),
                         ElevatedButton(onPressed: (){
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (BuildContext context) => EditProfilePaciente()
+                              builder: (BuildContext context) => EditProfilePaciente(docid: docController.text, nombre: nombreController.text, direccion: direccionController.text, edad: int.parse(edadController.text),)
                           ));
                         }, child: Text('Editar'))
                       ],

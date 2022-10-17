@@ -11,13 +11,15 @@ class NavBarPatient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nombreController = TextEditingController();
+    final emailController = TextEditingController();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: const Text('Sebastian Llanos'),
-            accountEmail: const Text('sebastian.llanos@gmail.com'),
+            accountName: const Text('Marco Loayza'),
+            accountEmail: const Text('paciente@paciente.com'),
             currentAccountPicture: CircleAvatar(
               child: Image.asset(
                 'assets/image/icon.png',

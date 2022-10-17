@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pry20220116/models/paciente.dart';
+import 'package:pry20220116/models/patient.dart';
 import 'package:pry20220116/screens/profile_patient.dart';
 import 'package:pry20220116/widgets/nav_bar_patient.dart';
 import 'package:intl/intl.dart';
