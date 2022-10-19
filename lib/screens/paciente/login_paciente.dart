@@ -20,14 +20,22 @@ class PLoginWidget extends StatefulWidget {
   const PLoginWidget({Key? key}) : super(key: key);
 
   @override
-  _PLoginWidget createState() => _PLoginWidget();
+  _PLoginWidgetState createState() => _PLoginWidgetState();
 }
 
-class _PLoginWidget extends State<PLoginWidget> {
+class _PLoginWidgetState extends State<PLoginWidget> {
   final _keyForm = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   late bool _passwordVisible;
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+    );
+    Navigator.pushNamed(context, PBottomNavBar.id);
+  }
 
   @override
   void initState() {
@@ -40,14 +48,6 @@ class _PLoginWidget extends State<PLoginWidget> {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
-  }
-
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-    );
-    Navigator.pushNamed(context, PBottomNavBar.id);
   }
 
   @override

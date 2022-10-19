@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/paciente/citas_paciente.dart';
-import 'package:pry20220116/screens/paciente/chatbot_paciente.dart';
-import 'package:pry20220116/screens/paciente/solicitud_citas_paciente.dart';
+import 'package:pry20220116/screens/medico/citas_medico.dart';
+import 'package:pry20220116/screens/medico/chatbot_medico.dart';
+import 'package:pry20220116/screens/medico/lista_conversaciones_medico.dart';
+import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
+
 import '../../utilities/constraints.dart';
-import 'side_bar_paciente.dart';
 
-class PBottomNavBar extends StatefulWidget {
-  const PBottomNavBar({Key? key}) : super(key: key);
+class MBottomNavBar extends StatefulWidget {
+  const MBottomNavBar({super.key});
 
-  static String id = '/bottomNavBarPaciente';
+  static String id = '/bottomNavBarMedico';
 
   @override
-  _PBottomNavBar createState() => _PBottomNavBar();
+  _MBottomNavBar createState() => _MBottomNavBar();
 }
 
-class _PBottomNavBar extends State<PBottomNavBar> {
+class _MBottomNavBar extends State<MBottomNavBar> {
   int _selectedIndex = 0;
 
   final List<Widget> _tabs = [
-    const PChatBot(),
-    const PCitas(),
-    const PSolicitud()
+    const MCitas(),
+    const MChatBot(),
+    const MListaConversaciones()
   ];
 
   void _onItemTapped(int index) {
@@ -34,17 +35,10 @@ class _PBottomNavBar extends State<PBottomNavBar> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(backgroundColor: colorPrincipal),
-      drawer: const PSideBar(),
+      drawer: const MSideBar(),
       body: _tabs[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const [
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: EdgeInsets.only(bottom: 2.0),
-              child: Icon(Icons.smart_toy_outlined, size: 40.0),
-            ),
-            label: 'CHATBOT',
-          ),
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(bottom: 2.0),
@@ -55,9 +49,16 @@ class _PBottomNavBar extends State<PBottomNavBar> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(bottom: 2.0),
-              child: Icon(Icons.feed_outlined, size: 40.0),
+              child: Icon(Icons.smart_toy_outlined, size: 40.0),
             ),
-            label: 'SOLICITUD',
+            label: 'CHATBOT',
+          ),
+          BottomNavigationBarItem(
+            icon: Padding(
+              padding: EdgeInsets.only(bottom: 2.0),
+              child: Icon(Icons.chat, size: 40.0),
+            ),
+            label: 'CHAT',
           ),
         ],
         currentIndex: _selectedIndex,

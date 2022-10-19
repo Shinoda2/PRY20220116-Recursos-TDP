@@ -2,17 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pry20220116/screens/paciente/perfil_paciente.dart';
-import 'package:pry20220116/widgets/nav_bar.dart';
-import 'package:pry20220116/models/medico.dart';
 import 'package:pry20220116/services/datos-paciente.dart';
-import 'package:pry20220116/screens/profile.dart';
 import 'package:pry20220116/widgets/paciente/side_bar_paciente.dart';
 import 'package:pry20220116/widgets/paciente/bottom_navBar_paciente.dart';
 
 import '../models/paciente.dart';
 import '../widgets/input_with_help.dart';
-import '../widgets/navigation_bar.dart';
-import '../widgets/primary_button.dart';
 import '../widgets/with_tooltip.dart';
 
 class EditProfilePaciente extends StatefulWidget {

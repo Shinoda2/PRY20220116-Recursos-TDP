@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:pry20220116/screens/profile.dart';
+import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:bubble/bubble.dart';
 import 'dart:convert';
 
 import '../../utilities/constraints.dart';
+import '../../widgets/medico/bottom_navBar_medico.dart';
 import '../camera_screen.dart';
 
-class PChatBot extends StatefulWidget {
-  const PChatBot({Key? key}) : super(key: key);
+class MChatBot extends StatefulWidget {
+  const MChatBot({Key? key}) : super(key: key);
 
   @override
-  _PChatBotState createState() => _PChatBotState();
+  _MChatBotState createState() => _MChatBotState();
 }
 
-class _PChatBotState extends State<PChatBot> {
+class _MChatBotState extends State<MChatBot> {
   final inputTextController = TextEditingController();
   final FocusNode focusNode = FocusNode();
 
@@ -30,8 +37,8 @@ class _PChatBotState extends State<PChatBot> {
   }
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
-  final List<String> _data = [];
-  static const String botURL =
+  List<String> _data = [];
+  static const String BOT_URL =
       "https://chatbot-wisha.azurewebsites.net/api/tp2-chatbot-wisha";
 
   @override
@@ -55,7 +62,6 @@ class _PChatBotState extends State<PChatBot> {
                   Animation<double> animation) {
                 return burbujaMensaje(_data[index], animation, index);
               },
-              reverse: false,
             ),
           ),
           Padding(
@@ -111,18 +117,18 @@ class _PChatBotState extends State<PChatBot> {
   }
 
   void getResponse() {
-    if (queryController.text.isNotEmpty) {
-      insertSingleItem(queryController.text);
+    if (queryController.text.length > 0) {
+      this.insertSingleItem(queryController.text);
       var client = getClient();
       Map data = {'query': queryController.text};
       var body = json.encode(data);
       try {
         // ignore: avoid_single_cascade_in_expression_statements
         client.post(
-          Uri.parse(botURL),
+          Uri.parse(BOT_URL),
           body: body,
         )..then((response) {
-            //print(response.body);
+            print(response.body);
             //Map<String, dynamic> data = jsonDecode(response.body);
             insertSingleItem(response.body + '<bot>');
           });

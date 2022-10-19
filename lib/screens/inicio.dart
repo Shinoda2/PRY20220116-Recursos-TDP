@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pry20220116/widgets/analisis_medico.dart';
 
 import '../utilities/constraints.dart';
+import 'medico/login_medico.dart';
 import 'paciente/login_paciente.dart';
 
 class Inicio extends StatefulWidget {
@@ -56,16 +57,16 @@ class _Inicio extends State<Inicio> {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: ElevatedButton(
-                // onPressed: () {
-                //   Navigator.pushNamed(context, PLogin.id);
-                // },
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => const AnalisisMedico(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, MLogin.id);
                 },
+                // onPressed: () {
+                //   Navigator.of(context).push(
+                //     MaterialPageRoute(
+                //       builder: (BuildContext context) => const AnalisisMedico(),
+                //     ),
+                //   );
+                // },
                 style: ElevatedButton.styleFrom(
                   side: const BorderSide(width: 2.0, color: colorSecundario),
                   backgroundColor: colorPrincipal,

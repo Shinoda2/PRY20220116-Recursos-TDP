@@ -8,13 +8,14 @@ import '../../models/cita.dart';
 import '../../models/lista_medicos.dart';
 import '../individual_medical_chat.dart';
 
-class PCalendario extends StatefulWidget {
-  const PCalendario({Key? key}) : super(key: key);
+class PCitas extends StatefulWidget {
+  const PCitas({Key? key}) : super(key: key);
+
   @override
-  _PCalendario createState() => _PCalendario();
+  _PCitasState createState() => _PCitasState();
 }
 
-class _PCalendario extends State<PCalendario> {
+class _PCitasState extends State<PCitas> {
   List<Medical> medicals = [];
   late final ValueNotifier<List<Cita>> _selectedEvents;
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -41,7 +42,7 @@ class _PCalendario extends State<PCalendario> {
     super.dispose();
   }
 
-  Future<String> getMedicals() async {
+  Future<String> getMedicos() async {
     if (!alreadyRun2) {
       await db.collection('medico').get().then((QuerySnapshot res) {
         res.docs.forEach((doc) {
@@ -99,7 +100,7 @@ class _PCalendario extends State<PCalendario> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Object>(
-      future: Future.wait([getCitas(), getMedicals()]),
+      future: Future.wait([getCitas(), getMedicos()]),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Padding(

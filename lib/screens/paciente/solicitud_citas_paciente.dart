@@ -218,7 +218,7 @@ Future<void> popUpExito(BuildContext context) {
       return AlertDialog(
         contentPadding:
             const EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 10.0),
-        actionsPadding: EdgeInsets.only(bottom: 10),
+        actionsPadding: const EdgeInsets.only(bottom: 10),
         title: const Text(
           'Cita Registrada',
           style: TextStyle(fontSize: 13.0),

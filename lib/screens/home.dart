@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/paciente/citas_paciente.dart';
-import 'package:pry20220116/screens/chatbot.dart';
+import 'package:pry20220116/screens/medico/chatbot_medico.dart';
 import 'package:pry20220116/screens/paciente/solicitud_citas_paciente.dart';
 import 'package:pry20220116/screens/paciente/citas_paciente.dart';
 
@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
       'Index 0',
       style: optionStyle,
     ),
-    ChatBot(),
+    MChatBot(),
     PSolicitud()
   ];
 
