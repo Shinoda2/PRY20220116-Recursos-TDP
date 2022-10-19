@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/paciente/citas_pa.dart';
 import 'package:pry20220116/screens/paciente/citas_paciente.dart';
 import 'package:pry20220116/screens/paciente/chatbot_paciente.dart';
 import 'package:pry20220116/screens/paciente/solicitud_citas_paciente.dart';
@@ -17,7 +18,7 @@ class PBottomNavBar extends StatefulWidget {
 class _PBottomNavBar extends State<PBottomNavBar> {
   int _selectedIndex = 0;
 
-  final List<Widget> _tabs = [PChatBot(), PCalendario(), PSolicitud()];
+  final List<Widget> _tabs = [PChatBot(), PacienteCalendario(), PSolicitud()];
 
   void _onItemTapped(int index) {
     setState(() {

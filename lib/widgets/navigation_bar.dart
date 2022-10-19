@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/calendar.dart';
 import 'package:pry20220116/screens/chatbot.dart';
 import 'package:pry20220116/screens/list_patient.dart';
+import 'package:pry20220116/screens/medico/citas_me.dart';
 
 class MBottomNavBar extends StatefulWidget {
   @override
@@ -20,7 +23,7 @@ class _MBottomNavBar extends State<MBottomNavBar> {
           });
           if (index == 0) {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => Calendar()));
+                builder: (BuildContext context) => MedicoCalendario()));
           } else if (index == 1) {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => ChatBot()));

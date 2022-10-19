@@ -1,12 +1,13 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pry20220116/screens/shared/chat_page.dart';
 import 'package:pry20220116/utilities/constraints.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../models/cita.dart';
-import '../../models/lista_medicos.dart';
-import '../individual_medical_chat.dart';
 
 class PCalendario extends StatefulWidget {
   const PCalendario({Key? key}) : super(key: key);
@@ -15,7 +16,6 @@ class PCalendario extends StatefulWidget {
 }
 
 class _PCalendario extends State<PCalendario> {
-  List<Medical> medicals = [];
   late final ValueNotifier<List<Cita>> _selectedEvents;
   FirebaseFirestore db = FirebaseFirestore.instance;
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -39,24 +39,6 @@ class _PCalendario extends State<PCalendario> {
   void dispose() {
     _selectedEvents.dispose();
     super.dispose();
-  }
-
-  Future<String> getMedicals() async {
-    if (!alreadyRun2) {
-      await db.collection('medico').get().then((QuerySnapshot res) {
-        res.docs.forEach((doc) {
-          medicals.add(
-            Medical.fromFirestore(
-                doc as DocumentSnapshot<Map<String, dynamic>>, null),
-          );
-          print('Document data doctor: ${doc.data()}');
-          print(doc["especialidad_codigo"].toString());
-        });
-      });
-      alreadyRun2 = true;
-      return "Success!";
-    }
-    return ":(";
   }
 
   Future<String> getCitas() async {
@@ -99,7 +81,7 @@ class _PCalendario extends State<PCalendario> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Object>(
-      future: Future.wait([getCitas(), getMedicals()]),
+      future: getCitas(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Padding(
@@ -130,7 +112,7 @@ class _PCalendario extends State<PCalendario> {
                       _selectedDay = selectDay;
                       _focusedDay = focusDay;
                     });
-                    //print(focusedDay);
+                    print(_focusedDay);
                   },
                   calendarStyle: const CalendarStyle(
                     isTodayHighlighted: true,
@@ -187,21 +169,29 @@ class _PCalendario extends State<PCalendario> {
                                       Expanded(
                                         child: ListTile(
                                           onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      IndividualMedicalChat(
-                                                        medical: medicals[
-                                                            cita.codigo_medico! -
-                                                                1],
-                                                        chatRoomId:
-                                                            "medico_paciente",
-                                                      ))),
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => ChatView(
+                                                currentUserId: cita
+                                                    .codigo_paciente!
+                                                    .toString(),
+                                                anotherUserName:
+                                                    cita.nombre_medico!,
+                                                anotherUserId: cita
+                                                    .codigo_medico!
+                                                    .toString(),
+                                                appointmentId: cita.citaId!,
+                                                isFinished: cita.isFinished!,
+                                              ),
+                                            ),
+                                          ),
                                           title: Text(
-                                              medicals[cita.codigo_medico! - 1]
-                                                  .nombre!),
-                                          subtitle: Text("Diagnóstico: " +
-                                              cita.diagnostico!),
+                                            //! Nombre de doctor
+                                            "Doctor : ${cita.nombre_medico!}",
+                                          ),
+                                          subtitle: Text(
+                                            "Diagnóstico: ${cita.diagnostico!}",
+                                          ),
                                           trailing: Text("Ir al chat"),
                                         ),
                                       ),
@@ -245,7 +235,7 @@ class _PCalendario extends State<PCalendario> {
                       _selectedDay = selectDay;
                       _focusedDay = focusDay;
                     });
-                    //print(focusedDay);
+                    print(_focusedDay);
                   },
                   calendarStyle: const CalendarStyle(
                     isTodayHighlighted: true,
