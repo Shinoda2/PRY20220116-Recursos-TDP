@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:tflite/tflite.dart';
+//import 'package:tflite/tflite.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({Key? key}) : super(key: key);
@@ -9,7 +9,20 @@ class CameraScreen extends StatefulWidget {
   _CameraScreen createState() => _CameraScreen();
 }
 
+class _CameraScreen extends State<CameraScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text("Camara"),
+      ),
+    );
+  }
+}
+
+/* 
 class _CameraScreen extends State<CameraScreen>{
+
 
   late List<CameraDescription> cameras;
   late CameraController cameraController;
@@ -169,5 +182,6 @@ class _CameraScreen extends State<CameraScreen>{
       ),
     );
   }
-
 }
+
+ */

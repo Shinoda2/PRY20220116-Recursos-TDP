@@ -1,6 +1,7 @@
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pry20220116/chat/chat.dart';
 import 'package:pry20220116/models/patients.dart';
 import 'package:pry20220116/screens/individual_patient_chat.dart';
 
@@ -19,12 +20,14 @@ class PatientCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => IndividualPatientChat(
-                  patient: patient,
-                  chatRoomId: chatRoomId,
-                )));
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatView(
+                  currentUserId: "1",
+                  anotherUserName: "patient.nombre!",
+                  anotherUserId: "2",
+                  appointmentId: "gPI6RoA9lnq74izvdjEM")),
+        );
       },
       child: Column(
         children: [

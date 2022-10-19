@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:pry20220116/chat/chat.dart';
 import 'package:pry20220116/screens/profile.dart';
 import 'package:pry20220116/screens/profile_patient.dart';
 import 'package:pry20220116/widgets/nav_bar_patient.dart';
@@ -117,7 +118,7 @@ class _CalendarPatient extends State<CalendarPatient> {
       body: FutureBuilder<Object>(
           future: Future.wait([getCitas(), getMedicals()]),
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
+            if (!snapshot.hasData) {
               return Column(
                 children: [
                   TableCalendar(
@@ -160,46 +161,48 @@ class _CalendarPatient extends State<CalendarPatient> {
                         return ListView(
                           children: value
                               .map((Cita cita) => Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 0.8),
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 4.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 90,
-                                  child: Text(
-                                    DateFormat.jm()
-                                        .format(cita.fecha!.toDate()),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: ListTile(
-                                    onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                IndividualMedicalChat(
-                                                  medical: medicals[
-                                                  cita.codigo_medico! -
-                                                      1],
-                                                  chatRoomId:
-                                                  "medico_paciente",
-                                                ))),
-                                    title: Text(medicals[
-                                    cita.codigo_medico! - 1]
-                                        .nombre!),
-                                    subtitle: Text("Diagnóstico: " +
-                                        cita.diagnostico!),
-                                    trailing: Text("Ir al chat"),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ))
+                                    decoration: BoxDecoration(
+                                      border: Border.all(width: 0.8),
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 12.0, vertical: 4.0),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 90,
+                                          child: Text(
+                                            DateFormat.jm()
+                                                .format(cita.fecha!.toDate()),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: ListTile(
+                                            onTap: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => ChatView(
+                                                      currentUserId: "1",
+                                                      anotherUserName:
+                                                          "Doctor :",
+                                                      anotherUserId: cita
+                                                          .codigo_medico
+                                                          .toString(),
+                                                      appointmentId:
+                                                          "gPI6RoA9lnq74izvdjEM")),
+                                            ),
+                                            title: Text(medicals[
+                                                    cita.codigo_medico! - 1]
+                                                .nombre!),
+                                            subtitle: Text("Diagnóstico: " +
+                                                cita.diagnostico!),
+                                            trailing: Text("Ir al chat"),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ))
                               .toList(),
                         );
                       },

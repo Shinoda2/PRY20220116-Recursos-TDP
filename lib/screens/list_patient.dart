@@ -27,8 +27,8 @@ class _ListPatient extends State<ListPatient> {
   List<Paciente> patients = [];
   List<Cita> citas = [];
   late Future<bool> isDone;
-  late String? lastMessage;
-  late DateTime? lastMessageDate;
+  late String? lastMessage = "";
+  late DateTime? lastMessageDate = DateTime.now();
 
   @override
   void initState() {
@@ -46,9 +46,9 @@ class _ListPatient extends State<ListPatient> {
         .limit(1)
         .get()
         .then((value) => value.docs.forEach((element) {
-      lastMessage = element["message"];
-      lastMessageDate = element["time"].toDate();
-    }));
+              lastMessage = element["message"];
+              lastMessageDate = element["time"].toDate();
+            }));
   }
 
   Future<bool> getAll() async {
@@ -57,7 +57,7 @@ class _ListPatient extends State<ListPatient> {
         .where("email", isEqualTo: widget.email)
         .get()
         .then(
-          (res) {
+      (res) {
         medical = Medical.fromFirestore(res.docs[0], null);
         id = res.docs[0].id;
       },
@@ -78,7 +78,7 @@ class _ListPatient extends State<ListPatient> {
     });
     List<String> codigos = [];
     citas.forEach(
-          (element) {
+      (element) {
         codigos.add(element.codigo_paciente.toString());
       },
     );
@@ -125,7 +125,7 @@ class _ListPatient extends State<ListPatient> {
               return ListView.builder(
                 itemCount: patients.length,
                 itemBuilder: (context, index) => PatientCard(patients[index],
-                    "medico_paciente", lastMessage, lastMessageDate),
+                    "medico_paciente", "lastMessage", DateTime.now()),
               );
             } else if (snapshot.hasError) {
               return const Text("Error");
