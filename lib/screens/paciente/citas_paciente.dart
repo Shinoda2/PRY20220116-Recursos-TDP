@@ -9,13 +9,15 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../../models/cita.dart';
 
-class PCalendario extends StatefulWidget {
-  const PCalendario({Key? key}) : super(key: key);
+class PCitas extends StatefulWidget {
+  const PCitas({Key? key}) : super(key: key);
+
   @override
-  _PCalendario createState() => _PCalendario();
+  _PCitasState createState() => _PCitasState();
 }
 
-class _PCalendario extends State<PCalendario> {
+class _PCitasState extends State<PCitas> {
+  List<Medical> medicals = [];
   late final ValueNotifier<List<Cita>> _selectedEvents;
   FirebaseFirestore db = FirebaseFirestore.instance;
   CalendarFormat _calendarFormat = CalendarFormat.month;

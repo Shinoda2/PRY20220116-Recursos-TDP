@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:pry20220116/widgets/nav_bar.dart';
+import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
 import 'package:pry20220116/models/medico.dart';
 import 'package:pry20220116/services/datos-medico.dart';
 import 'package:pry20220116/screens/profile.dart';
 
 import '../widgets/input_with_help.dart';
-import '../widgets/navigation_bar.dart';
+import '../widgets/medico/bottom_navBar_medico.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/with_tooltip.dart';
 
@@ -29,7 +29,7 @@ class _EditMedicProfile extends State<EditProfile> {
     final dniController = TextEditingController();
     final docController = TextEditingController();
     return Scaffold(
-      drawer: NavBar(),
+      drawer: MSideBar(),
       appBar: AppBar(
         actions: [
           IconButton(

@@ -1,13 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/list_patient.dart';
+import 'package:pry20220116/screens/medico/lista_conversaciones_medico.dart';
 import 'package:pry20220116/screens/inicio.dart';
 
-class NavBar extends StatelessWidget {
+class MSideBar extends StatelessWidget {
+  const MSideBar({super.key});
+
   @override
   Widget build(BuildContext context) {
+    var correo = FirebaseAuth.instance.currentUser!.email!;
+
     return Drawer(
+      width: MediaQuery.of(context).size.width * 0.85,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -31,7 +35,7 @@ class NavBar extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => ListPatient()));
+                  builder: (BuildContext context) => MListaConversaciones()));
             },
           ),
           Divider(),

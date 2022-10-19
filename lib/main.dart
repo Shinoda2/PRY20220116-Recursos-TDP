@@ -3,11 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:pry20220116/screens/inicio.dart';
+import 'package:pry20220116/screens/medico/login_medico.dart';
 import 'package:pry20220116/screens/paciente/lista_medicinas_paciente.dart';
 import 'package:pry20220116/screens/paciente/lista_medicos_paciente.dart';
 import 'package:pry20220116/screens/paciente/login_paciente.dart';
 import 'package:pry20220116/screens/paciente/perfil_paciente.dart';
 import 'package:pry20220116/utilities/constraints.dart';
+import 'package:pry20220116/widgets/medico/bottom_navBar_medico.dart';
 import 'package:pry20220116/widgets/paciente/bottom_navBar_paciente.dart';
 
 Future<void> main() async {
@@ -93,10 +95,15 @@ class MyApp extends StatelessWidget {
       initialRoute: MyHomePage.id,
       routes: {
         MyHomePage.id: (context) => const MyHomePage(),
+        //paciente
         PLogin.id: (context) => const PLogin(),
+        PBottomNavBar.id: (context) => const PBottomNavBar(),
         PPerfil.id: (context) => const PPerfil(),
         PListaMedicos.id: (context) => const PListaMedicos(),
         PListaMedicinas.id: (context) => const PListaMedicinas(),
+        //medico
+        MLogin.id: (context) => const MLogin(),
+        MBottomNavBar.id: (context) => const MBottomNavBar(),
       },
     );
   }
@@ -113,7 +120,7 @@ class MyHomePage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const PBottomNavBar();
+              return const MBottomNavBar();
             } else {
               return const Inicio();
             }

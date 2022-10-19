@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/widgets/nav_bar.dart';
+import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
 import 'package:pry20220116/models/medico.dart';
 import 'package:pry20220116/services/datos-medico.dart';
 import 'package:pry20220116/screens/edit_profile.dart';
 
-import '../widgets/navigation_bar.dart';
+import '../widgets/medico/bottom_navBar_medico.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class _LoginMedicoState extends State<Profile> {
     final direccionController = TextEditingController();
     final dniController = TextEditingController();
     return Scaffold(
-      drawer: NavBar(),
+      drawer: MSideBar(),
       appBar: AppBar(
         actions: [
           IconButton(

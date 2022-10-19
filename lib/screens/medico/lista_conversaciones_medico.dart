@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/models/lista_pacientes.dart';
 import 'package:pry20220116/screens/profile.dart';
-import 'package:pry20220116/widgets/nav_bar.dart';
+import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
 import 'package:pry20220116/widgets/patient_card.dart';
 
-import '../widgets/navigation_bar.dart';
+import '../../widgets/medico/bottom_navBar_medico.dart';
 
-class ListPatient extends StatefulWidget {
-  //ListPatient(Key key): super(key: key);
+class MListaConversaciones extends StatefulWidget {
+  const MListaConversaciones({super.key});
+
   @override
-  _ListPatient createState() => _ListPatient();
+  _MListaConversacionesState createState() => _MListaConversacionesState();
 }
 
-class _ListPatient extends State<ListPatient> {
+class _MListaConversacionesState extends State<MListaConversaciones> {
   /*List<Patient> patients=[
     Patient('Elizabeth','assets/image/icon.png','16:00','Hola'),
     Patient('Jose Carlos','assets/image/icon.png','17:00','Hola'),
@@ -25,23 +26,10 @@ class _ListPatient extends State<ListPatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Profile()));
-            },
-          ),
-        ],
-      ),
       body: ListView.builder(
         itemCount: patients.length,
         itemBuilder: (context, index) => PatientCard(patients[index]),
       ),
-      bottomNavigationBar: MBottomNavBar(),
     );
   }
 }

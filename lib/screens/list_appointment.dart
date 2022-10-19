@@ -6,7 +6,7 @@ import 'package:pry20220116/widgets/appointment_card.dart';
 import 'package:pry20220116/widgets/paciente/side_bar_paciente.dart';
 import 'package:pry20220116/widgets/paciente/bottom_navBar_paciente.dart';
 
-import '../widgets/navigation_bar.dart';
+import '../widgets/medico/bottom_navBar_medico.dart';
 
 class ListAppointment extends StatefulWidget {
   const ListAppointment({Key? key}) : super(key: key);
