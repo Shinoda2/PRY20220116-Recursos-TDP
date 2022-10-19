@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/paciente/citas_pa.dart';
 import 'package:pry20220116/screens/paciente/citas_paciente.dart';
 import 'package:pry20220116/screens/paciente/chatbot_paciente.dart';
 import 'package:pry20220116/screens/paciente/solicitud_citas_paciente.dart';
