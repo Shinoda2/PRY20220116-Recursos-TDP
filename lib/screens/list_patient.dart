@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pry20220116/models/patients.dart';
+import 'package:pry20220116/models/lista_pacientes.dart';
 import 'package:pry20220116/screens/profile.dart';
 import 'package:pry20220116/widgets/nav_bar.dart';
 import 'package:pry20220116/widgets/patient_card.dart';
 
 import '../widgets/navigation_bar.dart';
 
-class ListPatient extends StatefulWidget{
+class ListPatient extends StatefulWidget {
   //ListPatient(Key key): super(key: key);
   @override
   _ListPatient createState() => _ListPatient();
@@ -25,24 +25,23 @@ class _ListPatient extends State<ListPatient> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: NavBar(),
-        appBar: AppBar(
-           actions: [
-             IconButton(
-               icon: const Icon(Icons.person),
-                 onPressed: () {
-                   Navigator.of(context).push(MaterialPageRoute(
-                       builder: (BuildContext context) => Profile()));
-                 },
-             ),
-           ],
-        ),
-
+      drawer: NavBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Profile()));
+            },
+          ),
+        ],
+      ),
       body: ListView.builder(
         itemCount: patients.length,
-        itemBuilder: (context,index)=> PatientCard(patients[index]),
+        itemBuilder: (context, index) => PatientCard(patients[index]),
       ),
-      bottomNavigationBar: NavigationBarB(),
-      );
+      bottomNavigationBar: MBottomNavBar(),
+    );
   }
 }

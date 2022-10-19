@@ -26,22 +26,25 @@ class _ChatBotState extends State<ChatBot> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const CameraScreen()),
-    ).then((value) {setState(() {
-      queryController.text += value;
-    });});
+    ).then((value) {
+      setState(() {
+        queryController.text += value;
+      });
+    });
+  }
 
-
-  }  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<String> _data = [];
   static const String BOT_URL =
       "https://chatbot-wisha.azurewebsites.net/api/tp2-chatbot-wisha";
 
-
   @override
   void initState() {
-    insertSingleItem('Bienvenido. Soy el Chatbot de Wisha, pregúntame algo...' + '<bot>');
+    insertSingleItem(
+        'Bienvenido. Soy el Chatbot de Wisha, pregúntame algo...' + '<bot>');
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,8 +59,8 @@ class _ChatBotState extends State<ChatBot> {
             AnimatedList(
               key: _listKey,
               initialItemCount: _data.length,
-              itemBuilder:
-                  (BuildContext context, int index, Animation<double> animation) {
+              itemBuilder: (BuildContext context, int index,
+                  Animation<double> animation) {
                 return buildItem(_data[index], animation, index);
               },
             ),
@@ -77,10 +80,12 @@ class _ChatBotState extends State<ChatBot> {
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
                         // ignore: prefer_const_constructors
-                        icon: IconButton(icon: Icon(Icons.camera_alt),
-                          onPressed: (){
+                        icon: IconButton(
+                          icon: Icon(Icons.camera_alt),
+                          onPressed: () {
                             navigateResult(context);
-                          },),
+                          },
+                        ),
                         hintText: "¡Hola Bot!",
                         fillColor: Colors.white12,
                       ),
@@ -96,7 +101,7 @@ class _ChatBotState extends State<ChatBot> {
             ),
           ],
         ),
-        bottomNavigationBar: NavigationBarB());
+        bottomNavigationBar: MBottomNavBar());
   }
 
   void getResponse() {
@@ -111,10 +116,10 @@ class _ChatBotState extends State<ChatBot> {
           Uri.parse(BOT_URL),
           body: body,
         )..then((response) {
-          print(response.body);
-          //Map<String, dynamic> data = jsonDecode(response.body);
-          insertSingleItem(response.body + '<bot>');
-        });
+            print(response.body);
+            //Map<String, dynamic> data = jsonDecode(response.body);
+            insertSingleItem(response.body + '<bot>');
+          });
       } finally {
         client.close();
         queryController.clear();
@@ -152,5 +157,4 @@ Widget buildItem(String item, Animation<double> animation, int index) {
       ),
     ),
   );
-
 }

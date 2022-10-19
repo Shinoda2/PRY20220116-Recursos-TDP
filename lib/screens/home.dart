@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/calendar_patient.dart';
+import 'package:pry20220116/screens/paciente/citas_paciente.dart';
 import 'package:pry20220116/screens/chatbot.dart';
-import 'package:pry20220116/screens/solicitud.dart';
-import 'package:pry20220116/screens/calendar_patient.dart';
+import 'package:pry20220116/screens/paciente/solicitud_citas_paciente.dart';
+import 'package:pry20220116/screens/paciente/citas_paciente.dart';
 
 enum Menu { itemOne, itemTwo, itemThree, itemFour }
 
@@ -24,9 +24,8 @@ class _HomeState extends State<Home> {
       'Index 0',
       style: optionStyle,
     ),
-
     ChatBot(),
-    Solicitud()
+    PSolicitud()
   ];
 
   void _onItemTapped(int index) {
@@ -45,7 +44,10 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today_rounded, size: 30,),
+            icon: Icon(
+              Icons.calendar_today_rounded,
+              size: 30,
+            ),
             label: '',
           ),
           BottomNavigationBarItem(
