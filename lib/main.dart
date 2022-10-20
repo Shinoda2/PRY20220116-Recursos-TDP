@@ -120,7 +120,7 @@ class MyHomePage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const MBottomNavBar();
+              return const PBottomNavBar();
             } else {
               return const Inicio();
             }

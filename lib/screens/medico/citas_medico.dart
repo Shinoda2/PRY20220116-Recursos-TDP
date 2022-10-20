@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../utilities/constraints.dart';
 import '../shared/chat_page.dart';
 
 class MCitas extends StatefulWidget {
@@ -18,11 +20,17 @@ class _MCitasState extends State<MCitas> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        MyCalendario(),
-        MisCitas(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          MyCalendario(),
+          Padding(
+            padding: EdgeInsets.only(bottom: 10.0),
+            child: kLineaDivisora,
+          ),
+          MisCitas(),
+        ],
+      ),
     );
   }
 }
@@ -142,8 +150,7 @@ class _CitaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(document.data());
-    return ListTile(
+    return GestureDetector(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -156,14 +163,59 @@ class _CitaItem extends StatelessWidget {
           ),
         ),
       ),
-      title: Text(
-        //! Nombre de paciente
-        "Paciente : ${document["nombre_paciente"]}",
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          side: const BorderSide(
+            color: colorTres,
+            width: 1.0,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 12.0),
+                child: Text(
+                  DateFormat('jm')
+                      .format(
+                          DateTime.parse(document["fecha"].toDate().toString()))
+                      .toString(),
+                  style: const TextStyle(
+                    fontSize: 10.0,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${document["nombre_paciente"]}",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                    Text(
+                      "Síntomas: ${document["sintoma"]}",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: const TextStyle(
+                        fontSize: 9.0,
+                        letterSpacing: 1.0,
+                        color: colorTres,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
-      subtitle: Text(
-        "Diagnóstico: ${document["diagnostico"]}",
-      ),
-      trailing: Text("Ir al chat"),
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:pry20220116/screens/medico/citas_medico.dart';
 import 'package:pry20220116/screens/medico/chatbot_medico.dart';
 import 'package:pry20220116/screens/medico/lista_conversaciones_medico.dart';
 import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import '../../utilities/constraints.dart';
 
@@ -23,6 +25,12 @@ class _MBottomNavBar extends State<MBottomNavBar> {
     const MChatBot(),
     const MListaConversaciones()
   ];
+
+  @override
+  void initState() {
+    initializeDateFormatting();
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
