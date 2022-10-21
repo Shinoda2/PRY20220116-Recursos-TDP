@@ -52,8 +52,8 @@ class _PListaMedicinasWidget extends State<PListaMedicinasWidget> {
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.search),
                         hintText: 'Buscar...',
-                        hintStyle: kSubTitulo1,
-                        labelStyle: kSubTitulo1,
+                        hintStyle: kHintText,
+                        labelStyle: kHintText,
                       ),
                       onChanged: (val) {
                         setState(() {
@@ -109,7 +109,7 @@ class _PListaMedicinasWidget extends State<PListaMedicinasWidget> {
                                 'Stock: ' + data['stock'].toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: kSubTitulo1,
+                                style: kHintText,
                               ),
                               leading: CircleAvatar(
                                 backgroundImage: NetworkImage(data['imagen']),
@@ -132,7 +132,7 @@ class _PListaMedicinasWidget extends State<PListaMedicinasWidget> {
                                 'Stock: ' + data['stock'].toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: kSubTitulo1,
+                                style: kHintText,
                               ),
                               leading: CircleAvatar(
                                 backgroundImage: NetworkImage(data['imagen']),

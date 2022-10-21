@@ -49,8 +49,8 @@ class _PListaMedicosWidget extends State<PListaMedicosWidget> {
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.search),
                         hintText: 'Buscar...',
-                        hintStyle: kSubTitulo1,
-                        labelStyle: kSubTitulo1,
+                        hintStyle: kHintText,
+                        labelStyle: kHintText,
                       ),
                       onChanged: (val) {
                         setState(() {
@@ -104,7 +104,7 @@ class _PListaMedicosWidget extends State<PListaMedicosWidget> {
                                     data['especialidad_codigo'].toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: kSubTitulo1,
+                                style: kHintText,
                               ),
                               leading: CircleAvatar(
                                 backgroundImage: NetworkImage(data['imagen']),
@@ -128,7 +128,7 @@ class _PListaMedicosWidget extends State<PListaMedicosWidget> {
                                     data['especialidad_codigo'].toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: kSubTitulo1,
+                                style: kHintText,
                               ),
                               leading: CircleAvatar(
                                 backgroundImage: NetworkImage(data['imagen']),

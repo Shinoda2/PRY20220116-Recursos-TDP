@@ -3,7 +3,7 @@ import 'package:pry20220116/models/paciente.dart';
 
 final db = FirebaseFirestore.instance;
 
-Future<Paciente> getUserName(String email) async {
+Future<Paciente> getDataPaciente(String email) async {
   var username = '';
   int edad = 0;
   var direccion = '';
@@ -55,7 +55,7 @@ Future<Paciente> getUserName(String email) async {
 
 CollectionReference cita = FirebaseFirestore.instance.collection("cita");
 
-Future<void> crearcita(String diagnostico, String codigoPaciente,
+Future<void> crearCita(String diagnostico, String codigoPaciente,
     int codigoMedico, Timestamp fecha) {
   return cita
       .add({

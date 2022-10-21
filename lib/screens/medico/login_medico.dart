@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../utilities/constraints.dart';
-import '../../widgets/medico/bottom_navBar_medico.dart';
+import '../../widgets/medico/bottom_nav_bar_medico.dart';
 
 class MLogin extends StatelessWidget {
   const MLogin({Key? key}) : super(key: key);
@@ -32,12 +32,12 @@ class _MLoginWidgetState extends State<MLoginWidget> {
   Future signIn() async {
     try {
       showDialog(
-        // The user CANNOT close this dialog  by pressing outsite it
+        // The user CANNOT close this dialog  by pressing outside it
         barrierDismissible: false,
         context: context,
         builder: (_) {
           return Dialog(
-              child: Container(
+              child: SizedBox(
             height: 200,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +119,7 @@ class _MLoginWidgetState extends State<MLoginWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: colorPrincipal),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -159,7 +159,7 @@ class _MLoginWidgetState extends State<MLoginWidget> {
                                         vertical: 15.0, horizontal: 10.0),
                                     border: OutlineInputBorder(),
                                     labelText: "Correo",
-                                    labelStyle: kSubTitulo1,
+                                    labelStyle: kHintText,
                                   ),
                                   validator: (value) {
                                     return validarTexto("Correo", value!);
@@ -174,7 +174,7 @@ class _MLoginWidgetState extends State<MLoginWidget> {
                         padding: const EdgeInsets.only(bottom: 30.0),
                         child: Row(
                           children: [
-                            Icon(Icons.camera_alt_outlined),
+                            const Icon(Icons.camera_alt_outlined),
                             Padding(
                               padding: const EdgeInsets.only(left: 10.0),
                               child: SizedBox(
@@ -186,9 +186,9 @@ class _MLoginWidgetState extends State<MLoginWidget> {
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.symmetric(
                                         vertical: 15.0, horizontal: 10.0),
-                                    border: OutlineInputBorder(),
+                                    border: const OutlineInputBorder(),
                                     labelText: "Contraseña",
-                                    labelStyle: kSubTitulo1,
+                                    labelStyle: kHintText,
                                     suffixIcon: IconButton(
                                       onPressed: () {
                                         setState(() {

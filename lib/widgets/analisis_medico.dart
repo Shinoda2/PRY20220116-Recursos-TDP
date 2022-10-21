@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/medico/lista_conversaciones_medico.dart';
+import 'package:pry20220116/screens/medico/lista_pacientes_medico.dart';
 import 'package:pry20220116/screens/medico/login_medico.dart';
 
 class AnalisisMedico extends StatelessWidget {
@@ -13,7 +13,7 @@ class AnalisisMedico extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return MListaConversaciones();
+              return MListaPacientes();
             } else {
               return const MLoginWidget();
             }

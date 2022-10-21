@@ -2,13 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pry20220116/screens/paciente/perfil_paciente.dart';
-import 'package:pry20220116/services/datos-paciente.dart';
+import 'package:pry20220116/services/datos_paciente.dart';
 import 'package:pry20220116/widgets/paciente/side_bar_paciente.dart';
-import 'package:pry20220116/widgets/paciente/bottom_navBar_paciente.dart';
+import 'package:pry20220116/widgets/paciente/bottom_nav_bar_paciente.dart';
 
 import '../models/paciente.dart';
-import '../widgets/input_with_help.dart';
-import '../widgets/with_tooltip.dart';
 
 class EditProfilePaciente extends StatefulWidget {
   const EditProfilePaciente({Key? key}) : super(key: key);
@@ -35,7 +33,7 @@ class _EditPacienteProfile extends State<EditProfilePaciente> {
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => PPerfilWidget()));
+                  builder: (BuildContext context) => PPerfilStf()));
             },
           ),
         ],
@@ -43,7 +41,7 @@ class _EditPacienteProfile extends State<EditProfilePaciente> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder<Paciente>(
-          future: getUserName(email),
+          future: getDataPaciente(email),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case (ConnectionState.waiting):
@@ -71,33 +69,12 @@ class _EditPacienteProfile extends State<EditProfilePaciente> {
                     Container(
                       child: Column(
                         children: [
-                          WithTooltip(
-                              child: Text(
-                                'EDITAR PERFIL',
-                                style: Theme.of(context).textTheme.headline1,
-                              ),
-                              tooltipMessage: 'Ayuda'),
                           const SizedBox(
                             height: 15,
                           ),
                           Form(
                             child: Column(
                               children: [
-                                InputWithHelp(
-                                  placeholder: 'NOMBRE COMPLETO',
-                                  tooltipMessage: 'Ayuda',
-                                  controlador: nombreController,
-                                ),
-                                InputWithHelp(
-                                  placeholder: 'EDAD',
-                                  tooltipMessage: 'Ayuda',
-                                  controlador: edadController,
-                                ),
-                                InputWithHelp(
-                                  placeholder: 'DIRECCION',
-                                  tooltipMessage: 'Ayuda',
-                                  controlador: direccionController,
-                                ),
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -114,7 +91,7 @@ class _EditPacienteProfile extends State<EditProfilePaciente> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  PPerfilWidget()));
+                                                  PPerfilStf()));
                                     },
                                     child: Text('Guardar'))
                               ],

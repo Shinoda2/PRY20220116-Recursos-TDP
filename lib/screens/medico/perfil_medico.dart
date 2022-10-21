@@ -1,29 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pry20220116/models/paciente.dart';
-import 'package:pry20220116/services/datos_paciente.dart';
+import 'package:pry20220116/models/medico.dart';
+import 'package:pry20220116/services/datos_medico.dart';
 import '../../utilities/constraints.dart';
 
-class PPerfil extends StatelessWidget {
-  const PPerfil({Key? key}) : super(key: key);
+class MPerfil extends StatelessWidget {
+  const MPerfil({Key? key}) : super(key: key);
 
-  static String id = '/perfilPaciente';
+  static String id = '/perfilMedico';
 
   @override
   Widget build(BuildContext context) {
-    return const PPerfilStf();
+    return const MPerfilStf();
   }
 }
 
-class PPerfilStf extends StatefulWidget {
-  const PPerfilStf({Key? key}) : super(key: key);
+class MPerfilStf extends StatefulWidget {
+  const MPerfilStf({Key? key}) : super(key: key);
 
   @override
-  _PPerfilState createState() => _PPerfilState();
+  _MPerfilState createState() => _MPerfilState();
 }
 
-class _PPerfilState extends State<PPerfilStf> {
+class _MPerfilState extends State<MPerfilStf> {
   final _keyForm = GlobalKey<FormState>();
   final nombreController = TextEditingController();
   final edadController = TextEditingController();
@@ -53,8 +53,8 @@ class _PPerfilState extends State<PPerfilStf> {
       ),
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: FutureBuilder<Paciente>(
-          future: getDataPaciente(correo),
+        child: FutureBuilder<Medico>(
+          future: getDataMedico(correo),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case (ConnectionState.waiting):
@@ -154,13 +154,13 @@ class _PPerfilState extends State<PPerfilStf> {
                             readOnly: false,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
                             child: ElevatedButton(
                               onPressed: () {
                                 if (_keyForm.currentState!.validate()) {
                                   var edad = int.tryParse(edadController.text);
                                   //print(docController.text);
-                                  editarPaciente(
+                                  editarMedico(
                                           docController.text,
                                           nombreController.text,
                                           edad!,
@@ -188,17 +188,6 @@ class _PPerfilState extends State<PPerfilStf> {
                               ),
                             ),
                           ),
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     Navigator.of(context).push(
-                          //       MaterialPageRoute(
-                          //         builder: (BuildContext context) =>
-                          //             EditProfilePaciente(),
-                          //       ),
-                          //     );
-                          //   },
-                          //   child: const Text('Editar'),
-                          // )
                         ],
                       ),
                     ),

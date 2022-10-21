@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/medico/citas_medico.dart';
 import 'package:pry20220116/screens/medico/chatbot_medico.dart';
-import 'package:pry20220116/screens/medico/lista_conversaciones_medico.dart';
+import 'package:pry20220116/screens/medico/lista_pacientes_medico.dart';
 import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import '../../utilities/constraints.dart';
@@ -23,7 +22,7 @@ class _MBottomNavBar extends State<MBottomNavBar> {
   final List<Widget> _tabs = [
     const MCitas(),
     const MChatBot(),
-    const MListaConversaciones()
+    const MListaPacientes()
   ];
 
   @override
@@ -64,9 +63,9 @@ class _MBottomNavBar extends State<MBottomNavBar> {
           BottomNavigationBarItem(
             icon: Padding(
               padding: EdgeInsets.only(bottom: 2.0),
-              child: Icon(Icons.chat, size: 40.0),
+              child: Icon(Icons.people, size: 40.0),
             ),
-            label: 'CHAT',
+            label: 'PACIENTES',
           ),
         ],
         currentIndex: _selectedIndex,

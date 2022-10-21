@@ -1,15 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
 import 'package:pry20220116/models/medico.dart';
-import 'package:pry20220116/services/datos-medico.dart';
-import 'package:pry20220116/screens/profile.dart';
+import 'package:pry20220116/services/datos_medico.dart';
+import 'package:pry20220116/screens/medico/perfil_medico.dart';
 
-import '../widgets/input_with_help.dart';
-import '../widgets/medico/bottom_navBar_medico.dart';
-import '../widgets/primary_button.dart';
-import '../widgets/with_tooltip.dart';
+import '../widgets/medico/bottom_nav_bar_medico.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -36,7 +32,7 @@ class _EditMedicProfile extends State<EditProfile> {
             icon: const Icon(Icons.person),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => Profile()));
+                  builder: (BuildContext context) => MPerfilStf()));
             },
           ),
         ],
@@ -44,7 +40,7 @@ class _EditMedicProfile extends State<EditProfile> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder<Medico>(
-          future: getMedicUserName(email),
+          future: getDataMedico(email),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case (ConnectionState.waiting):
@@ -72,33 +68,12 @@ class _EditMedicProfile extends State<EditProfile> {
                     Container(
                       child: Column(
                         children: [
-                          WithTooltip(
-                              child: Text(
-                                'EDITAR PERFIL',
-                                style: Theme.of(context).textTheme.headline1,
-                              ),
-                              tooltipMessage: 'Ayuda'),
                           const SizedBox(
                             height: 15,
                           ),
                           Form(
                             child: Column(
                               children: [
-                                InputWithHelp(
-                                  placeholder: 'NOMBRE COMPLETO',
-                                  tooltipMessage: 'Ayuda',
-                                  controlador: nombreController,
-                                ),
-                                InputWithHelp(
-                                  placeholder: 'EDAD',
-                                  tooltipMessage: 'Ayuda',
-                                  controlador: edadController,
-                                ),
-                                InputWithHelp(
-                                  placeholder: 'DIRECCION',
-                                  tooltipMessage: 'Ayuda',
-                                  controlador: direccionController,
-                                ),
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -115,7 +90,7 @@ class _EditMedicProfile extends State<EditProfile> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  Profile()));
+                                                  MPerfilStf()));
                                     },
                                     child: Text('Guardar'))
                               ],

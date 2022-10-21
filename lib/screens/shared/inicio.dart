@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/widgets/analisis_medico.dart';
 
-import '../utilities/constraints.dart';
-import 'medico/login_medico.dart';
-import 'paciente/login_paciente.dart';
+import '../../utilities/constraints.dart';
+import '../medico/login_medico.dart';
+import '../paciente/login_paciente.dart';
 
 class Inicio extends StatefulWidget {
   const Inicio({Key? key}) : super(key: key);

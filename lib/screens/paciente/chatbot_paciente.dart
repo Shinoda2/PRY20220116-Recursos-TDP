@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../../utilities/constraints.dart';
-import '../camera_screen.dart';
+import '../shared/camera_screen.dart';
 
 class PChatBot extends StatefulWidget {
   const PChatBot({Key? key}) : super(key: key);
@@ -63,37 +63,46 @@ class _PChatBotState extends State<PChatBot> {
             child: Row(
               children: [
                 Flexible(
-                  child: TextField(
-                    maxLines: null,
-                    textCapitalization: TextCapitalization.sentences,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(color: Colors.black, fontSize: 12.0),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 1, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(30.0),
+                  child: SizedBox(
+                    height: 40.0,
+                    child: TextField(
+                      maxLines: null,
+                      textCapitalization: TextCapitalization.sentences,
+                      textAlignVertical: TextAlignVertical.center,
+                      style: const TextStyle(
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.w500,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(30.0),
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 5.0,
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 1.0, color: colorTres),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 1.0, color: colorTres),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        hintText: 'Escribe tu mensaje...',
+                        hintStyle: kHintText,
                       ),
-                      hintText: 'Escribe tu mensaje...',
-                      hintStyle: kSubTitulo1,
-                      fillColor: Colors.white12,
+                      focusNode: focusNode,
+                      controller: queryController,
+                      textInputAction: TextInputAction.send,
+                      onSubmitted: (msg) {
+                        getResponse();
+                      },
                     ),
-                    focusNode: focusNode,
-                    autofocus: true,
-                    controller: queryController,
-                    textInputAction: TextInputAction.send,
-                    onSubmitted: (msg) {
-                      getResponse();
-                    },
                   ),
                 ),
                 Material(
                   child: IconButton(
-                    padding: const EdgeInsets.only(left: 5.0),
+                    padding: const EdgeInsets.only(left: 15.0),
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.camera_alt_outlined),
                     onPressed: () {

@@ -3,10 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pry20220116/models/paciente.dart';
-import 'package:pry20220116/services/datos-paciente.dart';
+import 'package:pry20220116/services/datos_paciente.dart';
 
 import '../../utilities/constraints.dart';
-import '../camera_screen.dart';
+import '../shared/camera_screen.dart';
 
 class PSolicitud extends StatefulWidget {
   const PSolicitud({Key? key}) : super(key: key);
@@ -52,7 +52,7 @@ class _PSolicitud extends State<PSolicitud> {
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         child: SingleChildScrollView(
           child: FutureBuilder<Paciente>(
-            future: getUserName(correo),
+            future: getDataPaciente(correo),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case (ConnectionState.waiting):
@@ -143,7 +143,7 @@ class _PSolicitud extends State<PSolicitud> {
                                             vertical: 15.0, horizontal: 10.0),
                                         border: OutlineInputBorder(),
                                         labelText: 'Síntomas',
-                                        labelStyle: kSubTitulo1,
+                                        labelStyle: kHintText,
                                       ),
                                       validator: (value) {
                                         return validarTexto("Síntomas", value!);
@@ -184,7 +184,7 @@ class _PSolicitud extends State<PSolicitud> {
                           ),
                           onPressed: () {
                             if (_keyForm.currentState!.validate()) {
-                              crearcita(
+                              crearCita(
                                 sintomasController.text,
                                 FirebaseAuth.instance.currentUser!.uid,
                                 1,
@@ -314,7 +314,7 @@ class InputTextWidget extends StatelessWidget {
           textCapitalization: TextCapitalization.sentences,
           maxLines: maxLines,
           autocorrect: true,
-          style: const TextStyle(fontSize: 12.0),
+          style: const TextStyle(fontSize: 13.0),
           readOnly: readOnly,
           controller: controlador,
           keyboardType: inputType,
@@ -324,7 +324,7 @@ class InputTextWidget extends StatelessWidget {
                 const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
             border: const OutlineInputBorder(),
             labelText: label,
-            labelStyle: kSubTitulo1,
+            labelStyle: kHintText,
           ),
           validator: validacion,
         ),

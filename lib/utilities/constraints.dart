@@ -29,9 +29,9 @@ const kTituloCabezera = TextStyle(
   fontSize: 15.0,
 );
 
-const kSubTitulo1 = TextStyle(
-  fontWeight: FontWeight.w500,
-  fontSize: 12.0,
+const kHintText = TextStyle(
+  fontWeight: FontWeight.w400,
+  fontSize: 10.0,
 );
 
 const kLineaDivisora = Divider(color: colorSecundario);
@@ -40,7 +40,7 @@ ButtonStyle estiloBoton = ElevatedButton.styleFrom(
   side: const BorderSide(width: 2.0, color: colorSecundario),
   backgroundColor: colorPrincipal,
   foregroundColor: Colors.white,
-  fixedSize: Size(180.0, 50.0),
+  fixedSize: const Size(180.0, 50.0),
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(10.0),
   ),

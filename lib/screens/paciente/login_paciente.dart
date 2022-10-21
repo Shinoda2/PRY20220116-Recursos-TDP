@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../utilities/constraints.dart';
-import '../../widgets/paciente/bottom_navBar_paciente.dart';
+import '../../widgets/paciente/bottom_nav_bar_paciente.dart';
 
 class PLogin extends StatelessWidget {
   const PLogin({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class _PLoginWidgetState extends State<PLoginWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: colorPrincipal),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -93,7 +93,7 @@ class _PLoginWidgetState extends State<PLoginWidget> {
                                         vertical: 15.0, horizontal: 10.0),
                                     border: OutlineInputBorder(),
                                     labelText: "Correo",
-                                    labelStyle: kSubTitulo1,
+                                    labelStyle: kHintText,
                                   ),
                                   validator: (value) {
                                     return validarTexto("Correo", value!);
@@ -122,7 +122,7 @@ class _PLoginWidgetState extends State<PLoginWidget> {
                                         vertical: 15.0, horizontal: 10.0),
                                     border: OutlineInputBorder(),
                                     labelText: "Contraseña",
-                                    labelStyle: kSubTitulo1,
+                                    labelStyle: kHintText,
                                     suffixIcon: IconButton(
                                       onPressed: () {
                                         setState(() {

@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:pry20220116/screens/profile.dart';
-import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
-
 import 'package:http/http.dart' as http;
-import 'package:bubble/bubble.dart';
 import 'dart:convert';
-
 import '../../utilities/constraints.dart';
-import '../../widgets/medico/bottom_navBar_medico.dart';
-import '../camera_screen.dart';
+import '../shared/camera_screen.dart';
 
 class MChatBot extends StatefulWidget {
   const MChatBot({Key? key}) : super(key: key);
@@ -37,8 +29,8 @@ class _MChatBotState extends State<MChatBot> {
   }
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
-  List<String> _data = [];
-  static const String BOT_URL =
+  final List<String> _data = [];
+  static const String botURL =
       "https://chatbot-wisha.azurewebsites.net/api/tp2-chatbot-wisha";
 
   @override
@@ -51,7 +43,7 @@ class _MChatBotState extends State<MChatBot> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
       child: Column(
         children: <Widget>[
           Flexible(
@@ -69,45 +61,54 @@ class _MChatBotState extends State<MChatBot> {
             child: Row(
               children: [
                 Flexible(
-                  child: TextField(
-                    maxLines: null,
-                    textCapitalization: TextCapitalization.sentences,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(color: Colors.black, fontSize: 12.0),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 1, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(30.0),
+                  child: SizedBox(
+                    height: 40.0,
+                    child: TextField(
+                      maxLines: null,
+                      textCapitalization: TextCapitalization.sentences,
+                      textAlignVertical: TextAlignVertical.center,
+                      style: const TextStyle(
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.w500,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(30.0),
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10.0,
+                          vertical: 5.0,
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 1.0, color: colorTres),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 1.0, color: colorTres),
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        hintText: 'Escribe tu mensaje...',
+                        hintStyle: kHintText,
                       ),
-                      hintText: 'Escribe tu mensaje...',
-                      hintStyle: kSubTitulo1,
-                      fillColor: Colors.white12,
+                      focusNode: focusNode,
+                      controller: queryController,
+                      textInputAction: TextInputAction.send,
+                      onSubmitted: (msg) {
+                        getResponse();
+                      },
                     ),
-                    focusNode: focusNode,
-                    autofocus: true,
-                    controller: queryController,
-                    textInputAction: TextInputAction.send,
-                    onSubmitted: (msg) {
-                      getResponse();
-                    },
                   ),
                 ),
-                Material(
-                  child: IconButton(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    constraints: const BoxConstraints(),
-                    icon: const Icon(Icons.camera_alt_outlined),
-                    onPressed: () {
-                      //navigateResult(context);
-                    },
-                    color: Colors.black,
-                  ),
-                ),
+                // Material(
+                //   child: IconButton(
+                //     padding: const EdgeInsets.only(left: 15.0),
+                //     constraints: const BoxConstraints(),
+                //     icon: const Icon(Icons.camera_alt_outlined),
+                //     onPressed: () {
+                //       //navigateResult(context);
+                //     },
+                //     color: Colors.black,
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -117,18 +118,18 @@ class _MChatBotState extends State<MChatBot> {
   }
 
   void getResponse() {
-    if (queryController.text.length > 0) {
-      this.insertSingleItem(queryController.text);
+    if (queryController.text.isNotEmpty) {
+      insertSingleItem(queryController.text);
       var client = getClient();
       Map data = {'query': queryController.text};
       var body = json.encode(data);
       try {
         // ignore: avoid_single_cascade_in_expression_statements
         client.post(
-          Uri.parse(BOT_URL),
+          Uri.parse(botURL),
           body: body,
         )..then((response) {
-            print(response.body);
+            //print(response.body);
             //Map<String, dynamic> data = jsonDecode(response.body);
             insertSingleItem(response.body + '<bot>');
           });

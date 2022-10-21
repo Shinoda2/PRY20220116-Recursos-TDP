@@ -3,11 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:pry20220116/screens/shared/chat_page.dart';
+import 'package:pry20220116/screens/shared/chat_citas.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../utilities/constraints.dart';
+import '../shared/detalle_cita.dart';
 
 class PCitas extends StatefulWidget {
   const PCitas({Key? key}) : super(key: key);
@@ -21,17 +23,26 @@ class _PCitasState extends State<PCitas> {
   final currentUser = FirebaseAuth.instance.currentUser!;
 
   @override
+  void initState() {
+    initializeDateFormatting();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: const [
-          MyCalendario(),
-          Padding(
-            padding: EdgeInsets.only(bottom: 10.0),
-            child: kLineaDivisora,
-          ),
-          MisCitas(),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        child: Column(
+          children: const [
+            MyCalendario(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: kLineaDivisora,
+            ),
+            MisCitas(),
+          ],
+        ),
       ),
     );
   }
@@ -56,26 +67,21 @@ class _MyCalendarioState extends State<MyCalendario> {
         headerPadding: EdgeInsets.zero,
         formatButtonVisible: false,
         titleCentered: true,
+        titleTextStyle: TextStyle(fontSize: 13.0),
+        leftChevronPadding: EdgeInsets.all(8.0),
+        rightChevronPadding: EdgeInsets.all(8.0),
+      ),
+      daysOfWeekStyle: const DaysOfWeekStyle(
+        weekdayStyle: TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
+        weekendStyle: TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
       ),
       rowHeight: 40.0,
       focusedDay: _focusedDay,
       firstDay: DateTime(1920),
       lastDay: DateTime(2050),
-      calendarFormat: _calendarFormat,
-      onFormatChanged: (CalendarFormat _format) {
-        setState(() {
-          _calendarFormat = _format;
-        });
-      },
       startingDayOfWeek: StartingDayOfWeek.sunday,
       daysOfWeekVisible: true,
-      onDaySelected: (DateTime selectDay, DateTime focusDay) {
-        setState(() {
-          _selectedDay = selectDay;
-          _focusedDay = focusDay;
-        });
-        print(_focusedDay);
-      },
+      locale: 'es_mx',
       calendarStyle: const CalendarStyle(
         isTodayHighlighted: true,
         todayDecoration: BoxDecoration(
@@ -84,7 +90,7 @@ class _MyCalendarioState extends State<MyCalendario> {
         ),
         todayTextStyle: TextStyle(fontSize: 10.0, color: Colors.white),
         selectedDecoration: BoxDecoration(
-          color: Colors.blue,
+          color: colorSecundario,
           shape: BoxShape.circle,
         ),
         selectedTextStyle: TextStyle(fontSize: 10.0, color: Colors.white),
@@ -94,6 +100,19 @@ class _MyCalendarioState extends State<MyCalendario> {
         weekendTextStyle: TextStyle(fontSize: 10.0),
         outsideTextStyle: TextStyle(fontSize: 10.0, color: Color(0xFFAEAEAE)),
       ),
+      calendarFormat: _calendarFormat,
+      onFormatChanged: (CalendarFormat _format) {
+        setState(() {
+          _calendarFormat = _format;
+        });
+      },
+      onDaySelected: (DateTime selectDay, DateTime focusDay) {
+        setState(() {
+          _selectedDay = selectDay;
+          _focusedDay = focusDay;
+        });
+        //print(_focusedDay);
+      },
       selectedDayPredicate: (DateTime date) {
         return isSameDay(_selectedDay, date);
       },
@@ -153,18 +172,20 @@ class _CitaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatView(
-            currentUserId: document["codigo_paciente"],
-            anotherUserName: document["nombre_medico"],
-            anotherUserId: document["codigo_medico"],
-            appointmentId: document["citaId"],
-            isFinished: document['isFinished'],
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetalleCita(
+              nombrePaciente: document["nombre_paciente"],
+              sintoma: document["sintoma"],
+              nombreMedico: document["nombre_medico"],
+              finalizado: document['isFinished'],
+              fecha: document['fecha'],
+            ),
           ),
-        ),
-      ),
+        );
+      },
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -197,6 +218,7 @@ class _CitaItem extends StatelessWidget {
                     Text(
                       "${document["nombre_medico"]}",
                       style: const TextStyle(
+                        fontSize: 10.0,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.0,
                       ),
@@ -206,14 +228,36 @@ class _CitaItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
-                        fontSize: 9.0,
+                        fontSize: 7.0,
                         letterSpacing: 1.0,
                         color: colorTres,
                       ),
                     ),
                   ],
                 ),
-              )
+              ),
+              Material(
+                child: IconButton(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  constraints: const BoxConstraints(),
+                  icon: const Icon(Icons.chat_outlined),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatView(
+                          currentUserId: document["codigo_medico"],
+                          anotherUserName: document["nombre_paciente"],
+                          anotherUserId: document["codigo_paciente"],
+                          appointmentId: document["citaId"],
+                          isFinished: document['isFinished'],
+                        ),
+                      ),
+                    );
+                  },
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
         ),

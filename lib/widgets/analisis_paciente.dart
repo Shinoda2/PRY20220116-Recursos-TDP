@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/paciente/login_paciente.dart';
-import 'package:pry20220116/widgets/paciente/bottom_navBar_paciente.dart';
+import 'package:pry20220116/widgets/paciente/bottom_nav_bar_paciente.dart';
 
 class Analisis extends StatelessWidget {
   const Analisis({Key? key}) : super(key: key);

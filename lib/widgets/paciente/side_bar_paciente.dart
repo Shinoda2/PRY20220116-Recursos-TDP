@@ -2,12 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/paciente/lista_medicos_paciente.dart';
 import 'package:pry20220116/screens/paciente/lista_medicinas_paciente.dart';
-import 'package:pry20220116/screens/inicio.dart';
 
 import '../../main.dart';
 import '../../models/paciente.dart';
 import '../../screens/paciente/perfil_paciente.dart';
-import '../../services/datos-paciente.dart';
+import '../../services/datos_paciente.dart';
 import '../../utilities/constraints.dart';
 
 class PSideBar extends StatelessWidget {
@@ -23,7 +22,7 @@ class PSideBar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           FutureBuilder<Paciente>(
-            future: getUserName(correo),
+            future: getDataPaciente(correo),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -70,12 +69,11 @@ class PSideBar extends StatelessWidget {
                     );
                   }
                 default:
-                  return UserAccountsDrawerHeader(
-                    accountName:
-                        const Text("accountFirstName + accountLastName"),
-                    accountEmail: const Text("accountEmail"),
+                  return const UserAccountsDrawerHeader(
+                    accountName: Text("accountFirstName + accountLastName"),
+                    accountEmail: Text("accountEmail"),
                     currentAccountPicture: CircleAvatar(
-                      backgroundColor: Colors.lightBlue[900],
+                      backgroundColor: colorSecundario,
                     ),
                   );
               }
@@ -101,17 +99,6 @@ class PSideBar extends StatelessWidget {
               Navigator.pushNamed(context, PListaMedicos.id);
             },
           ),
-          // ListTile(
-          //   leading: Icon(Icons.description),
-          //   title: const Text(
-          //     'Mis Citas',
-          //     style: TextStyle(color: Colors.black54),
-          //   ),
-          //   onTap: () {
-          //     Navigator.of(context).push(MaterialPageRoute(
-          //         builder: (BuildContext context) => ListAppointment()));
-          //   },
-          // ),
           ListTile(
             leading: const Icon(Icons.local_hospital_outlined),
             title: const Text(

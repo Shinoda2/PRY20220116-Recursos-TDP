@@ -1,16 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
-import 'package:pry20220116/screens/inicio.dart';
+import 'package:pry20220116/screens/medico/perfil_paciente_medico.dart';
+import 'package:pry20220116/screens/shared/inicio.dart';
 import 'package:pry20220116/screens/medico/login_medico.dart';
+import 'package:pry20220116/screens/medico/perfil_medico.dart';
 import 'package:pry20220116/screens/paciente/lista_medicinas_paciente.dart';
 import 'package:pry20220116/screens/paciente/lista_medicos_paciente.dart';
 import 'package:pry20220116/screens/paciente/login_paciente.dart';
 import 'package:pry20220116/screens/paciente/perfil_paciente.dart';
 import 'package:pry20220116/utilities/constraints.dart';
-import 'package:pry20220116/widgets/medico/bottom_navBar_medico.dart';
-import 'package:pry20220116/widgets/paciente/bottom_navBar_paciente.dart';
+import 'package:pry20220116/widgets/medico/bottom_nav_bar_medico.dart';
+import 'package:pry20220116/widgets/paciente/bottom_nav_bar_paciente.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,60 +30,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pixelRatio = window.devicePixelRatio;
-    var logicalScreenSize = window.physicalSize / pixelRatio;
-    var logicalWidth = logicalScreenSize.width;
+    //var pixelRatio = window.devicePixelRatio;
+    //var logicalScreenSize = window.physicalSize / pixelRatio;
+    //var logicalWidth = logicalScreenSize.width;
 
     return MaterialApp(
       title: 'Wisha',
       theme: ThemeData(
-        textTheme: TextTheme(
-          headline1: TextStyle(
-            fontSize: logicalWidth / 14, // 360 / 18
-            fontWeight: FontWeight.w600, // Semi-bold
-            color: Colors.black,
-          ),
-          headline2: TextStyle(
-            fontSize: logicalWidth / 18, // 360 / 18
-            fontWeight: FontWeight.w500, // Medium
-            color: Colors.black,
-          ),
-          headline3: TextStyle(
-            fontSize: logicalWidth / 20, // 360 / 16
-            fontWeight: FontWeight.w500, // Medium
-            color: Colors.black,
-          ),
-          headline4: TextStyle(
-            fontSize: logicalWidth / 20, // 360 / 16
-            fontWeight: FontWeight.w600, // Semi-bold
-            color: Colors.black,
-          ),
-          subtitle2: TextStyle(
-            fontSize: logicalWidth / 22, // 360 / 16
-            fontWeight: FontWeight.w400, // Regular
-            color: Colors.black,
-          ),
-          bodyText1: TextStyle(
-            fontSize: logicalWidth / 24, // 360 / 14
-            fontWeight: FontWeight.w400, // Regular
-            color: Colors.black,
-          ),
-          bodyText2: TextStyle(
-            fontSize: logicalWidth / 26, // 360 / 12
-            fontWeight: FontWeight.w400, // Regular
-            color: Colors.black,
-          ),
-          caption: TextStyle(
-            fontSize: logicalWidth / 26, // 360 / 12
-            fontWeight: FontWeight.w400, // Regular
-            color: Colors.black54,
-          ),
-          overline: TextStyle(
-            fontSize: logicalWidth / 26, // 360 / 10
-            fontWeight: FontWeight.w500, // Medium
-            color: Colors.white,
-          ),
-        ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           primary: colorPrincipal,
           secondary: colorSecundario,
@@ -104,6 +58,8 @@ class MyApp extends StatelessWidget {
         //medico
         MLogin.id: (context) => const MLogin(),
         MBottomNavBar.id: (context) => const MBottomNavBar(),
+        MPerfil.id: (context) => const MPerfil(),
+        MPerfilPaciente.id: (context) => const MPerfilPaciente(),
       },
     );
   }
@@ -120,7 +76,7 @@ class MyHomePage extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const PBottomNavBar();
+              return const MBottomNavBar();
             } else {
               return const Inicio();
             }
