@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/models/medico.dart';
-import 'package:pry20220116/screens/medico/lista_pacientes_medico.dart';
-import 'package:pry20220116/screens/shared/inicio.dart';
 import 'package:pry20220116/utilities/constraints.dart';
 
 import '../../main.dart';

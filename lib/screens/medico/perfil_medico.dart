@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,7 +47,7 @@ class _MPerfilState extends State<MPerfilStf> {
 
   @override
   Widget build(BuildContext context) {
-    final docController = TextEditingController();
+    final currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
     return Scaffold(
       appBar: AppBar(
@@ -159,11 +161,13 @@ class _MPerfilState extends State<MPerfilStf> {
                               onPressed: () {
                                 if (_keyForm.currentState!.validate()) {
                                   var edad = int.tryParse(edadController.text);
+                                  var dni = int.tryParse(dniController.text);
                                   //print(docController.text);
                                   editarMedico(
-                                          docController.text,
+                                          currentUserId,
                                           nombreController.text,
                                           edad!,
+                                          dni!,
                                           direccionController.text)
                                       .then((value) => popUpExito(context))
                                       .onError(

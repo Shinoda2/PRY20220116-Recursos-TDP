@@ -1,7 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/medico/lista_pacientes_medico.dart';
 import 'package:pry20220116/screens/medico/login_medico.dart';
+import 'package:pry20220116/widgets/medico/bottom_nav_bar_medico.dart';
 
 class AnalisisMedico extends StatelessWidget {
   const AnalisisMedico({Key? key}) : super(key: key);
@@ -13,9 +15,9 @@ class AnalisisMedico extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return MListaPacientes();
+              return MBottomNavBar();
             } else {
-              return const MLoginWidget();
+              return MLoginWidget();
             }
           }),
     );

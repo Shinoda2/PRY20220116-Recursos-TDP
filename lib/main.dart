@@ -59,7 +59,6 @@ class MyApp extends StatelessWidget {
         MLogin.id: (context) => const MLogin(),
         MBottomNavBar.id: (context) => const MBottomNavBar(),
         MPerfil.id: (context) => const MPerfil(),
-        MPerfilPaciente.id: (context) => const MPerfilPaciente(),
       },
     );
   }

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../../utilities/constraints.dart';
-import '../shared/camera_screen.dart';
 
-class MChatBot extends StatefulWidget {
-  const MChatBot({Key? key}) : super(key: key);
+import '../../utilities/constraints.dart';
+import 'camera_screen.dart';
+
+class ChatBotView extends StatefulWidget {
+  const ChatBotView({Key? key}) : super(key: key);
 
   @override
-  _MChatBotState createState() => _MChatBotState();
+  _ChatBotViewState createState() => _ChatBotViewState();
 }
 
-class _MChatBotState extends State<MChatBot> {
+class _ChatBotViewState extends State<ChatBotView> {
   final inputTextController = TextEditingController();
   final FocusNode focusNode = FocusNode();
 
@@ -43,7 +44,7 @@ class _MChatBotState extends State<MChatBot> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: Column(
         children: <Widget>[
           Flexible(
@@ -54,6 +55,7 @@ class _MChatBotState extends State<MChatBot> {
                   Animation<double> animation) {
                 return burbujaMensaje(_data[index], animation, index);
               },
+              reverse: false,
             ),
           ),
           Padding(
@@ -98,17 +100,17 @@ class _MChatBotState extends State<MChatBot> {
                     ),
                   ),
                 ),
-                // Material(
-                //   child: IconButton(
-                //     padding: const EdgeInsets.only(left: 15.0),
-                //     constraints: const BoxConstraints(),
-                //     icon: const Icon(Icons.camera_alt_outlined),
-                //     onPressed: () {
-                //       //navigateResult(context);
-                //     },
-                //     color: Colors.black,
-                //   ),
-                // ),
+                /* Material(
+                  child: IconButton(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.camera_alt_outlined),
+                    onPressed: () {
+                      //navigateResult(context);
+                    },
+                    color: Colors.black,
+                  ),
+                ), */
               ],
             ),
           ),
@@ -130,7 +132,7 @@ class _MChatBotState extends State<MChatBot> {
           body: body,
         )..then((response) {
             //print(response.body);
-            //Map<String, dynamic> data = jsonDecode(response.body);
+            Map<String, dynamic> data = jsonDecode(response.body);
             insertSingleItem(response.body + '<bot>');
           });
       } finally {

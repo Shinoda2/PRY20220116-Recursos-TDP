@@ -1,20 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Paciente {
-  final String? nombre;
-  final int? edad;
+  final String? alergia;
+  final String? codigo_medico;
   final String? direccion;
   final int? dni;
-  final String? docid;
-  final Timestamp? fechaHora;
+  final int? edad;
+  final String? email;
+  final String? nombre;
+  final int? numero_telefono;
+  final String? uid;
+  final String? urlImage;
 
   const Paciente({
-    this.nombre,
-    this.edad,
+    this.alergia,
+    this.codigo_medico,
     this.direccion,
     this.dni,
-    this.docid,
-    this.fechaHora,
+    this.edad,
+    this.email,
+    this.nombre,
+    this.numero_telefono,
+    this.uid,
+    this.urlImage,
   });
 
   factory Paciente.fromFirestore(
@@ -23,12 +31,15 @@ class Paciente {
   ) {
     final data = snapshot.data();
     return Paciente(
-      nombre: data?['nombre'],
-      edad: data?['edad'],
-      direccion: data?['direccion'],
-      dni: data?['dni_paciente'],
-      docid: data?['uid'],
-      fechaHora: data?['fecha_hora'],
-    );
+        alergia: data?['alergia'],
+        codigo_medico: data?['codigo_medico'],
+        direccion: data?['direccion'],
+        dni: data?['dni_paciente'],
+        edad: data?['edad'],
+        email: data?['email'],
+        nombre: data?['nombre'],
+        numero_telefono: data?['numero_telefono'],
+        uid: data?['uid'],
+        urlImage: data?['urlImage']);
   }
 }

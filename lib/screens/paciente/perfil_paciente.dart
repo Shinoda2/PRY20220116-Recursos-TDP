@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pry20220116/models/paciente.dart';
 import 'package:pry20220116/services/datos_paciente.dart';
+import 'package:pry20220116/widgets/paciente/bottom_nav_bar_paciente.dart';
 import '../../utilities/constraints.dart';
 
 class PPerfil extends StatelessWidget {
@@ -45,7 +46,7 @@ class _PPerfilState extends State<PPerfilStf> {
 
   @override
   Widget build(BuildContext context) {
-    final docController = TextEditingController();
+    final String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
     return Scaffold(
       appBar: AppBar(
@@ -159,11 +160,13 @@ class _PPerfilState extends State<PPerfilStf> {
                               onPressed: () {
                                 if (_keyForm.currentState!.validate()) {
                                   var edad = int.tryParse(edadController.text);
+                                  var dni = int.tryParse(dniController.text);
                                   //print(docController.text);
                                   editarPaciente(
-                                          docController.text,
+                                          currentUserId,
                                           nombreController.text,
                                           edad!,
+                                          dni!,
                                           direccionController.text)
                                       .then((value) => popUpExito(context))
                                       .onError(
@@ -307,7 +310,10 @@ Future<void> popUpExito(BuildContext context) {
               style: TextStyle(fontSize: 10.0, color: Colors.blue),
             ),
             onPressed: () {
-              Navigator.of(context).popUntil(ModalRoute.withName("/"));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PBottomNavBar()),
+              );
             },
           )
         ],

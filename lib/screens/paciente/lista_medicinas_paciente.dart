@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/models/lista_medicinas.dart';
 
 import '../../utilities/constraints.dart';
 
@@ -25,7 +24,6 @@ class PListaMedicinasWidget extends StatefulWidget {
 class _PListaMedicinasWidget extends State<PListaMedicinasWidget> {
   String _search = '';
   bool isGrid = true;
-  List<Medicine> medicines = Medicine.generateMedicine();
 
   @override
   Widget build(BuildContext context) {

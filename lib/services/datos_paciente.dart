@@ -1,57 +1,68 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pry20220116/models/paciente.dart';
 
-final db = FirebaseFirestore.instance;
+final pacientedb = FirebaseFirestore.instance.collection("paciente");
 
-Future<Paciente> getDataPaciente(String email) async {
-  var username = '';
-  int edad = 0;
+Future<Paciente> getDataPaciente(String correo) async {
+  var alergia = '';
+  var codigo_medico = '';
   var direccion = '';
   int dni = 0;
-  var document = '';
+  int edad = 0;
+  var email = '';
+  var nombre = '';
+  int numero_telefono = 0;
+  var uid = '';
+  var urlImage = '';
+
   try {
-    await db
-        .collection("paciente")
-        .where("email", isEqualTo: email)
-        .get()
-        .then((event) {
+    await pacientedb.where("email", isEqualTo: correo).get().then((event) {
       for (var doc in event.docs) {
-        username = doc.data()["nombre"];
-        edad = doc.data()["edad"];
+        alergia = doc.data()["alergia"];
+        codigo_medico = doc.data()["codigo_medico"];
         direccion = doc.data()["direccion"];
         dni = doc.data()["dni_paciente"];
-        document = doc.id;
+        edad = doc.data()["edad"];
+        email = doc.data()["email"];
+        nombre = doc.data()["nombre"];
+        numero_telefono = doc.data()["numero_telefono"];
+        uid = doc.data()["uid"];
+        urlImage = doc.data()["urlImage"];
       }
     });
   } catch (e) {
     //print(e);
   }
   var paciente = Paciente(
-      nombre: username,
-      edad: edad,
+      alergia: alergia,
+      codigo_medico: codigo_medico,
       direccion: direccion,
       dni: dni,
-      docid: document);
+      edad: edad,
+      email: email,
+      nombre: nombre,
+      numero_telefono: numero_telefono,
+      uid: uid,
+      urlImage: urlImage);
   return paciente;
 }
 
-// CollectionReference solicitud =
-//     FirebaseFirestore.instance.collection("solicitud");
-//
-// Future<void> crearSolicitud(String direccion, int dni, int edad, String nombre,
-//     String sintomas, Timestamp fechaHora) {
-//   return solicitud
-//       .add({
-//         'direccion': direccion,
-//         'dni_paciente': dni,
-//         'edad': edad,
-//         'nombre': nombre,
-//         'sintomas': sintomas,
-//         'fecha_hora': fechaHora
-//       })
-//       .then((value) => {}) //print('Solicitud generada correctamente.'))
-//       .catchError((error) => {}); //print('Solicitud no fue generada'));
-// }
+Future<void> editarPaciente(
+    String id, String nombre, int edad, int dni, String direccion) {
+  return pacientedb
+      .doc(id)
+      .update({
+        'nombre': nombre,
+        'edad': edad,
+        'dni_paciente': dni,
+        'direccion': direccion,
+      })
+      .then((value) =>
+          {}) //print("Perfil de paciente actualizado correctamente"))
+      .catchError((error) => {}); //print("Actualización fallida."));
+}
+
+//!
 
 CollectionReference cita = FirebaseFirestore.instance.collection("cita");
 
@@ -66,21 +77,4 @@ Future<void> crearCita(String diagnostico, String codigoPaciente,
       })
       .then((value) => {}) //print('Cita generada correctamente.'))
       .catchError((error) => {}); //print('Cita no fue generada'));
-}
-
-CollectionReference paciente =
-    FirebaseFirestore.instance.collection("paciente");
-
-Future<void> editarPaciente(
-    String id, String nombre, int edad, String direccion) {
-  return paciente
-      .doc(id)
-      .update({
-        'nombre': nombre,
-        'edad': edad,
-        'direccion': direccion,
-      })
-      .then((value) =>
-          {}) //print("Perfil de paciente actualizado correctamente"))
-      .catchError((error) => {}); //print("Actualización fallida."));
 }
