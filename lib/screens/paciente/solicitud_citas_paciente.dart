@@ -314,7 +314,7 @@ class InputTextWidget extends StatelessWidget {
           textCapitalization: TextCapitalization.sentences,
           maxLines: maxLines,
           autocorrect: true,
-          style: const TextStyle(fontSize: 13.0),
+          style: const TextStyle(fontSize: 12.0),
           readOnly: readOnly,
           controller: controlador,
           keyboardType: inputType,

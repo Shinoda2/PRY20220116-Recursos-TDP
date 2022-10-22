@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/medico/citas_medico.dart';
-import 'package:pry20220116/screens/medico/lista_pacientes.dart';
+import 'package:pry20220116/screens/medico/lista_pacientes_medico.dart';
 import 'package:pry20220116/screens/shared/chatbot_view.dart';
 import 'package:pry20220116/widgets/medico/side_bar_medico.dart';
 import 'package:intl/date_symbol_data_local.dart';

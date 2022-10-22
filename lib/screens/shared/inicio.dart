@@ -33,13 +33,6 @@ class _Inicio extends State<Inicio> {
                 onPressed: () {
                   Navigator.pushNamed(context, PLogin.id);
                 },
-                // onPressed: () {
-                //   Navigator.of(context).push(
-                //     MaterialPageRoute(
-                //       builder: (BuildContext context) => const Analisis(),
-                //     ),
-                //   );
-                // },
                 style: ElevatedButton.styleFrom(
                   side: const BorderSide(width: 2.0, color: colorSecundario),
                   backgroundColor: colorPrincipal,
@@ -60,13 +53,6 @@ class _Inicio extends State<Inicio> {
                 onPressed: () {
                   Navigator.pushNamed(context, MLogin.id);
                 },
-                // onPressed: () {
-                //   Navigator.of(context).push(
-                //     MaterialPageRoute(
-                //       builder: (BuildContext context) => const AnalisisMedico(),
-                //     ),
-                //   );
-                // },
                 style: ElevatedButton.styleFrom(
                   side: const BorderSide(width: 2.0, color: colorSecundario),
                   backgroundColor: colorPrincipal,

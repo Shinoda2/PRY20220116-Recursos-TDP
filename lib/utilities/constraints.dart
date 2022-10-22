@@ -31,10 +31,10 @@ const kTituloCabezera = TextStyle(
 
 const kHintText = TextStyle(
   fontWeight: FontWeight.w400,
-  fontSize: 10.0,
+  fontSize: 12.0,
 );
 
-const kLineaDivisora = Divider(color: colorSecundario);
+const kLineaDivisora = Divider(color: Colors.black);
 
 ButtonStyle estiloBoton = ElevatedButton.styleFrom(
   side: const BorderSide(width: 2.0, color: colorSecundario),

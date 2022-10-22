@@ -30,43 +30,46 @@ class _MPerfilState extends State<MPerfilPacienteStf> {
       appBar: AppBar(
         title: const Text("Nombre Paciente", style: kTituloCabezera),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Image.asset(
-                'assets/image/icon.png',
-                height: 120,
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Image.asset(
+                  'assets/image/icon.png',
+                  height: 120,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: Text(
-              'Nombre Completo: ${widget.paciente.nombre}',
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Text(
+                'Nombre Completo: ${widget.paciente.nombre}',
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: Text(
-              'Edad: ${widget.paciente.edad}',
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Text(
+                'Edad: ${widget.paciente.edad}',
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: Text(
-              'DNI: ${widget.paciente.dni}',
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Text(
+                'DNI: ${widget.paciente.dni}',
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: Text(
-              'Dirección: ${widget.paciente.direccion}',
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Text(
+                'Dirección: ${widget.paciente.direccion}',
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
