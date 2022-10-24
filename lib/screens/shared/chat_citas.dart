@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../utilities/constraints.dart';
+import 'camera_screen.dart';
 
 class ChatView extends StatefulWidget {
   final String _idUsuarioActual;
@@ -34,10 +35,22 @@ class ChatView extends StatefulWidget {
 class _ChatViewState extends State<ChatView> {
   CollectionReference citas = FirebaseFirestore.instance.collection('cita');
 
+
   var currentUserEmail = FirebaseAuth.instance.currentUser;
 
   final _textController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+
+  Future<void> navigateResult(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const CameraScreen()),
+    ).then((value) {
+      setState(() {
+        _textController.text += value;
+      });
+    });
+  }
 
   void sendMessage(String msg) {
     if (msg == '') return;
@@ -166,7 +179,7 @@ class _ChatViewState extends State<ChatView> {
               constraints: const BoxConstraints(),
               icon: const Icon(Icons.camera_alt_outlined),
               onPressed: () {
-                //navigateResult(context);
+                navigateResult(context);
               },
               color: Colors.black,
             ),
