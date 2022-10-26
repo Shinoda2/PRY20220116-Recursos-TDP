@@ -35,7 +35,10 @@ class _ALoginWidgetState extends State<ALoginWidget> {
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      Navigator.pushNamed(context, AdminHome.id);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AdminHome()),
+      );
     } on FirebaseAuthException catch (e) {
       showDialog(
         // The user CANNOT close this dialog  by pressing outsite it
@@ -75,8 +78,6 @@ class _ALoginWidgetState extends State<ALoginWidget> {
     } catch (e) {
       return "algo salio mal";
     }
-
-    Navigator.of(context).pop();
   }
 
   @override
