@@ -5,7 +5,7 @@ class Medico {
   final int? dni;
   final int? edad;
   final String? email;
-  final String? especialidadId;
+  final String? especialidad;
   final String? nombre;
   final int? numeroCelular;
   final int? aniosTrabajados;
@@ -17,7 +17,7 @@ class Medico {
       this.dni,
       this.edad,
       this.email,
-      this.especialidadId,
+      this.especialidad,
       this.uid,
       this.urlImage,
       this.nombre,
@@ -34,7 +34,7 @@ class Medico {
         dni: data?['dni_medico'],
         edad: data?['edad'],
         email: data?['email'],
-        especialidadId: data?['especialidad_codigo'],
+        especialidad: data?['especialidad'],
         nombre: data?['nombre'],
         numeroCelular: data?['numero'],
         aniosTrabajados: data?['tiempo_trabajado'],

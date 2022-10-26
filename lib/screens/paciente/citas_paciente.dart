@@ -246,9 +246,9 @@ class _CitaItem extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ChatView(
-                          currentUserId: document["codigo_medico"],
-                          anotherUserName: document["nombre_paciente"],
-                          anotherUserId: document["codigo_paciente"],
+                          currentUserId: document["codigo_paciente"],
+                          anotherUserName: document["nombre_medico"],
+                          anotherUserId: document["codigo_medico"],
                           appointmentId: document["citaId"],
                           isFinished: document['isFinished'],
                         ),
