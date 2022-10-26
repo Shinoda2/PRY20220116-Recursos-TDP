@@ -65,6 +65,19 @@ class MedicCardItem extends StatelessWidget {
             medico.nombre!,
             style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
           ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Especialidad: ${medico.especialidad!}",
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+              ),
+              Text(
+                "Años de experiencia: ${medico.aniosTrabajados!}",
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+              ),
+            ],
+          ),
           //onTap: () => Navigator.push(
           //  context,
           //  MaterialPageRoute(

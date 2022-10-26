@@ -17,7 +17,7 @@ class _ListaPacientePageState extends State<ListaPacientePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Lista de médicos"),
+        title: Text("Lista de pacientes"),
       ),
       body: Center(
         child: FutureBuilder<List<Paciente>>(
