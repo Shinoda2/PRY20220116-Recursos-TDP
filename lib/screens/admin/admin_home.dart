@@ -26,7 +26,7 @@ class _AdminHomeState extends State<AdminHome> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: Text("Admin"),
+        title: Text("Panel de Administrador"),
       ),
       body: Center(
         child: Column(
