@@ -1,0 +1,92 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:pry20220116/main.dart';
+import 'package:pry20220116/screens/admin/crear_medico.dart';
+import 'package:pry20220116/screens/admin/lista_medico.dart';
+import 'package:pry20220116/screens/admin/lista_paciente.dart';
+
+class AdminHome extends StatefulWidget {
+  const AdminHome({Key? key}) : super(key: key);
+
+  static String id = '/adminHome';
+
+  @override
+  State<AdminHome> createState() => _AdminHomeState();
+}
+
+class _AdminHomeState extends State<AdminHome> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text("Admin"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  btnCrearMedico(),
+                  btnListaMedicos(),
+                  btnListaPacientes(),
+                  btnCerrarSesion(),
+                ],
+              ),
+            ),
+            Flexible(
+              child: Image.asset('assets/image/medico.png'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget btnCrearMedico() {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CrearMedicoPage()),
+          );
+        },
+        child: Text("Crear médico"));
+  }
+
+  Widget btnListaMedicos() {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ListaMedicoPage()),
+          );
+        },
+        child: Text("Lista médicos"));
+  }
+
+  Widget btnListaPacientes() {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ListaPacientePage()),
+          );
+        },
+        child: Text("Lista pacientes"));
+  }
+
+  Widget btnCerrarSesion() {
+    return ElevatedButton(
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+          Navigator.pushNamed(context, MyHomePage.id);
+        },
+        child: Text("Cerrar sesión"));
+  }
+}

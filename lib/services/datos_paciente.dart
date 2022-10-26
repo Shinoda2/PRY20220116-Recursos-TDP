@@ -60,10 +60,7 @@ Future<Paciente> getDataPacienteByUID(String pacienteUID) async {
   var urlImage = '';
 
   try {
-    await pacientedb
-        .where("uid", isEqualTo: pacienteUID)
-        .get()
-        .then((event) {
+    await pacientedb.where("uid", isEqualTo: pacienteUID).get().then((event) {
       for (var doc in event.docs) {
         alergia = doc.data()["alergia"];
         codigo_medico = doc.data()["codigo_medico"];
@@ -135,4 +132,31 @@ Future<void> crearCita(
       })
       .then((value) => {}) //print('Cita generada correctamente.'))
       .catchError((error) => {}); //print('Cita no fue generada'));
+}
+
+Future<List<Paciente>> getAllPatients() async {
+  List<Paciente> listaPacientes = [];
+  Paciente paciente;
+
+  try {
+    await pacientedb.get().then((event) {
+      for (var doc in event.docs) {
+        paciente = Paciente(
+            alergia: doc.data()["alergia"],
+            codigo_medico: doc.data()["codigo_medico"],
+            direccion: doc.data()["direccion"],
+            dni: doc.data()["dni_paciente"],
+            edad: doc.data()["edad"],
+            email: doc.data()["email"],
+            nombre: doc.data()["nombre"],
+            numero_telefono: doc.data()["numero_telefono"],
+            uid: doc.data()["uid"]);
+        listaPacientes.add(paciente);
+      }
+    });
+  } catch (e) {
+    // print(e);
+  }
+
+  return listaPacientes;
 }

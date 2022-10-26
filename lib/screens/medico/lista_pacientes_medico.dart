@@ -21,7 +21,7 @@ class _MiListaPacientesState extends State<MiListaPacientes> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Paciente>>(
-      future: getListaGestantes(currentUserId),
+      future: getPatientListByMedicUID(currentUserId),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
@@ -81,7 +81,7 @@ class CardPaciente extends StatelessWidget {
   }
 }
 
-Future<List<Paciente>> getListaGestantes(String codigoMedico) async {
+Future<List<Paciente>> getPatientListByMedicUID(String codigoMedico) async {
   List<Paciente> listaPacientes = [];
   Paciente paciente;
 

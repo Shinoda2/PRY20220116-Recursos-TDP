@@ -149,3 +149,64 @@ Future<void> editarMedico(
           (value) => {}) //print("Perfil de médico actualizado correctamente"))
       .catchError((error) => {}); //print("Actualización fallida."));
 }
+
+Future<void> crearMedico(
+    String direccion,
+    String dni,
+    String edad,
+    String email,
+    String especialidad,
+    String nombre,
+    String numeroCelular,
+    String aniosTrabajados,
+    String contrasenia) {
+  String medicoId = medicodb.doc().id;
+  return medicodb
+      .doc(medicoId)
+      .set({
+        'direccion': direccion,
+        'dni_medico': int.parse(dni),
+        'edad': int.parse(edad),
+        'email': email,
+        'especialidad': especialidad,
+        'imagen':
+            'https://firebasestorage.googleapis.com/v0/b/wisha-database.appspot.com/o/female%20doctor.jpeg?alt=media&token=1d343adc-e71c-4917-9e85-9ccbbc7660b3',
+        'nombre': nombre,
+        'numero': int.parse(numeroCelular),
+        'tiempo_trabajado': int.parse(aniosTrabajados),
+        'uid': medicoId,
+        'urlImage':
+            'https://firebasestorage.googleapis.com/v0/b/wisha-database.appspot.com/o/female%20doctor.jpeg?alt=media&token=1d343adc-e71c-4917-9e85-9ccbbc7660b3'
+      })
+      .then((value) => {}) //print('Cita generada correctamente.'))
+      .catchError((error) => {}); //print('Cita no fue generada'));
+}
+
+Future<List<Medico>> getAllMedics() async {
+  List<Medico> listaMedicos = [];
+  Medico medico;
+
+  try {
+    await medicodb.get().then((event) {
+      for (var doc in event.docs) {
+        medico = Medico(
+          direccion: doc.data()["direccion"],
+          dni: doc.data()["dni_medico"],
+          edad: doc.data()["edad"],
+          email: doc.data()["email"],
+          especialidad: doc.data()["especialidad"],
+          nombre: doc.data()["nombre"],
+          numeroCelular: doc.data()["numero"],
+          aniosTrabajados: doc.data()["tiempo_trabajado"],
+          uid: doc.data()["uid"],
+          urlImage: doc.data()["urlImage"],
+        );
+        listaMedicos.add(medico);
+      }
+    });
+  } catch (e) {
+    // print(e);
+  }
+
+  return listaMedicos;
+}

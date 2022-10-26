@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/admin/admin_home.dart';
+import 'package:pry20220116/screens/admin/login_admin.dart';
 import 'package:pry20220116/screens/medico/perfil_paciente_medico.dart';
 import 'package:pry20220116/screens/shared/inicio.dart';
 import 'package:pry20220116/screens/medico/login_medico.dart';
@@ -59,6 +61,9 @@ class MyApp extends StatelessWidget {
         MLogin.id: (context) => const MLogin(),
         MBottomNavBar.id: (context) => const MBottomNavBar(),
         MPerfil.id: (context) => const MPerfil(),
+        //Admin
+        ALogin.id: (context) => const ALogin(),
+        AdminHome.id: (context) => const AdminHome(),
       },
     );
   }

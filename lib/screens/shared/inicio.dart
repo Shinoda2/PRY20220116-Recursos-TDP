@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pry20220116/screens/admin/login_admin.dart';
 import 'package:pry20220116/widgets/analisis_medico.dart';
 
 import '../../utilities/constraints.dart';
@@ -13,6 +15,8 @@ class Inicio extends StatefulWidget {
 }
 
 class _Inicio extends State<Inicio> {
+  TextStyle defaultStyle = TextStyle(color: Colors.grey, fontSize: 14);
+  TextStyle linkStyle = TextStyle(color: Colors.blue);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +72,19 @@ class _Inicio extends State<Inicio> {
           ),
           Flexible(
             child: Image.asset('assets/image/medico.png'),
+          ),
+          Center(
+            child: RichText(
+              text: TextSpan(children: <TextSpan>[
+                TextSpan(text: "Eres administrador?", style: defaultStyle),
+                TextSpan(
+                    text: "Iniciar sesión",
+                    style: linkStyle,
+                    recognizer: TapGestureRecognizer()
+                      ..onTap =
+                          (() => Navigator.pushNamed(context, ALogin.id))),
+              ]),
+            ),
           )
         ],
       ),
