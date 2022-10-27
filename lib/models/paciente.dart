@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Paciente {
   final String? alergia;
   final String? direccion;
-  final int? dni;
-  final int? edad;
+  final String? dni;
+  final String? edad;
   final String? email;
   final String? nombre;
-  final int? numero_telefono;
+  final String? telefono;
   final String? uid;
   final String? urlImage;
 
@@ -18,7 +18,7 @@ class Paciente {
     this.edad,
     this.email,
     this.nombre,
-    this.numero_telefono,
+    this.telefono,
     this.uid,
     this.urlImage,
   });
@@ -31,12 +31,25 @@ class Paciente {
     return Paciente(
         alergia: data?['alergia'],
         direccion: data?['direccion'],
-        dni: data?['dni_paciente'],
+        dni: data?['dni'],
         edad: data?['edad'],
         email: data?['email'],
         nombre: data?['nombre'],
-        numero_telefono: data?['numero_telefono'],
+        telefono: data?['telefono'],
         uid: data?['uid'],
         urlImage: data?['urlImage']);
+  }
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (alergia != null) "alergia": alergia,
+      if (direccion != null) "direccion": direccion,
+      if (dni != null) "dni": dni,
+      if (edad != null) "edad": edad,
+      if (email != null) "email": email,
+      if (nombre != null) "nombre": nombre,
+      if (telefono != null) "telefono": telefono,
+      if (uid != null) "uid": uid,
+      if (urlImage != null) "urlImage": urlImage
+    };
   }
 }

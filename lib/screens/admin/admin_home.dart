@@ -1,13 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:html';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/main.dart';
 import 'package:pry20220116/screens/admin/crear_medico.dart';
 import 'package:pry20220116/screens/admin/lista_medico.dart';
 import 'package:pry20220116/screens/admin/lista_paciente.dart';
+import 'package:pry20220116/screens/shared/inicio.dart';
 
 class AdminHome extends StatefulWidget {
   const AdminHome({Key? key}) : super(key: key);
@@ -89,7 +88,7 @@ class _AdminHomeState extends State<AdminHome> {
     return ElevatedButton(
         onPressed: () {
           FirebaseAuth.instance.signOut();
-          Navigator.pushNamed(context, MyHomePage.id);
+          Navigator.pushNamed(context, Inicio.id);
         },
         child: Text("Cerrar sesión"));
   }

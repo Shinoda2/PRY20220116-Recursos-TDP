@@ -14,6 +14,8 @@ import '../shared/detalle_cita.dart';
 class PCitas extends StatefulWidget {
   const PCitas({Key? key}) : super(key: key);
 
+  static String id = '/citaPaciente';
+
   @override
   _PCitasState createState() => _PCitasState();
 }

@@ -12,6 +12,8 @@ class ListaPacientePage extends StatefulWidget {
 }
 
 class _ListaPacientePageState extends State<ListaPacientePage> {
+  final patientService = PatientService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +23,7 @@ class _ListaPacientePageState extends State<ListaPacientePage> {
       ),
       body: Center(
         child: FutureBuilder<List<Paciente>>(
-          future: getAllPatients(),
+          future: patientService.getAllPatients(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());

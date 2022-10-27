@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pry20220116/models/medico.dart';
+import 'package:pry20220116/screens/shared/inicio.dart';
 import 'package:pry20220116/utilities/constraints.dart';
 
 import '../../main.dart';
@@ -98,7 +99,7 @@ class MSideBar extends StatelessWidget {
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
             onTap: () {
-              Navigator.pushNamed(context, MyHomePage.id);
+              Navigator.pushNamed(context, Inicio.id);
               FirebaseAuth.instance.signOut();
             },
           ),

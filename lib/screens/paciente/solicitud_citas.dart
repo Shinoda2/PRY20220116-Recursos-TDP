@@ -6,14 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pry20220116/models/medico.dart';
 import 'package:pry20220116/models/paciente.dart';
-import 'package:pry20220116/screens/paciente/citas_paciente.dart';
 import 'package:pry20220116/services/datos_medico.dart';
 import 'package:pry20220116/services/datos_paciente.dart';
 import 'package:pry20220116/utilities/constraints.dart';
 import 'package:pry20220116/widgets/paciente/bottom_nav_bar_paciente.dart';
 
 class SolicitudViewPage extends StatefulWidget {
-  const SolicitudViewPage({super.key});
+  const SolicitudViewPage({Key? key}) : super(key: key);
+
+  static String id = '/solicitudPaciente';
 
   @override
   State<SolicitudViewPage> createState() => _SolicitudViewPageState();
@@ -29,28 +30,32 @@ class _SolicitudViewPageState extends State<SolicitudViewPage> {
   var selectedSpecialty, selectedMedic;
   DateTime dateTime = DateTime.now().add(Duration(days: 1));
 
+  final patientService = PatientService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30),
+      body: Padding(
+        padding: const EdgeInsets.all(30),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text('SOLICITUD DE CITAS', style: kTitulo1),
-              SizedBox(height: 20),
-              dtFechaHora(context),
-              SizedBox(height: 20),
-              ddbtnEspecialidad(),
-              SizedBox(height: 20),
-              ddbtnMedico(),
-              SizedBox(height: 20),
-              tfSintoma(),
-              SizedBox(height: 20),
-              btnEnviar()
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('SOLICITUD DE CITAS', style: kTitulo1),
+                SizedBox(height: 20),
+                dtFechaHora(context),
+                SizedBox(height: 20),
+                ddbtnEspecialidad(),
+                SizedBox(height: 20),
+                ddbtnMedico(),
+                SizedBox(height: 20),
+                tfSintoma(),
+                SizedBox(height: 20),
+                btnEnviar()
+              ],
+            ),
           ),
         ),
       ),
@@ -205,7 +210,7 @@ class _SolicitudViewPageState extends State<SolicitudViewPage> {
 
   Widget btnEnviar() {
     return FutureBuilder<Paciente>(
-      future: getPatientByUID(currentUser.uid),
+      future: patientService.getPatientByUID(currentUser.uid),
       builder: (context, snapPaciente) {
         if (!snapPaciente.hasData) {
           return Center(child: CircularProgressIndicator());
@@ -234,7 +239,7 @@ class _SolicitudViewPageState extends State<SolicitudViewPage> {
                 if (_keyFormEspecialidad.currentState!.validate() &&
                     _keyFormMedico.currentState!.validate() &&
                     _keyFormSintoma.currentState!.validate()) {
-                  crearCita(
+                  patientService.crearCita(
                       snapPaciente.data!.uid!,
                       snapMedico.data!.uid!,
                       Timestamp.fromDate(dateTime),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/paciente/lista_medicos_paciente.dart';
 import 'package:pry20220116/screens/paciente/lista_medicinas_paciente.dart';
 
-import '../../main.dart';
 import '../../models/paciente.dart';
 import '../../screens/paciente/perfil_paciente.dart';
 import '../../services/datos_paciente.dart';
@@ -15,6 +14,7 @@ class PSideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = FirebaseAuth.instance.currentUser!;
+    final patientService = PatientService();
 
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.85,
@@ -22,12 +22,13 @@ class PSideBar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           FutureBuilder<Paciente>(
-            future: getPatientByUID(currentUser.uid),
+            future: patientService.getPatientByUID(currentUser.uid),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
                   return const UserAccountsDrawerHeader(
-                    accountName: CircularProgressIndicator(color: Colors.white),
+                    accountName:
+                        CircularProgressIndicator(color: Colors.white),
                     accountEmail:
                         CircularProgressIndicator(color: Colors.white),
                     currentAccountPicture:
@@ -37,20 +38,20 @@ class PSideBar extends StatelessWidget {
                   if (snapshot.hasData) {
                     return UserAccountsDrawerHeader(
                       accountName: Text(
-                        snapshot.data!.nombre!,
+                        snapshot.data!.nombre!.toString(),
                         style: const TextStyle(
                             fontSize: 13.0, fontWeight: FontWeight.bold),
                       ),
                       accountEmail: Text(
-                        currentUser.email!,
+                        snapshot.data!.email!,
                         style: const TextStyle(fontSize: 12.0),
                       ),
                       currentAccountPicture: CircleAvatar(
-                        child: Image.asset(
-                          'assets/image/icon.png',
+                        child: Image.network(
+                          snapshot.data!.urlImage!,
                           width: 90,
                           height: 90,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                       ),
                     );
@@ -117,11 +118,12 @@ class PSideBar extends StatelessWidget {
             leading: const Icon(Icons.exit_to_app, color: Colors.red),
             title: const Text(
               'Cerrar Sesión',
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
             onTap: () {
-              Navigator.pushNamed(context, MyHomePage.id);
-              FirebaseAuth.instance.signOut();
+              final patientService = PatientService();
+              patientService.signOutPatient(context);
             },
           ),
         ],

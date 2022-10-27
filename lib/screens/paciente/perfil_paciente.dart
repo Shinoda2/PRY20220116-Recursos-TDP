@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,260 +28,245 @@ class PPerfilStf extends StatefulWidget {
 
 class _PPerfilState extends State<PPerfilStf> {
   final _keyForm = GlobalKey<FormState>();
-  final nombreController = TextEditingController();
-  final edadController = TextEditingController();
+  final alergiaController = TextEditingController();
   final direccionController = TextEditingController();
   final dniController = TextEditingController();
+  final edadController = TextEditingController();
   final correoController = TextEditingController();
+  final nombreController = TextEditingController();
+  final telefonoController = TextEditingController();
+
+  final currentUser = FirebaseAuth.instance.currentUser!;
+  final patientService = PatientService();
 
   @override
   void dispose() {
-    nombreController.dispose();
-    edadController.dispose();
+    alergiaController.dispose();
     direccionController.dispose();
     dniController.dispose();
+    edadController.dispose();
     correoController.dispose();
+    nombreController.dispose();
+    telefonoController.dispose();
     super.dispose();
   }
-
-  final currentUser = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Perfil", style: kTituloCabezera),
+        title: const Text("Perfil"),
       ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: FutureBuilder<Paciente>(
-          future: getPatientByUID(currentUser.uid),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case (ConnectionState.waiting):
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.3,
-                  child: const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: FutureBuilder<Paciente>(
+            future: patientService.getPatientByUID(currentUser.uid),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
-              case (ConnectionState.done):
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: Text("Algo salió mal..."),
-                  );
-                }
-                nombreController.text = snapshot.data!.nombre!;
-                edadController.text = snapshot.data!.edad!.toString();
-                direccionController.text = snapshot.data!.direccion!;
-                dniController.text = snapshot.data!.dni!.toString();
-                correoController.text = currentUser.email!;
-                return SingleChildScrollView(
-                  child: Form(
-                    key: _keyForm,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 10.0),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20.0),
-                            child: Image.asset(
-                              'assets/image/icon.png',
-                              height: 120,
-                            ),
-                          ),
-                          InputTextWidget(
-                            controlador: nombreController,
-                            formatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp("[a-z A-Z á-ú ]")),
-                            ],
-                            label: 'Nombre Completo',
-                            inputType: TextInputType.text,
-                            validacion: (value) {
-                              return validarNombre("Nombre Completo", value!);
-                            },
-                            readOnly: false,
-                          ),
-                          InputTextWidget(
-                            controlador: edadController,
-                            formatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            label: 'Edad',
-                            inputType: TextInputType.number,
-                            validacion: (value) {
-                              return validarNumero("Edad", value!);
-                            },
-                            readOnly: false,
-                          ),
-                          InputTextWidget(
-                            controlador: correoController,
-                            formatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp("[a-z A-Z á-ú ]")),
-                            ],
-                            label: 'Correo',
-                            inputType: TextInputType.text,
-                            validacion: (value) {
-                              return validarTexto("Correo", value!);
-                            },
-                            readOnly: true,
-                          ),
-                          InputTextWidget(
-                            controlador: dniController,
-                            formatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            label: 'DNI',
-                            inputType: TextInputType.number,
-                            validacion: (value) {
-                              return validarNumero("DNI", value!);
-                            },
-                            readOnly: false,
-                          ),
-                          InputTextWidget(
-                            controlador: direccionController,
-                            formatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp("[a-z A-Z á-ú 0-9 .-]")),
-                            ],
-                            label: 'Dirección',
-                            inputType: TextInputType.text,
-                            validacion: (value) {
-                              return validarTexto("Dirección", value!);
-                            },
-                            readOnly: false,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_keyForm.currentState!.validate()) {
-                                  var edad = int.tryParse(edadController.text);
-                                  var dni = int.tryParse(dniController.text);
-                                  //print(docController.text);
-                                  editarPaciente(
-                                          currentUser.uid,
-                                          nombreController.text,
-                                          edad!,
-                                          dni!,
-                                          direccionController.text)
-                                      .then((value) => popUpExito(context))
-                                      .onError(
-                                        (error, stackTrace) =>
-                                            popUpFallido(context),
-                                      );
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                side: const BorderSide(
-                                    width: 2.0, color: colorSecundario),
-                                backgroundColor: colorPrincipal,
-                                foregroundColor: Colors.white,
-                                fixedSize: const Size(150.0, 50.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                              child: const Text(
-                                "GUARDAR",
-                                style: TextStyle(fontSize: 13.0),
-                              ),
-                            ),
-                          ),
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     Navigator.of(context).push(
-                          //       MaterialPageRoute(
-                          //         builder: (BuildContext context) =>
-                          //             EditProfilePaciente(),
-                          //       ),
-                          //     );
-                          //   },
-                          //   child: const Text('Editar'),
-                          // )
-                        ],
+              }
+              alergiaController.text = snapshot.data!.alergia!;
+              direccionController.text = snapshot.data!.direccion!;
+              dniController.text = snapshot.data!.dni!;
+              edadController.text = snapshot.data!.edad!;
+              correoController.text = snapshot.data!.email!;
+              nombreController.text = snapshot.data!.nombre!;
+              telefonoController.text = snapshot.data!.telefono!;
+              return Form(
+                key: _keyForm,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 10.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: Image.network(
+                          currentUser.photoURL!,
+                          height: 60,
+                        ),
                       ),
-                    ),
+                      //!Alergia
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: alergiaController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Alergia",
+                          ),
+                          validator: ((value) {
+                            return validateText("Alergia", value!);
+                          }),
+                        ),
+                      ),
+                      //!Direccion
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: direccionController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Dirección",
+                          ),
+                          validator: ((value) {
+                            return validateText("Dirección", value!);
+                          }),
+                        ),
+                      ),
+                      //!DNI
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: dniController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "DNI",
+                          ),
+                          validator: ((value) {
+                            return validateNumber("DNI", 8, value!);
+                          }),
+                        ),
+                      ),
+                      //!Edad
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: edadController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Edad",
+                          ),
+                          validator: ((value) {
+                            return validateNumber("Edad", 0, value!);
+                          }),
+                        ),
+                      ),
+                      //!Email
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          readOnly: true,
+                          controller: correoController,
+                          keyboardType: TextInputType.emailAddress,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(RegExp("[ ]"))
+                          ],
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Email",
+                          ),
+                          validator: ((value) {
+                            return validateText("Email", value!);
+                          }),
+                        ),
+                      ),
+                      //!Nombre
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: nombreController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            labelText: "Nombre completo",
+                          ),
+                          validator: ((value) {
+                            return validateText("Nombre completo", value!);
+                          }),
+                        ),
+                      ),
+                      //!Telefono
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: telefonoController,
+                          keyboardType: TextInputType.number,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            labelText: "Número de celular",
+                          ),
+                          validator: ((value) {
+                            return validateNumber(
+                                "Número de celular", 9, value!);
+                          }),
+                        ),
+                      ),
+                      //!Actualizar
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_keyForm.currentState!.validate()) {
+                              patientService
+                                  .editarPaciente(
+                                      currentUser.uid,
+                                      alergiaController.text,
+                                      direccionController.text,
+                                      dniController.text,
+                                      edadController.text,
+                                      nombreController.text,
+                                      telefonoController.text)
+                                  .then((value) => popUpExito(context))
+                                  .onError(
+                                    (error, stackTrace) =>
+                                        popUpFallido(context),
+                                  );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            side: const BorderSide(
+                                width: 2.0, color: colorSecundario),
+                            backgroundColor: colorPrincipal,
+                            foregroundColor: Colors.white,
+                            fixedSize: const Size(150.0, 50.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          child: const Text(
+                            "GUARDAR",
+                            style: TextStyle(fontSize: 13.0),
+                          ),
+                        ),
+                      ),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     Navigator.of(context).push(
+                      //       MaterialPageRoute(
+                      //         builder: (BuildContext context) =>
+                      //             EditProfilePaciente(),
+                      //       ),
+                      //     );
+                      //   },
+                      //   child: const Text('Editar'),
+                      // )
+                    ],
                   ),
-                );
-              default:
-                return const Text('Algo salió mal.');
-            }
-          },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
   }
-}
-
-class InputTextWidget extends StatelessWidget {
-  const InputTextWidget({
-    Key? key,
-    required this.controlador,
-    required this.formatters,
-    required this.label,
-    required this.inputType,
-    this.validacion,
-    required this.readOnly,
-  }) : super(key: key);
-
-  final TextEditingController controlador;
-  final TextInputType inputType;
-  final List<TextInputFormatter> formatters;
-  final String label;
-  final FormFieldValidator<String>? validacion;
-  final bool readOnly;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-        textCapitalization: TextCapitalization.sentences,
-        autocorrect: true,
-        style: const TextStyle(fontSize: 12.0),
-        readOnly: readOnly,
-        controller: controlador,
-        keyboardType: inputType,
-        inputFormatters: formatters,
-        decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-          border: const OutlineInputBorder(),
-          labelText: label,
-          labelStyle: kHintText,
-        ),
-        validator: validacion,
-      ),
-    );
-  }
-}
-
-String? validarNombre(String label, String value) {
-  if (value.isEmpty) {
-    return '$label es obligatorio';
-  }
-  if (value.length < 3) {
-    return '$label debe tener mínimo 3 carácteres';
-  }
-  return null;
-}
-
-String? validarTexto(String label, String value) {
-  if (value.isEmpty) {
-    return '$label es obligatorio';
-  }
-  return null;
-}
-
-String? validarNumero(String label, String value) {
-  if (value.isEmpty) {
-    return '$label es obligatorio';
-  }
-  return null;
 }
 
 Future<void> popUpExito(BuildContext context) {
@@ -354,4 +341,26 @@ Future<void> popUpFallido(BuildContext context) {
       );
     },
   );
+}
+
+String? validateText(String label, String value) {
+  if (value.isEmpty) {
+    return '$label es obligatorio';
+  }
+  if (value.length < 3) {
+    return '$label debe tener mínimo 3 caracteres';
+  }
+  return null;
+}
+
+String? validateNumber(String label, int length, String value) {
+  if (value.isEmpty) {
+    return '$label es obligatorio';
+  }
+  if (length != 0) {
+    if (value.length != length) {
+      return '$label no es válido';
+    }
+  }
+  return null;
 }

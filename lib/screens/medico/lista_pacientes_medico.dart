@@ -17,11 +17,12 @@ class MiListaPacientes extends StatefulWidget {
 
 class _MiListaPacientesState extends State<MiListaPacientes> {
   var currentUserId = FirebaseAuth.instance.currentUser!.uid;
+  final patientService = PatientService();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Paciente>>(
-      future: getPatientListByMedicUID(currentUserId),
+      future: patientService.getPatientListByMedicUID(currentUserId),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
