@@ -14,7 +14,7 @@ class PSideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var correo = FirebaseAuth.instance.currentUser!.email!;
+    final currentUser = FirebaseAuth.instance.currentUser!;
 
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.85,
@@ -22,7 +22,7 @@ class PSideBar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           FutureBuilder<Paciente>(
-            future: getDataPaciente(correo),
+            future: getPatientByUID(currentUser.uid),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
@@ -42,7 +42,7 @@ class PSideBar extends StatelessWidget {
                             fontSize: 13.0, fontWeight: FontWeight.bold),
                       ),
                       accountEmail: Text(
-                        correo,
+                        currentUser.email!,
                         style: const TextStyle(fontSize: 12.0),
                       ),
                       currentAccountPicture: CircleAvatar(

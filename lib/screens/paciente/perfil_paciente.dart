@@ -42,12 +42,10 @@ class _PPerfilState extends State<PPerfilStf> {
     super.dispose();
   }
 
-  var correo = FirebaseAuth.instance.currentUser!.email!;
+  final currentUser = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
-    final String currentUserId = FirebaseAuth.instance.currentUser!.uid;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Perfil", style: kTituloCabezera),
@@ -55,7 +53,7 @@ class _PPerfilState extends State<PPerfilStf> {
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: FutureBuilder<Paciente>(
-          future: getDataPaciente(correo),
+          future: getPatientByUID(currentUser.uid),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case (ConnectionState.waiting):
@@ -75,7 +73,7 @@ class _PPerfilState extends State<PPerfilStf> {
                 edadController.text = snapshot.data!.edad!.toString();
                 direccionController.text = snapshot.data!.direccion!;
                 dniController.text = snapshot.data!.dni!.toString();
-                correoController.text = correo;
+                correoController.text = currentUser.email!;
                 return SingleChildScrollView(
                   child: Form(
                     key: _keyForm,
@@ -163,7 +161,7 @@ class _PPerfilState extends State<PPerfilStf> {
                                   var dni = int.tryParse(dniController.text);
                                   //print(docController.text);
                                   editarPaciente(
-                                          currentUserId,
+                                          currentUser.uid,
                                           nombreController.text,
                                           edad!,
                                           dni!,

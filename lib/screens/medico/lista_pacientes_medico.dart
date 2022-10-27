@@ -80,33 +80,3 @@ class CardPaciente extends StatelessWidget {
     );
   }
 }
-
-Future<List<Paciente>> getPatientListByMedicUID(String codigoMedico) async {
-  List<Paciente> listaPacientes = [];
-  Paciente paciente;
-
-  try {
-    await pacientedb
-        .where("codigo_medico", isEqualTo: codigoMedico)
-        .get()
-        .then((event) {
-      for (var doc in event.docs) {
-        paciente = Paciente(
-            alergia: doc.data()["alergia"],
-            codigo_medico: doc.data()["codigo_medico"],
-            direccion: doc.data()["direccion"],
-            dni: doc.data()["dni_paciente"],
-            edad: doc.data()["edad"],
-            email: doc.data()["email"],
-            nombre: doc.data()["nombre"],
-            numero_telefono: doc.data()["numero_telefono"],
-            uid: doc.data()["uid"]);
-        listaPacientes.add(paciente);
-      }
-    });
-  } catch (e) {
-    // print(e);
-  }
-
-  return listaPacientes;
-}

@@ -1,55 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:pry20220116/models/paciente.dart';
 
 final pacientedb = FirebaseFirestore.instance.collection("paciente");
+final citaDB = FirebaseFirestore.instance.collection("cita");
 
-Future<Paciente> getDataPaciente(String correo) async {
+Future<Paciente> getPatientByUID(String pacienteUID) async {
   var alergia = '';
-  var codigo_medico = '';
-  var direccion = '';
-  int dni = 0;
-  int edad = 0;
-  var email = '';
-  var nombre = '';
-  int numero_telefono = 0;
-  var uid = '';
-  var urlImage = '';
-
-  try {
-    await pacientedb.where("email", isEqualTo: correo).get().then((event) {
-      for (var doc in event.docs) {
-        alergia = doc.data()["alergia"];
-        codigo_medico = doc.data()["codigo_medico"];
-        direccion = doc.data()["direccion"];
-        dni = doc.data()["dni_paciente"];
-        edad = doc.data()["edad"];
-        email = doc.data()["email"];
-        nombre = doc.data()["nombre"];
-        numero_telefono = doc.data()["numero_telefono"];
-        uid = doc.data()["uid"];
-        urlImage = doc.data()["urlImage"];
-      }
-    });
-  } catch (e) {
-    //print(e);
-  }
-  var paciente = Paciente(
-      alergia: alergia,
-      codigo_medico: codigo_medico,
-      direccion: direccion,
-      dni: dni,
-      edad: edad,
-      email: email,
-      nombre: nombre,
-      numero_telefono: numero_telefono,
-      uid: uid,
-      urlImage: urlImage);
-  return paciente;
-}
-
-Future<Paciente> getDataPacienteByUID(String pacienteUID) async {
-  var alergia = '';
-  var codigo_medico = '';
   var direccion = '';
   int dni = 0;
   int edad = 0;
@@ -63,7 +20,6 @@ Future<Paciente> getDataPacienteByUID(String pacienteUID) async {
     await pacientedb.where("uid", isEqualTo: pacienteUID).get().then((event) {
       for (var doc in event.docs) {
         alergia = doc.data()["alergia"];
-        codigo_medico = doc.data()["codigo_medico"];
         direccion = doc.data()["direccion"];
         dni = doc.data()["dni_paciente"];
         edad = doc.data()["edad"];
@@ -79,7 +35,6 @@ Future<Paciente> getDataPacienteByUID(String pacienteUID) async {
   }
   var paciente = Paciente(
       alergia: alergia,
-      codigo_medico: codigo_medico,
       direccion: direccion,
       dni: dni,
       edad: edad,
@@ -89,6 +44,61 @@ Future<Paciente> getDataPacienteByUID(String pacienteUID) async {
       uid: uid,
       urlImage: urlImage);
   return paciente;
+}
+
+Future<List<Paciente>> getPatientListByMedicUID2(String codigoMedico) async {
+  List<Paciente> listaPacientes = [];
+  Paciente paciente;
+
+  try {
+    await pacientedb
+        .where("codigo_medico", isEqualTo: codigoMedico)
+        .get()
+        .then((event) {
+      for (var doc in event.docs) {
+        paciente = Paciente(
+            alergia: doc.data()["alergia"],
+            direccion: doc.data()["direccion"],
+            dni: doc.data()["dni_paciente"],
+            edad: doc.data()["edad"],
+            email: doc.data()["email"],
+            nombre: doc.data()["nombre"],
+            numero_telefono: doc.data()["numero_telefono"],
+            uid: doc.data()["uid"]);
+        listaPacientes.add(paciente);
+      }
+    });
+  } catch (e) {
+    // print(e);
+  }
+
+  return listaPacientes;
+}
+
+Future<List<Paciente>> getAllPatients() async {
+  List<Paciente> listaPacientes = [];
+  Paciente paciente;
+
+  try {
+    await pacientedb.get().then((event) {
+      for (var doc in event.docs) {
+        paciente = Paciente(
+            alergia: doc.data()["alergia"],
+            direccion: doc.data()["direccion"],
+            dni: doc.data()["dni_paciente"],
+            edad: doc.data()["edad"],
+            email: doc.data()["email"],
+            nombre: doc.data()["nombre"],
+            numero_telefono: doc.data()["numero_telefono"],
+            uid: doc.data()["uid"]);
+        listaPacientes.add(paciente);
+      }
+    });
+  } catch (e) {
+    // print(e);
+  }
+
+  return listaPacientes;
 }
 
 Future<void> editarPaciente(
@@ -107,8 +117,6 @@ Future<void> editarPaciente(
 }
 
 //!
-
-CollectionReference citaDB = FirebaseFirestore.instance.collection("cita");
 
 Future<void> crearCita(
     String codigoPaciente,
@@ -134,28 +142,29 @@ Future<void> crearCita(
       .catchError((error) => {}); //print('Cita no fue generada'));
 }
 
-Future<List<Paciente>> getAllPatients() async {
+Future<List<Paciente>> getPatientListByMedicUID(String medicUID) async {
+  List<String> listaPacientesUID = [];
   List<Paciente> listaPacientes = [];
   Paciente paciente;
+  String pacienteUID;
 
   try {
-    await pacientedb.get().then((event) {
+    await citaDB
+        .where("codigo_medico", isEqualTo: medicUID)
+        .get()
+        .then((event) {
       for (var doc in event.docs) {
-        paciente = Paciente(
-            alergia: doc.data()["alergia"],
-            codigo_medico: doc.data()["codigo_medico"],
-            direccion: doc.data()["direccion"],
-            dni: doc.data()["dni_paciente"],
-            edad: doc.data()["edad"],
-            email: doc.data()["email"],
-            nombre: doc.data()["nombre"],
-            numero_telefono: doc.data()["numero_telefono"],
-            uid: doc.data()["uid"]);
-        listaPacientes.add(paciente);
+        pacienteUID = doc.data()["codigo_paciente"];
+        listaPacientesUID.add(pacienteUID);
       }
     });
   } catch (e) {
-    // print(e);
+    debugPrint(e.toString());
+  }
+  listaPacientesUID = listaPacientesUID.toSet().toList();
+  for (var i = 0; i < listaPacientesUID.length; i++) {
+    paciente = await getPatientByUID(listaPacientesUID[i]);
+    listaPacientes.add(paciente);
   }
 
   return listaPacientes;

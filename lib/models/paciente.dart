@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Paciente {
   final String? alergia;
-  final String? codigo_medico;
   final String? direccion;
   final int? dni;
   final int? edad;
@@ -14,7 +13,6 @@ class Paciente {
 
   const Paciente({
     this.alergia,
-    this.codigo_medico,
     this.direccion,
     this.dni,
     this.edad,
@@ -32,7 +30,6 @@ class Paciente {
     final data = snapshot.data();
     return Paciente(
         alergia: data?['alergia'],
-        codigo_medico: data?['codigo_medico'],
         direccion: data?['direccion'],
         dni: data?['dni_paciente'],
         edad: data?['edad'],

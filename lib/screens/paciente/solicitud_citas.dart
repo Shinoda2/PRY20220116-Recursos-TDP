@@ -205,7 +205,7 @@ class _SolicitudViewPageState extends State<SolicitudViewPage> {
 
   Widget btnEnviar() {
     return FutureBuilder<Paciente>(
-      future: getDataPacienteByUID(currentUser.uid),
+      future: getPatientByUID(currentUser.uid),
       builder: (context, snapPaciente) {
         if (!snapPaciente.hasData) {
           return Center(child: CircularProgressIndicator());
