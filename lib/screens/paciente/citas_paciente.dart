@@ -197,7 +197,7 @@ class _CitaItem extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(18.0),
           child: Row(
             children: [
               Padding(
@@ -208,19 +208,19 @@ class _CitaItem extends StatelessWidget {
                           DateTime.parse(document["fecha"].toDate().toString()))
                       .toString(),
                   style: const TextStyle(
-                    fontSize: 10.0,
-                    letterSpacing: 1.0,
+                    fontSize: 16,
+                    letterSpacing: 2.0,
                   ),
                 ),
               ),
               Flexible(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       "${document["nombre_medico"]}",
                       style: const TextStyle(
-                        fontSize: 10.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.0,
                       ),
@@ -230,7 +230,7 @@ class _CitaItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
-                        fontSize: 7.0,
+                        fontSize: 16.0,
                         letterSpacing: 1.0,
                         color: colorTres,
                       ),

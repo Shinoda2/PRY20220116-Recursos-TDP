@@ -16,7 +16,7 @@ class MSideBar extends StatelessWidget {
     var correo = FirebaseAuth.instance.currentUser!.email!;
 
     return Drawer(
-      width: MediaQuery.of(context).size.width * 0.85,
+      width: MediaQuery.of(context).size.width * 0.75,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -38,18 +38,20 @@ class MSideBar extends StatelessWidget {
                       accountName: Text(
                         snapshot.data!.nombre!,
                         style: const TextStyle(
-                            fontSize: 13.0, fontWeight: FontWeight.bold),
+                            fontSize: 20.0, fontWeight: FontWeight.bold),
                       ),
                       accountEmail: Text(
                         correo,
-                        style: const TextStyle(fontSize: 12.0),
+                        style: const TextStyle(fontSize: 16.0),
                       ),
                       currentAccountPicture: CircleAvatar(
-                        child: Image.asset(
-                          'assets/image/icon.png',
-                          width: 90,
-                          height: 90,
-                          fit: BoxFit.cover,
+                        child: ClipOval(
+                          child: Image.network(
+                            snapshot.data!.urlImage!,
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     );
@@ -99,7 +101,7 @@ class MSideBar extends StatelessWidget {
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
             onTap: () {
-              Navigator.pushNamed(context, Inicio.id);
+              Navigator.pushNamed(context, StartPage.id);
               FirebaseAuth.instance.signOut();
             },
           ),

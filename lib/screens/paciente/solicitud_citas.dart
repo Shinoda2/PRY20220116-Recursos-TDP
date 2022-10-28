@@ -246,10 +246,9 @@ class _SolicitudViewPageState extends State<SolicitudViewPage> {
                       snapMedico.data!.nombre!,
                       snapPaciente.data!.nombre!,
                       sintomaController.text);
-                  //popUpExito(context);
+                  popUpExito(context);
                 } else {
-                  //popUpFallido(context);
-                  debugPrint("fallo al crear cita");
+                  popUpFallido(context);
                 }
               },
             );

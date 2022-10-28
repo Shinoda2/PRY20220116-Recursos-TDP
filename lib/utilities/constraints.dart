@@ -26,12 +26,12 @@ const kTitulo2 = TextStyle(
 const kTituloCabezera = TextStyle(
   color: Colors.white,
   fontWeight: FontWeight.bold,
-  fontSize: 15.0,
+  fontSize: 20,
 );
 
 const kHintText = TextStyle(
   fontWeight: FontWeight.w400,
-  fontSize: 12.0,
+  fontSize: 16.0,
 );
 
 const kLineaDivisora = Divider(color: Colors.black);

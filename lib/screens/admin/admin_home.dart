@@ -2,8 +2,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/main.dart';
 import 'package:pry20220116/screens/admin/crear_medico.dart';
+import 'package:pry20220116/screens/admin/lista_medicamentos.dart';
 import 'package:pry20220116/screens/admin/lista_medico.dart';
 import 'package:pry20220116/screens/admin/lista_paciente.dart';
 import 'package:pry20220116/screens/shared/inicio.dart';
@@ -38,6 +38,7 @@ class _AdminHomeState extends State<AdminHome> {
                   btnCrearMedico(),
                   btnListaMedicos(),
                   btnListaPacientes(),
+                  btnListaMedicamentos(),
                   btnCerrarSesion(),
                 ],
               ),
@@ -73,6 +74,17 @@ class _AdminHomeState extends State<AdminHome> {
         child: Text("Lista médicos"));
   }
 
+  Widget btnListaMedicamentos() {
+    return ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ListaMedicamentoPage()),
+          );
+        },
+        child: Text("Lista medicamentos"));
+  }
+
   Widget btnListaPacientes() {
     return ElevatedButton(
         onPressed: () {
@@ -88,7 +100,7 @@ class _AdminHomeState extends State<AdminHome> {
     return ElevatedButton(
         onPressed: () {
           FirebaseAuth.instance.signOut();
-          Navigator.pushNamed(context, Inicio.id);
+          Navigator.pushNamed(context, StartPage.id);
         },
         child: Text("Cerrar sesión"));
   }

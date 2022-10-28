@@ -1,6 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../../utilities/constraints.dart';
 
 class PListaMedicinas extends StatelessWidget {
@@ -15,7 +16,7 @@ class PListaMedicinas extends StatelessWidget {
 }
 
 class PListaMedicinasWidget extends StatefulWidget {
-  const PListaMedicinasWidget({Key? key}) : super(key: key);
+  const PListaMedicinasWidget({super.key});
 
   @override
   _PListaMedicinasWidget createState() => _PListaMedicinasWidget();
@@ -30,19 +31,21 @@ class _PListaMedicinasWidget extends State<PListaMedicinasWidget> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Medicamentos", style: kTituloCabezera),
+        centerTitle: true,
+        title: const Text("Medicinas", style: kTituloCabezera),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
         child: Column(
           children: <Widget>[
+            //!Search
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    width: 240.0,
+                    width: MediaQuery.of(context).size.width * 0.75,
                     child: TextField(
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -73,17 +76,19 @@ class _PListaMedicinasWidget extends State<PListaMedicinasWidget> {
                 ),
               ],
             ),
-            const Padding(
+            //!Linea
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: kLineaDivisora,
             ),
+            //!Lista
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('medicamento')
                   .snapshots(),
               builder: (context, snapshots) {
                 return (snapshots.connectionState == ConnectionState.waiting)
-                    ? const Center(
+                    ? Center(
                         child: CircularProgressIndicator(),
                       )
                     : ListView.builder(
@@ -93,57 +98,43 @@ class _PListaMedicinasWidget extends State<PListaMedicinasWidget> {
                         itemBuilder: (context, index) {
                           var data = snapshots.data!.docs[index].data()
                               as Map<String, dynamic>;
-
                           if (_search.isEmpty) {
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                data['nombre'],
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kTitulo2,
-                              ),
-                              subtitle: Text(
-                                'Stock: ' + data['stock'].toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kHintText,
-                              ),
-                              leading: CircleAvatar(
-                                backgroundImage: NetworkImage(data['imagen']),
-                              ),
-                            );
+                            return medicineCardItem(data);
                           }
                           if (data['nombre']
                               .toString()
                               .toLowerCase()
-                              .startsWith(_search.toLowerCase())) {
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                data['nombre'],
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kTitulo2,
-                              ),
-                              subtitle: Text(
-                                'Stock: ' + data['stock'].toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kHintText,
-                              ),
-                              leading: CircleAvatar(
-                                backgroundImage: NetworkImage(data['imagen']),
-                              ),
-                            );
+                              .contains(_search.toLowerCase())) {
+                            return medicineCardItem(data);
                           }
                           return Container();
-                        },
-                      );
+                        });
               },
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget medicineCardItem(Map<String, dynamic> data) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        data['nombre'],
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: kTitulo1,
+      ),
+      subtitle: Text(
+        'Stock: ${data["stock"]}',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: kHintText,
+      ),
+      leading: CircleAvatar(
+        radius: 30,
+        backgroundImage: NetworkImage(data['urlImage']),
       ),
     );
   }

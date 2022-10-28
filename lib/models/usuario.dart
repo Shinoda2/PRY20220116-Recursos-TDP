@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Usuario {
-  final String? nombre;
+  final String? email;
   final String? uid;
   final String? rol;
 
   const Usuario({
-    this.nombre,
+    this.email,
     this.uid,
     this.rol,
   });
@@ -17,7 +17,7 @@ class Usuario {
   ) {
     final data = snapshot.data();
     return Usuario(
-      nombre: data?['nombre'],
+      email: data?['email'],
       uid: data?['uid'],
       rol: data?['rol'],
     );

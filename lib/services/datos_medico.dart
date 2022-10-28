@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pry20220116/models/medico.dart';
+import 'package:pry20220116/services/datos_usuario.dart';
 
 final medicodb = FirebaseFirestore.instance.collection("medico");
 
@@ -164,6 +165,9 @@ Future<void> crearMedico(
   UserCredential userCredential = await FirebaseAuth.instance
       .createUserWithEmailAndPassword(email: email, password: contrasenia);
 
+  AdminService adminService = AdminService();
+  adminService.crearUsuario(email, userCredential.user!.uid, "medico");
+
   medicodb
       .doc(userCredential.user!.uid)
       .set({
@@ -172,8 +176,6 @@ Future<void> crearMedico(
         'edad': int.parse(edad),
         'email': email,
         'especialidad': especialidad,
-        'imagen':
-            'https://firebasestorage.googleapis.com/v0/b/wisha-database.appspot.com/o/female%20doctor.jpeg?alt=media&token=1d343adc-e71c-4917-9e85-9ccbbc7660b3',
         'nombre': nombre,
         'numero': int.parse(numeroCelular),
         'tiempo_trabajado': int.parse(aniosTrabajados),

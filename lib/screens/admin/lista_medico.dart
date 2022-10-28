@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pry20220116/models/medico.dart';
+import 'package:pry20220116/screens/shared/perfiles/perfil_medico.dart';
 import 'package:pry20220116/services/datos_medico.dart';
 
 class ListaMedicoPage extends StatefulWidget {
@@ -59,31 +60,27 @@ class MedicCardItem extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           leading: CircleAvatar(
             radius: 30,
-            child: Image.network(medico.urlImage!),
+            backgroundImage: NetworkImage(medico.urlImage!),
           ),
           title: Text(
             medico.nombre!,
-            style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Especialidad: ${medico.especialidad!}",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
-              ),
-              Text(
-                "Años de experiencia: ${medico.aniosTrabajados!}",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
-              ),
-            ],
+          subtitle: Text(
+            medico.email!,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
           ),
-          //onTap: () => Navigator.push(
-          //  context,
-          //  MaterialPageRoute(
-          //    builder: (context) => MPerfilPaciente(paciente: paciente),
-          //  ),
-          //),
+          trailing: Icon(
+            Icons.arrow_right_rounded,
+            color: Colors.black,
+            size: 40,
+          ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PerfilMedico(medico: medico),
+            ),
+          ),
         ),
       ),
     );

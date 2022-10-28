@@ -17,7 +17,7 @@ class PSideBar extends StatelessWidget {
     final patientService = PatientService();
 
     return Drawer(
-      width: MediaQuery.of(context).size.width * 0.85,
+      width: MediaQuery.of(context).size.width * 0.75,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -27,8 +27,7 @@ class PSideBar extends StatelessWidget {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
                   return const UserAccountsDrawerHeader(
-                    accountName:
-                        CircularProgressIndicator(color: Colors.white),
+                    accountName: CircularProgressIndicator(color: Colors.white),
                     accountEmail:
                         CircularProgressIndicator(color: Colors.white),
                     currentAccountPicture:
@@ -47,11 +46,13 @@ class PSideBar extends StatelessWidget {
                         style: const TextStyle(fontSize: 12.0),
                       ),
                       currentAccountPicture: CircleAvatar(
-                        child: Image.network(
-                          snapshot.data!.urlImage!,
-                          width: 90,
-                          height: 90,
-                          fit: BoxFit.fill,
+                        child: ClipOval(
+                          child: Image.network(
+                            snapshot.data!.urlImage!,
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
                     );
@@ -118,8 +119,7 @@ class PSideBar extends StatelessWidget {
             leading: const Icon(Icons.exit_to_app, color: Colors.red),
             title: const Text(
               'Cerrar Sesión',
-              style:
-                  TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             ),
             onTap: () {
               final patientService = PatientService();

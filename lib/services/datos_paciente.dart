@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pry20220116/models/paciente.dart';
 import 'package:pry20220116/screens/paciente/auth/register.dart';
 import 'package:pry20220116/screens/shared/inicio.dart';
+import 'package:pry20220116/services/datos_usuario.dart';
 import 'package:pry20220116/widgets/paciente/bottom_nav_bar_paciente.dart';
 
 final pacientedb = FirebaseFirestore.instance.collection("paciente");
@@ -48,7 +49,7 @@ class PatientService {
     try {
       await _googleSignIn.signOut();
       await _auth.signOut();
-      Navigator.pushNamedAndRemoveUntil(context, Inicio.id, (_) => false);
+      Navigator.pushNamedAndRemoveUntil(context, StartPage.id, (_) => false);
     } on FirebaseAuthException catch (e) {
       print(e.message);
     }
@@ -76,6 +77,8 @@ class PatientService {
         uid: uid,
         urlImage: urlImage);
 
+    AdminService adminService = AdminService();
+    adminService.crearUsuario(email, uid, "paciente");
     final docRef = pacientedb
         .withConverter(
           fromFirestore: Paciente.fromFirestore,
@@ -141,7 +144,8 @@ class PatientService {
               email: doc.data()["email"],
               nombre: doc.data()["nombre"],
               telefono: doc.data()["telefono"],
-              uid: doc.data()["uid"]);
+              uid: doc.data()["uid"],
+              urlImage: doc.data()["urlImage"]);
           listaPacientes.add(paciente);
         }
       });

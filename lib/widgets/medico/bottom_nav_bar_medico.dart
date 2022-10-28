@@ -24,6 +24,7 @@ class _MBottomNavBar extends State<MBottomNavBar> {
     const ChatBotView(),
     const MiListaPacientes()
   ];
+  //const MListaPacientes()
 
   @override
   void initState() {

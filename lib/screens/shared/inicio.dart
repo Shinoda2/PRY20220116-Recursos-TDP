@@ -1,21 +1,19 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pry20220116/screens/admin/login_admin.dart';
-import 'package:pry20220116/screens/medico/login_medico.dart';
 import 'package:pry20220116/screens/paciente/auth/login.dart';
+import 'package:pry20220116/screens/shared/login.dart';
 
 import '../../utilities/constraints.dart';
 
-class Inicio extends StatefulWidget {
-  const Inicio({Key? key}) : super(key: key);
+class StartPage extends StatefulWidget {
+  const StartPage({Key? key}) : super(key: key);
 
-  static String id = '/';
+  static String id = '/startPage';
 
   @override
-  _Inicio createState() => _Inicio();
+  _StartPage createState() => _StartPage();
 }
 
-class _Inicio extends State<Inicio> {
+class _StartPage extends State<StartPage> {
   TextStyle defaultStyle = TextStyle(color: Colors.grey, fontSize: 14);
   TextStyle linkStyle = TextStyle(color: Colors.blue);
   @override
@@ -61,7 +59,7 @@ class _Inicio extends State<Inicio> {
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, MLogin.id);
+                    Navigator.pushNamed(context, LoginPage.id);
                   },
                   style: ElevatedButton.styleFrom(
                     side: const BorderSide(width: 2.0, color: colorSecundario),
@@ -79,19 +77,6 @@ class _Inicio extends State<Inicio> {
             Flexible(
               child: Image.asset('assets/image/medico.png'),
             ),
-            Center(
-              child: RichText(
-                text: TextSpan(children: <TextSpan>[
-                  TextSpan(text: "Eres administrador?", style: defaultStyle),
-                  TextSpan(
-                      text: "Iniciar sesión",
-                      style: linkStyle,
-                      recognizer: TapGestureRecognizer()
-                        ..onTap =
-                            (() => Navigator.pushNamed(context, ALogin.id))),
-                ]),
-              ),
-            )
           ],
         ),
       ),

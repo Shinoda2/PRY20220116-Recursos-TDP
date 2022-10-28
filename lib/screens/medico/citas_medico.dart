@@ -193,19 +193,19 @@ class _CitaItem extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(18.0),
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 10.0),
+                padding: const EdgeInsets.only(right: 12.0),
                 child: Text(
                   DateFormat('jm')
                       .format(
                           DateTime.parse(document["fecha"].toDate().toString()))
                       .toString(),
                   style: const TextStyle(
-                    fontSize: 8.0,
-                    letterSpacing: 1.0,
+                    fontSize: 16.0,
+                    letterSpacing: 2.0,
                   ),
                 ),
               ),
@@ -216,7 +216,7 @@ class _CitaItem extends StatelessWidget {
                     Text(
                       "${document["nombre_paciente"]}",
                       style: const TextStyle(
-                        fontSize: 10.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.0,
                       ),
@@ -226,7 +226,7 @@ class _CitaItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
-                        fontSize: 7.0,
+                        fontSize: 16.0,
                         letterSpacing: 1.0,
                         color: colorTres,
                       ),

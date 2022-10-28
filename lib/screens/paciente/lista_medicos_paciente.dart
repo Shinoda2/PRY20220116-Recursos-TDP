@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../utilities/constraints.dart';
@@ -29,19 +31,21 @@ class _PListaMedicosWidget extends State<PListaMedicosWidget> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        centerTitle: true,
         title: const Text("Médicos", style: kTituloCabezera),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
         child: Column(
           children: <Widget>[
+            //!Search
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    width: 240.0,
+                    width: MediaQuery.of(context).size.width * 0.75,
                     child: TextField(
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -72,16 +76,18 @@ class _PListaMedicosWidget extends State<PListaMedicosWidget> {
                 ),
               ],
             ),
-            const Padding(
+            //!Linea
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: kLineaDivisora,
             ),
+            //!Lista
             StreamBuilder<QuerySnapshot>(
               stream:
                   FirebaseFirestore.instance.collection('medico').snapshots(),
               builder: (context, snapshots) {
                 return (snapshots.connectionState == ConnectionState.waiting)
-                    ? const Center(
+                    ? Center(
                         child: CircularProgressIndicator(),
                       )
                     : ListView.builder(
@@ -92,48 +98,13 @@ class _PListaMedicosWidget extends State<PListaMedicosWidget> {
                           var data = snapshots.data!.docs[index].data()
                               as Map<String, dynamic>;
                           if (_search.isEmpty) {
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                data['nombre'],
-                                overflow: TextOverflow.ellipsis,
-                                style: kTitulo2,
-                              ),
-                              subtitle: Text(
-                                'Especialidad: ' +
-                                    data['especialidad_codigo'].toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kHintText,
-                              ),
-                              leading: CircleAvatar(
-                                backgroundImage: NetworkImage(data['imagen']),
-                              ),
-                            );
+                            return medicCardItem(data);
                           }
                           if (data['nombre']
                               .toString()
                               .toLowerCase()
-                              .startsWith(_search.toLowerCase())) {
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                data['nombre'],
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kTitulo2,
-                              ),
-                              subtitle: Text(
-                                'Especialidad: ' +
-                                    data['especialidad_codigo'].toString(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: kHintText,
-                              ),
-                              leading: CircleAvatar(
-                                backgroundImage: NetworkImage(data['imagen']),
-                              ),
-                            );
+                              .contains(_search.toLowerCase())) {
+                            return medicCardItem(data);
                           }
                           return Container();
                         });
@@ -141,6 +112,28 @@ class _PListaMedicosWidget extends State<PListaMedicosWidget> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget medicCardItem(Map<String, dynamic> data) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        data['nombre'],
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: kTitulo1,
+      ),
+      subtitle: Text(
+        'Especialidad: ' + data['especialidad'],
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: kHintText,
+      ),
+      leading: CircleAvatar(
+        radius: 30,
+        backgroundImage: NetworkImage(data['urlImage']),
       ),
     );
   }

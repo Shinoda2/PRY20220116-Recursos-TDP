@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pry20220116/models/paciente.dart';
+import 'package:pry20220116/screens/shared/perfiles/perfil_paciente.dart';
 import 'package:pry20220116/services/datos_paciente.dart';
 
 class ListaPacientePage extends StatefulWidget {
@@ -59,20 +60,29 @@ class PatientCardItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
           contentPadding: EdgeInsets.zero,
-          //leading: CircleAvatar(
-          //  radius: 30,
-          //  child: Image.network(paciente.urlImage!),
-          //),
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundImage: NetworkImage(paciente.urlImage!),
+          ),
           title: Text(
             paciente.nombre!,
-            style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
           ),
-          //onTap: () => Navigator.push(
-          //  context,
-          //  MaterialPageRoute(
-          //    builder: (context) => MPerfilPaciente(paciente: paciente),
-          //  ),
-          //),
+          subtitle: Text(
+            paciente.email!,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+          ),
+          trailing: Icon(
+            Icons.arrow_right_rounded,
+            color: Colors.black,
+            size: 40,
+          ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PerfilPaciente(paciente: paciente),
+            ),
+          ),
         ),
       ),
     );

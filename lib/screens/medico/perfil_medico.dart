@@ -87,9 +87,13 @@ class _MPerfilState extends State<MPerfilStf> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20.0),
-                            child: Image.asset(
-                              'assets/image/icon.png',
-                              height: 120,
+                            child: CircleAvatar(
+                              radius: 45,
+                              child: ClipOval(
+                                child: Image.network(
+                                  snapshot.data!.urlImage!,
+                                ),
+                              ),
                             ),
                           ),
                           InputTextWidget(
