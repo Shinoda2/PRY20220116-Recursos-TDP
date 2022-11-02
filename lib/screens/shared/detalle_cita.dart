@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pry20220116/models/cita.dart';
 import 'package:pry20220116/models/usuario.dart';
 import 'package:pry20220116/services/datos_citas.dart';
 import 'package:pry20220116/services/datos_usuario.dart';
@@ -22,7 +23,9 @@ class DetalleCitaPage extends StatefulWidget {
 }
 
 class _DetalleCitaPageState extends State<DetalleCitaPage> {
+  AdminService adminService = AdminService();
   AppointmentService appointmentService = AppointmentService();
+
   DateTime dateTime = DateTime.now().add(Duration(days: 1));
 
   @override
@@ -103,51 +106,58 @@ class _DetalleCitaPageState extends State<DetalleCitaPage> {
   }
 
   Widget btnEditarCita() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 40),
-      child: ElevatedButton(
-          onPressed: () async {
-            DateTime? date = await pickDate(context, dateTime);
-            if (date == null) return;
+    return FutureBuilder<Cita>(
+        future: appointmentService.getCitaByUID(widget.citaId),
+        builder: (context, userSnap) {
+          if (!userSnap.hasData) {
+            return CircularProgressIndicator();
+          }
+          if (userSnap.data!.isFinished!) {
+            return SizedBox();
+          }
+          return Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: ElevatedButton(
+                onPressed: () async {
+                  DateTime? date = await pickDate(context, dateTime);
+                  if (date == null) return;
 
-            TimeOfDay? time = await pickTime(context, dateTime);
-            if (time == null) return;
+                  TimeOfDay? time = await pickTime(context, dateTime);
+                  if (time == null) return;
 
-            final dt = DateTime(
-                date.year, date.month, date.day, time.hour, time.minute);
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text('¿Estás seguro?'),
-                    content: Text(
-                        'Vas a editar el horario de la cita para las ' +
-                            DateFormat('dd/MM/y hh:mm a').format(dt)),
-                    actions: <Widget>[
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Cancelar.')),
-                      TextButton(
-                          onPressed: () {
-                            appointmentService.editarCita(
-                                widget.citaId, Timestamp.fromDate(dt));
-                            Navigator.pop(context);
-                          },
-                          child: Text('Si.'))
-                    ],
-                  );
-                });
-          },
-          child: Text("Editar fecha")),
-    );
+                  final dt = DateTime(
+                      date.year, date.month, date.day, time.hour, time.minute);
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('¿Estás seguro?'),
+                          content: Text(
+                              'Vas a editar el horario de la cita para las ' +
+                                  DateFormat('dd/MM/y hh:mm a').format(dt)),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Cancelar.')),
+                            TextButton(
+                                onPressed: () {
+                                  appointmentService.editarCita(
+                                      widget.citaId, Timestamp.fromDate(dt));
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Si.'))
+                          ],
+                        );
+                      });
+                },
+                child: Text("Editar fecha")),
+          );
+        });
   }
 
   Widget btnFinalizarCita() {
-    AdminService adminService = AdminService();
-    AppointmentService appointmentService = AppointmentService();
-
     final currentUserID = FirebaseAuth.instance.currentUser!.uid;
 
     return FutureBuilder<Usuario>(
