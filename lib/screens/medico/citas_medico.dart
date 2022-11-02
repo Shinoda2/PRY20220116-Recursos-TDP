@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:pry20220116/models/cita.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../utilities/constraints.dart';
@@ -28,21 +31,7 @@ class _MCitasState extends State<MCitas> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-        child: Column(
-          children: const [
-            MyCalendario(),
-            Padding(
-              padding: EdgeInsets.only(bottom: 10.0),
-              child: kLineaDivisora,
-            ),
-            MisCitas(),
-          ],
-        ),
-      ),
-    );
+    return MyCalendario();
   }
 }
 
@@ -54,118 +43,132 @@ class MyCalendario extends StatefulWidget {
 }
 
 class _MyCalendarioState extends State<MyCalendario> {
+  late final ValueNotifier<List<Cita>> _selectedEvents;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  final currentUserId = FirebaseAuth.instance.currentUser!.uid;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
+  List<Cita> citas = [];
+  bool alreadyRun1 = false;
   @override
-  Widget build(BuildContext context) {
-    return TableCalendar(
-      headerStyle: const HeaderStyle(
-        headerPadding: EdgeInsets.zero,
-        formatButtonVisible: false,
-        titleCentered: true,
-        titleTextStyle: TextStyle(fontSize: 13.0),
-        leftChevronPadding: EdgeInsets.all(8.0),
-        rightChevronPadding: EdgeInsets.all(8.0),
-      ),
-      daysOfWeekStyle: const DaysOfWeekStyle(
-        weekdayStyle: TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
-        weekendStyle: TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
-      ),
-      rowHeight: 40.0,
-      focusedDay: _focusedDay,
-      firstDay: DateTime(1920),
-      lastDay: DateTime(2050),
-      startingDayOfWeek: StartingDayOfWeek.sunday,
-      daysOfWeekVisible: true,
-      locale: 'es_mx',
-      calendarStyle: const CalendarStyle(
-        isTodayHighlighted: true,
-        todayDecoration: BoxDecoration(
-          color: Color.fromRGBO(72, 189, 255, 0.5),
-          shape: BoxShape.circle,
-        ),
-        todayTextStyle: TextStyle(fontSize: 10.0, color: Colors.white),
-        selectedDecoration: BoxDecoration(
-          color: colorSecundario,
-          shape: BoxShape.circle,
-        ),
-        selectedTextStyle: TextStyle(fontSize: 10.0, color: Colors.white),
-        defaultTextStyle: TextStyle(fontSize: 10.0),
-        holidayTextStyle: TextStyle(fontSize: 10.0),
-        disabledTextStyle: TextStyle(fontSize: 10.0),
-        weekendTextStyle: TextStyle(fontSize: 10.0),
-        outsideTextStyle: TextStyle(fontSize: 10.0, color: Color(0xFFAEAEAE)),
-      ),
-      calendarFormat: _calendarFormat,
-      onFormatChanged: (CalendarFormat _format) {
-        setState(() {
-          _calendarFormat = _format;
-        });
-      },
-      onDaySelected: (DateTime selectDay, DateTime focusDay) {
-        setState(() {
-          _selectedDay = selectDay;
-          _focusedDay = focusDay;
-        });
-        //print(_focusedDay);
-      },
-      selectedDayPredicate: (DateTime date) {
-        return isSameDay(_selectedDay, date);
-      },
-    );
+  void initState() {
+    super.initState();
+    _selectedDay = _focusedDay;
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
-}
-
-class MisCitas extends StatefulWidget {
-  const MisCitas({super.key});
 
   @override
-  State<MisCitas> createState() => _MisCitasState();
-}
+  void dispose() {
+    _selectedEvents.dispose();
+    super.dispose();
+  }
 
-class _MisCitasState extends State<MisCitas> {
-  final currentUser = FirebaseAuth.instance.currentUser!;
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection("cita")
-          .where("codigo_medico", isEqualTo: currentUser.uid)
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(
-            child: Text("No se hay citas registradas"),
+  Future<String> getCitas() async {
+    if (!alreadyRun1) {
+      await FirebaseFirestore.instance
+          .collection('cita')
+          .where('codigo_medico', isEqualTo: currentUserId)
+          .get()
+          .then((QuerySnapshot res) {
+        res.docs.forEach((doc) {
+          citas.add(
+            Cita.fromFirestore(
+                doc as DocumentSnapshot<Map<String, dynamic>>, null),
           );
+        });
+      });
+      alreadyRun1 = true;
+      return "Success!";
+    }
+    return ":(";
+  }
+
+  List<Cita> _getEventsForDay(DateTime day) {
+    return citas.where((Cita cita) {
+      return isSameDay(cita.fecha!.toDate(), day);
+    }).toList();
+  }
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (!isSameDay(_selectedDay, selectedDay)) {
+      setState(() {
+        _selectedDay = selectedDay;
+        _focusedDay = focusedDay;
+        _rangeStart = null; // Important to clean those
+        _rangeEnd = null;
+        //_rangeSelectionMode = RangeSelectionMode.toggledOff;
+      });
+
+      _selectedEvents.value = _getEventsForDay(selectedDay);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Object>(
+      future: Future.wait([getCitas()]),
+      builder: ((context, snapshot) {
+        if (!snapshot.hasData) {
+          return CircularProgressIndicator();
         }
-        return _ListaCita(snapshot: snapshot);
-      },
+        return Column(
+          children: [
+            TableCalendar(
+              eventLoader: (day) {
+                return _getEventsForDay(day);
+              },
+              focusedDay: _focusedDay,
+              firstDay: DateTime(2020),
+              lastDay: DateTime(2050),
+              calendarFormat: _calendarFormat,
+              onFormatChanged: (format) {
+                if (_calendarFormat != format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                }
+              },
+              startingDayOfWeek: StartingDayOfWeek.sunday,
+              daysOfWeekVisible: true,
+              onDaySelected: _onDaySelected,
+              calendarStyle: CalendarStyle(
+                isTodayHighlighted: true,
+                selectedDecoration: BoxDecoration(
+                  color: Colors.blue,
+                  shape: BoxShape.circle,
+                ),
+                selectedTextStyle: TextStyle(color: Colors.white),
+              ),
+              headerStyle: HeaderStyle(
+                formatButtonVisible: false,
+                titleCentered: true,
+              ),
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: ValueListenableBuilder<List<Cita>>(
+                valueListenable: _selectedEvents,
+                builder: (context, value, _) {
+                  return ListView(
+                    children:
+                        value.map((Cita cita) => CitaItem(cita: cita)).toList(),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }
 
-class _ListaCita extends StatelessWidget {
-  final AsyncSnapshot<QuerySnapshot> snapshot;
-  const _ListaCita({Key? key, required this.snapshot}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        padding: const EdgeInsets.only(),
-        children: snapshot.data!.docs.map((document) {
-          return _CitaItem(document: document);
-        }).toList());
-  }
-}
-
-class _CitaItem extends StatelessWidget {
-  final QueryDocumentSnapshot<Object?> document;
-  const _CitaItem({Key? key, required this.document}) : super(key: key);
+class CitaItem extends StatelessWidget {
+  final Cita cita;
+  const CitaItem({Key? key, required this.cita}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +177,7 @@ class _CitaItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetalleCitaPage(citaId: document["citaId"]),
+            builder: (context) => DetalleCitaPage(citaId: cita.citaId!),
           ),
         );
       },
@@ -193,10 +196,8 @@ class _CitaItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 12.0),
                 child: Text(
-                  DateFormat('jm')
-                      .format(
-                          DateTime.parse(document["fecha"].toDate().toString()))
-                      .toString(),
+                  DateFormat.jm()
+                      .format(DateTime.parse(cita.fecha!.toDate().toString())),
                   style: const TextStyle(
                     fontSize: 16.0,
                     letterSpacing: 2.0,
@@ -208,7 +209,7 @@ class _CitaItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      "${document["nombre_paciente"]}",
+                      cita.nombre_paciente!,
                       style: const TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -216,7 +217,7 @@ class _CitaItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Síntomas: ${document["sintoma"]}",
+                      "Síntomas: ${cita.sintoma}",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
@@ -238,11 +239,11 @@ class _CitaItem extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ChatView(
-                          currentUserId: document["codigo_medico"],
-                          anotherUserName: document["nombre_paciente"],
-                          anotherUserId: document["codigo_paciente"],
-                          appointmentId: document["citaId"],
-                          isFinished: document['isFinished'],
+                          currentUserId: cita.codigo_medico!,
+                          anotherUserName: cita.nombre_paciente!,
+                          anotherUserId: cita.codigo_paciente!,
+                          appointmentId: cita.citaId!,
+                          isFinished: cita.isFinished!,
                         ),
                       ),
                     );
