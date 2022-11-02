@@ -1,4 +1,4 @@
-import 'dart:developer';
+// ignore_for_file: prefer_const_constructors
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -91,13 +91,13 @@ class MyHomePage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return StartPage();
           }
           return FutureBuilder<Usuario>(
             future: adminService.getUserByUID(snapshot.data!.uid),
             builder: (BuildContext context, usersnap) {
               if (!usersnap.hasData) {
-                return Center(child: CircularProgressIndicator());
+                return StartPage();
               }
               switch (usersnap.data!.rol!) {
                 case 'medico':
@@ -107,7 +107,7 @@ class MyHomePage extends StatelessWidget {
                 case 'administrador':
                   return AdminHome();
                 default:
-                  return Center(child: CircularProgressIndicator());
+                  return StartPage();
               }
             },
           );

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pry20220116/models/medico.dart';
 import 'package:pry20220116/models/paciente.dart';
+import 'package:pry20220116/services/datos_citas.dart';
 import 'package:pry20220116/services/datos_medico.dart';
 import 'package:pry20220116/services/datos_paciente.dart';
 import 'package:pry20220116/utilities/constraints.dart';
@@ -31,6 +32,7 @@ class _SolicitudViewPageState extends State<SolicitudViewPage> {
   DateTime dateTime = DateTime.now().add(Duration(days: 1));
 
   final patientService = PatientService();
+  final appointmentService = AppointmentService();
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +241,7 @@ class _SolicitudViewPageState extends State<SolicitudViewPage> {
                 if (_keyFormEspecialidad.currentState!.validate() &&
                     _keyFormMedico.currentState!.validate() &&
                     _keyFormSintoma.currentState!.validate()) {
-                  patientService.crearCita(
+                  appointmentService.crearCita(
                       snapPaciente.data!.uid!,
                       snapMedico.data!.uid!,
                       Timestamp.fromDate(dateTime),

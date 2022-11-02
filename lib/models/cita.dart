@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Cita {
-  final String? diagnostico;
+  final String? sintoma;
   final String? citaId;
   final String? codigo_medico;
   final String? codigo_paciente;
@@ -13,7 +13,7 @@ class Cita {
   final bool? isFinished;
 
   Cita(
-      {required this.diagnostico,
+      {required this.sintoma,
       required this.citaId,
       required this.codigo_medico,
       required this.codigo_paciente,
@@ -28,7 +28,7 @@ class Cita {
   ) {
     final data = snapshot.data();
     return Cita(
-        diagnostico: data?['diagnostico'],
+        sintoma: data?['sintoma'],
         citaId: data?['citaId'],
         codigo_medico: data?['codigo_medico'],
         codigo_paciente: data?['codigo_paciente'],
@@ -40,7 +40,7 @@ class Cita {
 
   Map<String, dynamic> toFirestore() {
     return {
-      if (diagnostico != null) "diagnostico": diagnostico,
+      if (sintoma != null) "sintoma": sintoma,
       if (citaId != null) "citaId": citaId,
       if (codigo_medico != null) "codigo_medico": codigo_medico,
       if (codigo_paciente != null) "codigo_paciente": codigo_paciente,

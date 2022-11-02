@@ -174,13 +174,7 @@ class _CitaItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetalleCita(
-              nombrePaciente: document["nombre_paciente"],
-              sintoma: document["sintoma"],
-              nombreMedico: document["nombre_medico"],
-              finalizado: document['isFinished'],
-              fecha: document['fecha'],
-            ),
+            builder: (context) => DetalleCitaPage(citaId: document["citaId"]),
           ),
         );
       },

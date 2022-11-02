@@ -173,32 +173,6 @@ class PatientService {
         .catchError((error) => {}); //print("Actualización fallida."));
   }
 
-//!
-
-  Future<void> crearCita(
-      String codigoPaciente,
-      String codigoMedico,
-      Timestamp fecha,
-      String nombreMedico,
-      String nombrePaciente,
-      String sintoma) {
-    String citaId = citaDB.doc().id;
-    return citaDB
-        .doc(citaId)
-        .set({
-          'citaId': citaId,
-          'codigo_paciente': codigoPaciente,
-          'codigo_medico': codigoMedico,
-          'fecha': fecha,
-          'isFinished': false,
-          'nombre_medico': nombreMedico,
-          'nombre_paciente': nombrePaciente,
-          'sintoma': sintoma
-        })
-        .then((value) => {}) //print('Cita generada correctamente.'))
-        .catchError((error) => {}); //print('Cita no fue generada'));
-  }
-
   Future<List<Paciente>> getPatientListByMedicUID(String medicUID) async {
     List<String> listaPacientesUID = [];
     List<Paciente> listaPacientes = [];
