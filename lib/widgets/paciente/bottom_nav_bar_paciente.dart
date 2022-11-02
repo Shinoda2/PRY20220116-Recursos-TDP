@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pry20220116/screens/paciente/citas_paciente.dart';
 import 'package:pry20220116/screens/paciente/solicitud_citas.dart';
-import 'package:pry20220116/screens/shared/chatbot_view.dart';
+import 'package:pry20220116/screens/shared/chatbot_page.dart';
 import '../../utilities/constraints.dart';
 import 'side_bar_paciente.dart';
 
@@ -18,7 +18,7 @@ class _PBottomNavBar extends State<PBottomNavBar> {
   int _selectedIndex = 0;
 
   final List<Widget> _tabs = [
-    const ChatBotView(),
+    const ChatBotPage(),
     const PCitas(),
     const SolicitudViewPage()
   ];

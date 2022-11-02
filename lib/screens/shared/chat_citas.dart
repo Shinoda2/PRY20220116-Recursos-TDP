@@ -35,7 +35,6 @@ class ChatView extends StatefulWidget {
 class _ChatViewState extends State<ChatView> {
   CollectionReference citas = FirebaseFirestore.instance.collection('cita');
 
-
   var currentUserEmail = FirebaseAuth.instance.currentUser;
 
   final _textController = TextEditingController();
@@ -140,7 +139,7 @@ class _ChatViewState extends State<ChatView> {
                 textCapitalization: TextCapitalization.sentences,
                 textAlignVertical: TextAlignVertical.center,
                 style: const TextStyle(
-                  fontSize: 10.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                 ),
                 decoration: InputDecoration(
@@ -273,7 +272,7 @@ class BurbujaMensaje extends StatelessWidget {
               children: [
                 Text(
                   messageChat.content,
-                  style: const TextStyle(color: Colors.white, fontSize: 10.0),
+                  style: const TextStyle(color: Colors.white, fontSize: 16.0),
                   textAlign: TextAlign.start,
                 ),
                 Text(
@@ -284,7 +283,7 @@ class BurbujaMensaje extends StatelessWidget {
                   ),
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 8.0,
+                    fontSize: 12.0,
                     fontWeight: FontWeight.w300,
                   ),
                   textAlign: TextAlign.center,
